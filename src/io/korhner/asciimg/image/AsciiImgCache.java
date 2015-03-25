@@ -22,7 +22,7 @@ import javax.imageio.ImageIO;
 public class AsciiImgCache implements Iterable<Entry<Character, int[]>> {
 
 	/** A map of characters to their bitmaps. */
-	private final Map<Character, int[]> imageCache;
+	protected final Map<Character, int[]> imageCache;
 
 	/** Minimum value of ASCII char to take into consideration. */
 	private static final int MIN_CHAR = 65;
