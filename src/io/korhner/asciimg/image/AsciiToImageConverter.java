@@ -5,9 +5,8 @@ import java.util.Map.Entry;
 
 public class AsciiToImageConverter extends AsciiConverter<BufferedImage> {
 
-	public AsciiToImageConverter(AsciiImgCache characterCacher) {
-		super(characterCacher);
-		// TODO Auto-generated constructor stub
+	public AsciiToImageConverter(AsciiImgCache characterCacher, final BestCharacterFitStrategy characterFitStrategy) {
+		super(characterCacher, characterFitStrategy);
 	}
 
 	@Override
@@ -34,7 +33,7 @@ public class AsciiToImageConverter extends AsciiConverter<BufferedImage> {
 			int xOffset = i % this.characterCache.getCharacterImageSize().width;
 			int yOffset = i / this.characterCache.getCharacterImageSize().width;
 
-			sourceImagePixels[convert2DTo1D(startCoordinateX + xOffset, startCoordinateY + yOffset, imageWidth)] = charPixels[i];
+			sourceImagePixels[ImageUtils.convert2DTo1D(startCoordinateX + xOffset, startCoordinateY + yOffset, imageWidth)] = charPixels[i];
 		}
 		
 	}

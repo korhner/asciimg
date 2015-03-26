@@ -6,8 +6,8 @@ public class AsciiToStringConverter extends AsciiConverter<String> {
 
 	private StringBuffer buffer;
 
-	public AsciiToStringConverter(AsciiImgCache characterCacher) {
-		super(characterCacher);
+	public AsciiToStringConverter(AsciiImgCache characterCacher, final BestCharacterFitStrategy characterFitStrategy) {
+		super(characterCacher, characterFitStrategy);
 		// TODO Auto-generated constructor stub
 	}
 
