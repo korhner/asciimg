@@ -1,5 +1,7 @@
 package io.korhner.asciimg.image;
 
+import io.korhner.asciimg.image.character_fit_strategy.BestCharacterFitStrategy;
+
 import java.awt.Dimension;
 import java.awt.image.BufferedImage;
 import java.util.Map.Entry;
@@ -8,7 +10,16 @@ public abstract class AsciiConverter<Output> {
 
 	protected final AsciiImgCache characterCache;
 
-	protected final BestCharacterFitStrategy characterFitStrategy;
+	protected BestCharacterFitStrategy characterFitStrategy;
+
+	public BestCharacterFitStrategy getCharacterFitStrategy() {
+		return characterFitStrategy;
+	}
+
+	public void setCharacterFitStrategy(
+			BestCharacterFitStrategy characterFitStrategy) {
+		this.characterFitStrategy = characterFitStrategy;
+	}
 
 	protected Output output;
 
@@ -24,8 +35,8 @@ public abstract class AsciiConverter<Output> {
 			int imageWidth, int imageHeight);
 
 	protected abstract void addCharacterToOutput(
-			Entry<Character, int[]> characterEntry, int tileX, int tileY,
-			int[] sourceImagePixels, int imageWidth);
+			Entry<Character, GrayscaleMatrix> characterEntry,
+			int[] sourceImagePixels, int tileX, int tileY, int imageWidth);
 
 	/**
 	 * Produces a new image that is an ascii art of the supplied image.
@@ -35,31 +46,68 @@ public abstract class AsciiConverter<Output> {
 	 * @return the buffered image
 	 */
 	public Output convertImage(final BufferedImage source) {
-		Dimension tile = this.characterCache.getCharacterImageSize();
+		Dimension tileSize = this.characterCache.getCharacterImageSize();
 
-		int outputImageWidth = (source.getWidth() / tile.width) * tile.width;
-		int outputImageHeight = (source.getHeight() / tile.height)
-				* tile.height;
+		long startTime = 0;
+		long endTime = 0;
+		
+		int outputImageWidth = (source.getWidth() / tileSize.width)
+				* tileSize.width;
+		int outputImageHeight = (source.getHeight() / tileSize.height)
+				* tileSize.height;
 
+		startTime = System.currentTimeMillis();
 		int[] imagePixels = source.getRGB(0, 0, outputImageWidth,
 				outputImageHeight, null, 0, outputImageWidth);
+		preprocessSourceImage(imagePixels, outputImageWidth, outputImageHeight);
+		endTime = System.currentTimeMillis() - startTime;
+		System.out.println("Creating pixel array took " + endTime);
+		
+		startTime = System.currentTimeMillis();
+		GrayscaleMatrix sourceMatrix = new GrayscaleMatrix(imagePixels,
+				outputImageWidth, outputImageHeight);
+		endTime = System.currentTimeMillis() - startTime;
+		System.out.println("Creating matrix took " + endTime);
+		
+		preprocessGrayscaleMatrix(sourceMatrix);
 
+		startTime = System.currentTimeMillis();
+		TiledGrayscaleMatrix tiledMatrix = new TiledGrayscaleMatrix(
+				sourceMatrix, tileSize.width, tileSize.height);
+		endTime = System.currentTimeMillis() - startTime;
+		System.out.println("Creating tile matrix took " + endTime);
+		
 		this.output = initializeOutput(outputImageWidth, outputImageHeight);
-
-		for (int i = 0; i < outputImageHeight / tile.getHeight(); i++) {
-			for (int j = 0; j < outputImageWidth / tile.getWidth(); j++) {
-				Entry<Character, int[]> characterEntry = this.characterFitStrategy
-						.findBestFit(this.characterCache, imagePixels,
-								outputImageWidth, j, i);
-
-				addCharacterToOutput(characterEntry, j, i, imagePixels,
-						outputImageWidth);
-			}
+		
+		int i = 0;
+		
+		for (GrayscaleMatrix tile : tiledMatrix) {
+			Entry<Character, GrayscaleMatrix> characterEntry = this.characterFitStrategy
+					.findBestFit(this.characterCache, tile);
+			
+			int tileX = ImageUtils.convert1DtoX(i, tiledMatrix.getTilesX());
+			int tileY = ImageUtils.convert1DtoY(i, tiledMatrix.getTilesX());
+			
+			addCharacterToOutput(characterEntry, imagePixels, tileX, tileY, outputImageWidth);
+			i++;
 		}
-
+		
+		
+		startTime = System.currentTimeMillis();
 		finalizeOutput(imagePixels, outputImageWidth, outputImageHeight);
-
+		endTime = System.currentTimeMillis() - startTime;
+		System.out.println("finalizing took " + endTime);
+		
 		return this.output;
+
+	}
+
+	protected void preprocessSourceImage(final int[] pixels, final int width,
+			final int height) {
+
+	}
+
+	protected void preprocessGrayscaleMatrix(final GrayscaleMatrix matrix) {
 
 	}
 
