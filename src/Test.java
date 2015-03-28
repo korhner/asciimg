@@ -15,9 +15,9 @@ import javax.imageio.ImageIO;
 public class Test {
 
 	public static void main(String[] args) throws IOException {
-		File inputFile = new File("a.jpg");
+		File inputFile = new File(args[0]);
 		BufferedImage input = ImageIO.read(inputFile);
-		Font font = new Font("Courier", Font.PLAIN, 6);
+		Font font = new Font("Courier", Font.PLAIN,6);
 
 		AsciiImgCache cache = AsciiImgCache.create(font);
 		AsciiImageConverter imgConverter = new AsciiImageConverter(cache);
