@@ -19,8 +19,8 @@ public class Examples {
 		// initialize caches
 		AsciiImgCache smallFontCache = AsciiImgCache.create(new Font("Courier",
 				Font.BOLD, 6));
-		AsciiImgCache mediumFontCache = AsciiImgCache.create(new Font(
-				"Courier", Font.BOLD, 8));
+		AsciiImgCache mediumBlackAndWhiteCache = AsciiImgCache.create(new Font(
+				"Courier", Font.BOLD, 10), new char[] {'\\', ' ', '/'});
 		AsciiImgCache largeFontCache = AsciiImgCache.create(new Font("Courier",
 				Font.PLAIN, 16));
 
@@ -36,7 +36,7 @@ public class Examples {
 		AsciiToImageConverter imageConverter = new AsciiToImageConverter(
 				smallFontCache, squareErrorStrategy);
 		AsciiToStringConverter stringConverter = new AsciiToStringConverter(
-				mediumFontCache, ssimStrategy);
+				largeFontCache, ssimStrategy);
 
 		// small font images, square error
 		imageConverter.setCharacterCache(smallFontCache);
@@ -45,7 +45,7 @@ public class Examples {
 				new File("examples/portrait_small_square_error.png"));
 
 		// medium font images, square error
-		imageConverter.setCharacterCache(mediumFontCache);
+		imageConverter.setCharacterCache(mediumBlackAndWhiteCache);
 		imageConverter.setCharacterFitStrategy(squareErrorStrategy);
 		ImageIO.write(imageConverter.convertImage(portraitImage), "png",
 				new File("examples/portrait_medium_square_error.png"));
@@ -63,7 +63,7 @@ public class Examples {
 				new File("examples/portrait_small_ssim.png"));
 
 		// medium font images, ssim error
-		imageConverter.setCharacterCache(mediumFontCache);
+		imageConverter.setCharacterCache(mediumBlackAndWhiteCache);
 		imageConverter.setCharacterFitStrategy(ssimStrategy);
 		ImageIO.write(imageConverter.convertImage(portraitImage), "png",
 				new File("examples/portrait_medium_ssim.png"));
@@ -75,8 +75,7 @@ public class Examples {
 				new File("examples/portrait_large_ssim.png"));
 
 		// string converter, output to console
-		System.out.println(stringConverter.convertImage(portraitImage)
-				.toString());
+		System.out.println(stringConverter.convertImage(portraitImage));
 
 	}
 }
