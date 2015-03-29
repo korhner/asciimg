@@ -43,7 +43,7 @@ Here are some sample images generated with various parameters:
 
 ## Architecture:
 
-<img src="http://korhner.github.io/assets/img/asciimg/asciimg_cls_diagram.png" />
+![Architecture](http://korhner.github.io/assets/img/asciimg/asciimg_cls_diagram.png)
 
 ## AsciiImgCache
 
