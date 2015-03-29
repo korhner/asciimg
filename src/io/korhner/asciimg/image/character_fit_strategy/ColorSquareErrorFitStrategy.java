@@ -1,33 +1,25 @@
 package io.korhner.asciimg.image.character_fit_strategy;
 
-import io.korhner.asciimg.image.AsciiImgCache;
-import io.korhner.asciimg.image.FloatColor;
-import io.korhner.asciimg.image.GrayscaleMatrix;
-import io.korhner.asciimg.image.ImageUtils;
+import io.korhner.asciimg.image.matrix.GrayscaleMatrix;
 
-import java.util.Map.Entry;
-
+/**
+ * Calculates squared mean error between each pixel.
+ */
 public class ColorSquareErrorFitStrategy implements BestCharacterFitStrategy {
 
+	/**
+	 * @see io.korhner.asciimg.image.character_fit_strategy.BestCharacterFitStrategy#calculateError(io.korhner.asciimg.image.matrix.GrayscaleMatrix, io.korhner.asciimg.image.matrix.GrayscaleMatrix)
+	 */
 	@Override
-	public Entry<Character, GrayscaleMatrix> findBestFit(
-			AsciiImgCache characterCache, GrayscaleMatrix tile) {
-		
-		float minError = Float.MAX_VALUE;
-		Entry<Character, GrayscaleMatrix> bestFit = null;
-
-		for (Entry<Character, GrayscaleMatrix> charImage : characterCache) {
-			GrayscaleMatrix charPixels = charImage.getValue();
-
-			float error = tile.calculateMeanSquareError(charPixels);
-
-			if (error < minError) {
-				minError = error;
-				bestFit = charImage;
-			}
+	public float calculateError(GrayscaleMatrix character, GrayscaleMatrix tile) {
+		float error = 0;
+		for (int i = 0; i < character.getData().length; i++) {
+			error += (character.getData()[i] - tile.getData()[i])
+					* (character.getData()[i] - tile.getData()[i]);
 		}
-		
-		return bestFit;
+
+		return error / character.getData().length;
+
 	}
 
 }
