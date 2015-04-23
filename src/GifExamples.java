@@ -30,7 +30,7 @@ public class GifExamples {
 		
 		GifToAsciiConvert asciiConvert = new GifToAsciiConvert(smallFontCache, ssimStrategy);
 		
-		asciiConvert.convertGitToAscii(srcFilePath, disFilePath, delay);
+		asciiConvert.convertGitToAscii(srcFilePath, disFilePath, delay,0);
 
 	}
 }

@@ -11,8 +11,16 @@ public class GifToAsciiConvert extends AsciiToImageConverter{
 			BestCharacterFitStrategy characterFitStrategy) {
 		super(characterCacher, characterFitStrategy);
 	}
-
-	public int  convertGitToAscii(String srcFilePath,String disFilePath,int delay){
+	
+	/**
+	 * 
+	 * @param srcFilePath
+	 * @param disFilePath
+	 * @param delay－－the delay time(ms) between each frame
+	 * @param repeat－－he number of times the set of GIF frames should be played.0 means play indefinitely. 
+	 * @return
+	 */
+	public int  convertGitToAscii(String srcFilePath,String disFilePath,int delay,int repeat){
 		GifDecoder decoder = new GifDecoder();
 		int status = decoder.read(srcFilePath);
 		if(status!=0){
