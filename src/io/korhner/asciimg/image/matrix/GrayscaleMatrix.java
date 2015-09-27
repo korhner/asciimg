@@ -102,7 +102,7 @@ public class GrayscaleMatrix {
 		// extract components
 		int red = (rgbColor >> 16) & 0xFF;
 		int green = (rgbColor >> 8) & 0xFF;
-		int blue = (rgbColor >> 8) & 0xFF;
+		int blue = rgbColor & 0xFF;
 
 		// convert to grayscale
 		return 0.3f * red + 0.59f * green + 0.11f * blue;

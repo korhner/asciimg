@@ -1,9 +1,18 @@
 package io.korhner.asciimg.utils;
-import java.net.*;
-import java.io.*;
-import java.util.*;
-import java.awt.*;
-import java.awt.image.*;
+import java.awt.AlphaComposite;
+import java.awt.Color;
+import java.awt.Dimension;
+import java.awt.Graphics2D;
+import java.awt.Rectangle;
+import java.awt.image.BufferedImage;
+import java.awt.image.DataBufferInt;
+import java.io.BufferedInputStream;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.net.URL;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Class GifDecoder - Decodes a GIF file into one or more frames.
@@ -91,7 +100,7 @@ public class GifDecoder {
 	protected byte[] pixelStack;
 	protected byte[] pixels;
 
-	protected ArrayList frames; // frames read from current file
+	protected List<GifFrame> frames; // frames read from current file
 	protected int frameCount;
 
 	static class GifFrame {
@@ -485,7 +494,7 @@ public class GifDecoder {
 	protected void init() {
 		status = STATUS_OK;
 		frameCount = 0;
-		frames = new ArrayList();
+		frames = new ArrayList<>();
 		gct = null;
 		lct = null;
 	}
@@ -758,9 +767,6 @@ public class GifDecoder {
 		lastRect = new Rectangle(ix, iy, iw, ih);
 		lastImage = image;
 		lastBgColor = bgColor;
-		int dispose = 0;
-		boolean transparency = false;
-		int delay = 0;
 		lct = null;
 	}
 
