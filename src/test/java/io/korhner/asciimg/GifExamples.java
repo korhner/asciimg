@@ -1,3 +1,5 @@
+package io.korhner.asciimg;
+
 import io.korhner.asciimg.image.AsciiImgCache;
 import io.korhner.asciimg.image.character_fit_strategy.BestCharacterFitStrategy;
 import io.korhner.asciimg.image.character_fit_strategy.StructuralSimilarityFitStrategy;
@@ -31,6 +33,5 @@ public class GifExamples {
 		GifToAsciiConvert asciiConvert = new GifToAsciiConvert(smallFontCache, ssimStrategy);
 		
 		asciiConvert.convertGitToAscii(srcFilePath, disFilePath, delay,0);
-
 	}
 }
