@@ -6,12 +6,10 @@ import io.korhner.asciimg.image.character_fit_strategy.ColorSquareErrorFitStrate
 import io.korhner.asciimg.image.character_fit_strategy.StructuralSimilarityFitStrategy;
 import io.korhner.asciimg.image.converter.AsciiToImageConverter;
 import io.korhner.asciimg.image.converter.AsciiToStringConverter;
-
 import java.awt.Font;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
-
 import javax.imageio.ImageIO;
 
 public class Examples {
@@ -78,6 +76,5 @@ public class Examples {
 
 		// string converter, output to console
 		System.out.println(stringConverter.convertImage(portraitImage));
-
 	}
 }
