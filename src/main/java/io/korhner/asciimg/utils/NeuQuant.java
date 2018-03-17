@@ -65,10 +65,10 @@ public class NeuQuant {
 	/* defs for freq and bias */
 	/** bias for fractions */
 	protected static final int INT_BIAS_SHIFT = 16;
-	protected static final int INT_BIAS = (((int) 1) << INT_BIAS_SHIFT);
+	protected static final int INT_BIAS = (1 << INT_BIAS_SHIFT);
 	/** GAMMA = 1024 */
 	protected static final int GAMMA_SHIFT = 10;
-	protected static final int GAMMA = (((int) 1) << GAMMA_SHIFT);
+	protected static final int GAMMA = (1 << GAMMA_SHIFT);
 	protected static final int BETA_SHIFT = 10;
 	/** BETA = 1/1024 */
 	protected static final int BETA = (INT_BIAS >> BETA_SHIFT);
@@ -79,7 +79,7 @@ public class NeuQuant {
 	protected static final int INIT_RAD = (NET_SIZE >> 3);
 	/** at 32.0 biased by 6 bits */
 	protected static final int RADIUS_BIAS_SHIFT = 6;
-	protected static final int RADIUS_BIAS = (((int) 1) << RADIUS_BIAS_SHIFT);
+	protected static final int RADIUS_BIAS = (1 << RADIUS_BIAS_SHIFT);
 	/** and decreases by a */
 	protected static final int INIT_RADIUS = (INIT_RAD * RADIUS_BIAS);
 	/** factor of 1/30 each cycle */
@@ -88,16 +88,16 @@ public class NeuQuant {
 	/* defs for decreasing alpha factor */
 	/** alpha starts at 1.0 */
 	protected static final int ALPHA_BIAS_SHIFT = 10;
-	protected static final int INIT_ALPHA = (((int) 1) << ALPHA_BIAS_SHIFT);
+	protected static final int INIT_ALPHA = (1 << ALPHA_BIAS_SHIFT);
 
 	/** biased by 10 bits */
 	protected int alphaDec;
 
 	/* RAD_BIAS and ALPHA_RAD_BIAS used for radPower calculation */
 	protected static final int RAD_BIAS_SHIFT = 8;
-	protected static final int RAD_BIAS = (((int) 1) << RAD_BIAS_SHIFT);
+	protected static final int RAD_BIAS = (1 << RAD_BIAS_SHIFT);
 	protected static final int ALPHA_RAD_B_SHIFT = (ALPHA_BIAS_SHIFT + RAD_BIAS_SHIFT);
-	protected static final int ALPHA_RAD_BIAS = (((int) 1) << ALPHA_RAD_B_SHIFT);
+	protected static final int ALPHA_RAD_BIAS = (1 << ALPHA_RAD_B_SHIFT);
 
 	/* Types and Global Variables
 	-------------------------- */
@@ -465,7 +465,7 @@ public class NeuQuant {
 
 		int a;
 
-		int bestD = ~(((int) 1) << 31);
+		int bestD = ~(1 << 31);
 		int bestBiasd = bestD;
 		int bestPos = -1;
 		int bestBiasPos = bestPos;

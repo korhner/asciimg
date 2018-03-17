@@ -137,7 +137,7 @@ public class GifDecoder {
 
 		delay = -1;
 		if ((frameIdx >= 0) && (frameIdx < frameCount)) {
-			delay = ((GifFrame) frames.get(frameIdx)).delay;
+			delay = frames.get(frameIdx).delay;
 		}
 		return delay;
 	}
@@ -268,7 +268,7 @@ public class GifDecoder {
 	public BufferedImage getFrame(final int frameNum) {
 		BufferedImage image = null;
 		if ((frameNum >= 0) && (frameNum < frameCount)) {
-			image = ((GifFrame) frames.get(frameNum)).image;
+			image = frames.get(frameNum).image;
 		}
 		return image;
 	}
