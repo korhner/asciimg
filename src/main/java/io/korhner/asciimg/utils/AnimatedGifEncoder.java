@@ -47,7 +47,7 @@ public class AnimatedGifEncoder {
 	protected byte[] indexedPixels; // converted frame indexed to palette
 	protected int colorDepth; // number of bit planes
 	protected byte[] colorTab; // RGB palette
-	protected boolean[] usedEntry; // active palette entries
+	protected final boolean[] usedEntry; // active palette entries
 	protected int palSize; // color table size (bits-1)
 	protected int dispose; // disposal code (-1 = use default)
 	protected boolean closeStream; // close stream when finished

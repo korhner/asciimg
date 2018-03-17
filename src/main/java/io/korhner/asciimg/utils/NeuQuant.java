@@ -103,9 +103,9 @@ public class NeuQuant {
 	-------------------------- */
 
 	/** the input image itself */
-	protected byte[] picture;
+	protected final byte[] picture;
 	/** lengthCount = H*W*3 */
-	protected int lengthCount;
+	protected final int lengthCount;
 
 	/** sampling factor 1..30 */
 	protected int sampleFac;
@@ -113,16 +113,16 @@ public class NeuQuant {
 	///** BGRc */
 	//typedef int pixel[4];
 	/** the network itself - [NET_SIZE][4] */
-	protected int[][] network;
+	protected final int[][] network;
 
 	/** for network lookup - really 256 */
-	protected int[] netIndex = new int[256];
+	protected final int[] netIndex;
 
 	/** bias and freq arrays for learning */
-	protected int[] bias = new int[NET_SIZE];
-	protected int[] freq = new int[NET_SIZE];
+	protected final int[] bias;
+	protected final int[] freq;
 	/** radPower for pre-computation */
-	protected int[] radPower = new int[INIT_RAD];
+	protected final int[] radPower;
 
 	/**
 	 * Initialise network input range (0,0,0) to (255,255,255) and set parameters
@@ -134,6 +134,8 @@ public class NeuQuant {
 		this.sampleFac = sampleFac;
 
 		network = new int[NET_SIZE][];
+		bias = new int[NET_SIZE];
+		freq = new int[NET_SIZE];
 		for (int i = 0; i < NET_SIZE; i++) {
 			network[i] = new int[4];
 			final int[] p = network[i];
@@ -141,6 +143,8 @@ public class NeuQuant {
 			freq[i] = INT_BIAS / NET_SIZE; /* 1/NET_SIZE */
 			bias[i] = 0;
 		}
+		netIndex = new int[256];
+		radPower = new int[INIT_RAD];
 	}
 
 	public byte[] colorMap() {
@@ -264,9 +268,9 @@ public class NeuQuant {
 		int j;
 		i = 0;
 		while (i < samplePixels) {
-			final  int blue = (p[pix + 0] & 0xff) << NET_BIAS_SHIFT;
+			final int blue  = (p[pix    ] & 0xff) << NET_BIAS_SHIFT;
 			final int green = (p[pix + 1] & 0xff) << NET_BIAS_SHIFT;
-			final int red = (p[pix + 2] & 0xff) << NET_BIAS_SHIFT;
+			final int red   = (p[pix + 2] & 0xff) << NET_BIAS_SHIFT;
 			j = contest(blue, green, red);
 
 			alterSingle(alpha, j, blue, green, red);

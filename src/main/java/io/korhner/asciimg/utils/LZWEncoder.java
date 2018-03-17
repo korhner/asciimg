@@ -45,8 +45,8 @@ class LZWEncoder {
 	private int maxCode; // maximum code, given nBits
 	private final int maxMaxCode; // should NEVER generate this code
 
-	private int[] hTab;
-	private int[] codeTab;
+	private final int[] hTab;
+	private final int[] codeTab;
 
 	private final int hSize; // for dynamic table sizing
 
@@ -115,7 +115,7 @@ class LZWEncoder {
 	private int aCount;
 
 	// Define the storage for the packet accumulator
-	private byte[] accum;
+	private final byte[] accum;
 
 	//----------------------------------------------------------------------------
 	LZWEncoder(final int width, final int height, final byte[] pixels, final int colorDepth) {
@@ -254,7 +254,7 @@ class LZWEncoder {
 		}
 	}
 
-	private static final int maxCode(final int nBits) {
+	private static int maxCode(final int nBits) {
 		return (1 << nBits) - 1;
 	}
 

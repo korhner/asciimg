@@ -83,7 +83,7 @@ public class GifDecoder {
 	protected BufferedImage image; // current frame
 	protected BufferedImage lastImage; // previous frame
 
-	protected byte[] block; // current data block
+	protected final byte[] block; // current data block
 	protected int blockSize; // block size
 
 	// last graphic control extension info
@@ -118,8 +118,8 @@ public class GifDecoder {
 
 	static class GifFrame {
 
-		public BufferedImage image;
-		public int delay;
+		public final BufferedImage image;
+		public final int delay;
 
 		GifFrame(final BufferedImage image, final int delay) {
 			this.image = image;
