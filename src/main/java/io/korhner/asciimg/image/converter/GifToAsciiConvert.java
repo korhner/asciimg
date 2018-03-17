@@ -12,11 +12,12 @@ public class GifToAsciiConvert extends AsciiToImageConverter{
 	}
 
 	/**
-	 * @param srcFilePath
-	 * @param disFilePath
 	 * @param delay－－the delay time(ms) between each frame
 	 * @param repeat－－he number of times the set of GIF frames should be played.0 means play indefinitely.
 	 * @return
+	 *   1:  done
+	 *   0:  opening disFile failed
+	 *   -1: srcFile does not exist or opening failed
 	 */
 	public int convertGitToAscii(final String srcFilePath, final String disFilePath, final int delay, final int repeat) {
 		final GifDecoder decoder = new GifDecoder();
@@ -35,13 +36,14 @@ public class GifToAsciiConvert extends AsciiToImageConverter{
 					encoder.addFrame(this.convertImage(decoder.getFrame(i)));
 				}
 				encoder.finish();
-				ret = 1; // done!
+				ret = 1; // done
 			} else {
 				ret = 0; // opening disFile failed
 			}
 		} else {
-			ret = -1; // srcFile does not exist or opening failed!
+			ret = -1; // srcFile does not exist or opening failed
 		}
+
 		return ret;
 	}
 }

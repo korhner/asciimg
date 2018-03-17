@@ -98,7 +98,6 @@ public class AnimatedGifEncoder {
 	 * image is added.
 	 *
 	 * @param iterations int number of iterations.
-	 * @return
 	 */
 	public void setRepeat(final int iterations) {
 		if (iterations >= 0) {
@@ -227,7 +226,6 @@ public class AnimatedGifEncoder {
 	 * than 20 do not yield significant improvements input speed.
 	 *
 	 * @param quality int greater than 0.
-	 * @return
 	 */
 	public void setQuality(final int quality) {
 		if (quality < 1) {
