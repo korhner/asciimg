@@ -47,7 +47,7 @@ public class AsciiToStringConverter extends AsciiConverter<StringBuffer> {
 		this.getOutput().append(characterEntry.getKey());
 
 		// append new line at the end of the row
-		if ((tileX + 1) * this.getCharacterCache().getCharacterImageSize().getWidth() == imageWidth) {
+		if ((tileX + 1) * this.getCharacterCache().getCharacterImageSize().width == imageWidth) {
 			this.getOutput().append(System.lineSeparator());
 		}
 	}

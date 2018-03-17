@@ -302,11 +302,12 @@ public class GifDecoder {
 					status = STATUS_FORMAT_ERROR;
 				}
 			}
+			try {
+				input.close();
+			} catch (final IOException exc) {
+			}
 		}
-		try {
-			input.close();
-		} catch (final IOException exc) {
-		}
+
 		return status;
 	}
 
