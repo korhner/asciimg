@@ -469,7 +469,7 @@ public class NeuQuant {
 
 		int a;
 
-		int bestD = ~(1 << 31);
+		@SuppressWarnings("NumericOverflow") int bestD = ~(1 << 31);
 		int bestBiasd = bestD;
 		int bestPos = -1;
 		int bestBiasPos = bestPos;
