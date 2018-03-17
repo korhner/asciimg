@@ -1,8 +1,13 @@
 package io.korhner.asciimg.utils;
 
-import java.io.*;
-import java.awt.*;
-import java.awt.image.*;
+import java.awt.Color;
+import java.awt.Graphics2D;
+import java.awt.image.BufferedImage;
+import java.awt.image.DataBufferByte;
+import java.io.BufferedOutputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.OutputStream;
 
 /**
  * Class AnimatedGifEncoder - Encodes a GIF file consisting of one or
@@ -23,9 +28,7 @@ import java.awt.image.*;
  *
  * @author Kevin Weiner, FM Software
  * @version 1.03 November 2003
- *
  */
-
 public class AnimatedGifEncoder {
 
 	protected int width; // image size
@@ -55,22 +58,22 @@ public class AnimatedGifEncoder {
 	 *
 	 * @param ms int delay time in milliseconds
 	 */
-	public void setDelay(int ms) {
+	public void setDelay(final int ms) {
 		delay = Math.round(ms / 10.0f);
 	}
-	
+
 	/**
 	 * Sets the GIF frame disposal code for the last added frame
 	 * and any subsequent frames.  Default is 0 if no transparent
 	 * color has been set, otherwise 2.
 	 * @param code int disposal code.
 	 */
-	public void setDispose(int code) {
+	public void setDispose(final int code) {
 		if (code >= 0) {
 			dispose = code;
 		}
 	}
-	
+
 	/**
 	 * Sets the number of times the set of GIF frames
 	 * should be played.  Default is 1; 0 means play
@@ -80,12 +83,12 @@ public class AnimatedGifEncoder {
 	 * @param iter int number of iterations.
 	 * @return
 	 */
-	public void setRepeat(int iter) {
+	public void setRepeat(final int iter) {
 		if (iter >= 0) {
 			repeat = iter;
 		}
 	}
-	
+
 	/**
 	 * Sets the transparent color for the last added frame
 	 * and any subsequent frames.
@@ -97,10 +100,10 @@ public class AnimatedGifEncoder {
 	 *
 	 * @param c Color to be treated as transparent on display.
 	 */
-	public void setTransparent(Color c) {
+	public void setTransparent(final Color c) {
 		transparent = c;
 	}
-	
+
 	/**
 	 * Adds next GIF frame.  The frame is not written immediately, but is
 	 * actually deferred until the next frame is received so that timing
@@ -111,7 +114,7 @@ public class AnimatedGifEncoder {
 	 * @param im BufferedImage containing frame to write.
 	 * @return true if successful.
 	 */
-	public boolean addFrame(BufferedImage im) {
+	public boolean addFrame(final BufferedImage im) {
 		if ((im == null) || !started) {
 			return false;
 		}
@@ -145,7 +148,7 @@ public class AnimatedGifEncoder {
 
 		return ok;
 	}
-	
+
 	/**
 	 * Flushes any pending data and closes output file.
 	 * If writing to an OutputStream, the stream is not
@@ -177,19 +180,19 @@ public class AnimatedGifEncoder {
 
 		return ok;
 	}
-	
+
 	/**
 	 * Sets frame rate in frames per second.  Equivalent to
 	 * <code>setDelay(1000/fps)</code>.
 	 *
 	 * @param fps float frame rate (frames per second)
 	 */
-	public void setFrameRate(float fps) {
+	public void setFrameRate(final float fps) {
 		if (fps != 0f) {
 			delay = Math.round(100f / fps);
 		}
 	}
-	
+
 	/**
 	 * Sets quality of color quantization (conversion of images
 	 * to the maximum 256 colors allowed by the GIF specification).
@@ -201,11 +204,14 @@ public class AnimatedGifEncoder {
 	 * @param quality int greater than 0.
 	 * @return
 	 */
-	public void setQuality(int quality) {
-		if (quality < 1) quality = 1;
-		sample = quality;
+	public void setQuality(final int quality) {
+		if (quality < 1) {
+			sample = 1;
+		} else {
+			sample = quality;
+		}
 	}
-	
+
 	/**
 	 * Sets the GIF frame size.  The default size is the
 	 * size of the first frame added if this method is
@@ -214,7 +220,7 @@ public class AnimatedGifEncoder {
 	 * @param w int frame width.
 	 * @param h int frame width.
 	 */
-	public void setSize(int w, int h) {
+	public void setSize(final int w, final int h) {
 		if (started && !firstFrame) return;
 		width = w;
 		height = h;
@@ -222,7 +228,7 @@ public class AnimatedGifEncoder {
 		if (height < 1) height = 240;
 		sizeSet = true;
 	}
-	
+
 	/**
 	 * Initiates GIF file creation on the given stream.  The stream
 	 * is not closed automatically.
@@ -230,7 +236,7 @@ public class AnimatedGifEncoder {
 	 * @param os OutputStream on which GIF images are written.
 	 * @return false if initial write failed.
 	 */
-	public boolean start(OutputStream os) {
+	public boolean start(final OutputStream os) {
 		if (os == null) return false;
 		boolean ok = true;
 		closeStream = false;
@@ -240,16 +246,17 @@ public class AnimatedGifEncoder {
 		} catch (IOException e) {
 			ok = false;
 		}
-		return started = ok;
+		started = ok;
+		return started;
 	}
-	
+
 	/**
 	 * Initiates writing of a GIF file with the specified name.
 	 *
 	 * @param file String containing output file name.
 	 * @return false if open or initial write failed.
 	 */
-	public boolean start(String file) {
+	public boolean start(final String file) {
 		boolean ok = true;
 		try {
 			out = new BufferedOutputStream(new FileOutputStream(file));
@@ -258,9 +265,10 @@ public class AnimatedGifEncoder {
 		} catch (IOException e) {
 			ok = false;
 		}
-		return started = ok;
+		started = ok;
+		return started;
 	}
-	
+
 	/**
 	 * Analyzes image colors and creates color map.
 	 */
@@ -283,8 +291,8 @@ public class AnimatedGifEncoder {
 		for (int i = 0; i < nPix; i++) {
 			int index =
 				nq.map(pixels[k++] & 0xff,
-					   pixels[k++] & 0xff,
-					   pixels[k++] & 0xff);
+						pixels[k++] & 0xff,
+						pixels[k++] & 0xff);
 			usedEntry[index] = true;
 			indexedPixels[i] = (byte) index;
 		}
@@ -296,12 +304,12 @@ public class AnimatedGifEncoder {
 			transIndex = findClosest(transparent);
 		}
 	}
-	
+
 	/**
 	 * Returns index of palette color closest to c
 	 *
 	 */
-	protected int findClosest(Color c) {
+	protected int findClosest(final Color c) {
 		if (colorTab == null) return -1;
 		int r = c.getRed();
 		int g = c.getGreen();
@@ -323,7 +331,7 @@ public class AnimatedGifEncoder {
 		}
 		return minpos;
 	}
-	
+
 	/**
 	 * Extracts image pixels into byte array "pixels"
 	 */
@@ -343,7 +351,7 @@ public class AnimatedGifEncoder {
 		}
 		pixels = ((DataBufferByte) image.getRaster().getDataBuffer()).getData();
 	}
-	
+
 	/**
 	 * Writes Graphic Control Extension
 	 */
@@ -365,16 +373,17 @@ public class AnimatedGifEncoder {
 		disp <<= 2;
 
 		// packed fields
-		out.write(0 | // 1:3 reserved
-			   disp | // 4:6 disposal
-			      0 | // 7   user input - 0 = none
-		     transp); // 8   transparency flag
+		out.write(
+				0 | // 1:3 reserved
+				disp | // 4:6 disposal
+				0 | // 7   user input - 0 = none
+				transp); // 8   transparency flag
 
 		writeShort(delay); // delay x 1/100 sec
 		out.write(transIndex); // transparent color index
 		out.write(0); // block terminator
 	}
-	
+
 	/**
 	 * Writes Image Descriptor
 	 */
@@ -390,14 +399,15 @@ public class AnimatedGifEncoder {
 			out.write(0);
 		} else {
 			// specify normal LCT
-			out.write(0x80 | // 1 local color table  1=yes
-						 0 | // 2 interlace - 0=no
-						 0 | // 3 sorted - 0=no
-						 0 | // 4-5 reserved
-				   palSize); // 6-8 size of color table
+			out.write(
+					0x80 | // 1 local color table  1=yes
+					0 | // 2 interlace - 0=no
+					0 | // 3 sorted - 0=no
+					0 | // 4-5 reserved
+					palSize); // 6-8 size of color table
 		}
 	}
-	
+
 	/**
 	 * Writes Logical Screen Descriptor
 	 */
@@ -406,15 +416,16 @@ public class AnimatedGifEncoder {
 		writeShort(width);
 		writeShort(height);
 		// packed fields
-		out.write((0x80 | // 1   : global color table flag = 1 (gct used)
-				   0x70 | // 2-4 : color resolution = 7
-				   0x00 | // 5   : gct sort flag = 0
-			   palSize)); // 6-8 : gct size
+		out.write((
+				0x80 | // 1   : global color table flag = 1 (gct used)
+				0x70 | // 2-4 : color resolution = 7
+				0x00 | // 5   : gct sort flag = 0
+				palSize)); // 6-8 : gct size
 
 		out.write(0); // background color index
 		out.write(0); // pixel aspect ratio - assume 1:1
 	}
-	
+
 	/**
 	 * Writes Netscape application extension to define
 	 * repeat count.
@@ -429,7 +440,7 @@ public class AnimatedGifEncoder {
 		writeShort(repeat); // loop count (extra iterations, 0=repeat forever)
 		out.write(0); // block terminator
 	}
-	
+
 	/**
 	 * Writes color table
 	 */
@@ -440,7 +451,7 @@ public class AnimatedGifEncoder {
 			out.write(0);
 		}
 	}
-	
+
 	/**
 	 * Encodes and writes pixel data
 	 */
@@ -449,19 +460,19 @@ public class AnimatedGifEncoder {
 			new LZWEncoder(width, height, indexedPixels, colorDepth);
 		encoder.encode(out);
 	}
-	
+
 	/**
 	 *    Write 16-bit value to output stream, LSB first
 	 */
-	protected void writeShort(int value) throws IOException {
+	protected void writeShort(final int value) throws IOException {
 		out.write(value & 0xff);
 		out.write((value >> 8) & 0xff);
 	}
-	
+
 	/**
 	 * Writes string to output stream
 	 */
-	protected void writeString(String s) throws IOException {
+	protected void writeString(final String s) throws IOException {
 		for (int i = 0; i < s.length(); i++) {
 			out.write((byte) s.charAt(i));
 		}

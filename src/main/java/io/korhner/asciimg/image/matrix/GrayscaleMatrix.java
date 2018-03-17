@@ -46,7 +46,7 @@ public class GrayscaleMatrix {
 	}
 
 	/** Grayscale pixel data. Values are between 0.0f and 255.0f. */
-	private final float data[];
+	private final float[] data;
 
 	/** Image width. */
 	private final int width;

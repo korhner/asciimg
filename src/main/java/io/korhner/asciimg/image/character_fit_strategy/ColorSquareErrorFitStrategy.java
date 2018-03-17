@@ -7,11 +7,8 @@ import io.korhner.asciimg.image.matrix.GrayscaleMatrix;
  */
 public class ColorSquareErrorFitStrategy implements BestCharacterFitStrategy {
 
-	/**
-	 * @see io.korhner.asciimg.image.character_fit_strategy.BestCharacterFitStrategy#calculateError(io.korhner.asciimg.image.matrix.GrayscaleMatrix, io.korhner.asciimg.image.matrix.GrayscaleMatrix)
-	 */
 	@Override
-	public float calculateError(GrayscaleMatrix character, GrayscaleMatrix tile) {
+	public float calculateError(final GrayscaleMatrix character, final GrayscaleMatrix tile) {
 		float error = 0;
 		for (int i = 0; i < character.getData().length; i++) {
 			error += (character.getData()[i] - tile.getData()[i])
@@ -19,7 +16,5 @@ public class ColorSquareErrorFitStrategy implements BestCharacterFitStrategy {
 		}
 
 		return error / character.getData().length;
-
 	}
-
 }

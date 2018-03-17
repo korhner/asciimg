@@ -1,7 +1,6 @@
 package io.korhner.asciimg.image;
 
 import io.korhner.asciimg.image.matrix.GrayscaleMatrix;
-
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
@@ -18,17 +17,15 @@ import java.util.Map;
 import java.util.Map.Entry;
 
 /**
- * Character cache that keeps a map of precalculated pixel data of each
+ * Character cache that keeps a map of pre-calculated pixel data of each
  * character that is eligible for ascii art.
  */
-public class AsciiImgCache implements
-		Iterable<Entry<Character, GrayscaleMatrix>> {
+public class AsciiImgCache implements Iterable<Entry<Character, GrayscaleMatrix>> {
 
 	/**
 	 * Calculate character rectangle for the given font metrics.
 	 *
-	 * @param fontMetrics
-	 *            the font metrics
+	 * @param font used to calculate the font metrics
 	 * @return the rectangle
 	 */
 	private static Dimension calculateCharacterRectangle(final Font font,
@@ -69,7 +66,7 @@ public class AsciiImgCache implements
 	 * @return the ascii img cache
 	 */
 	public static AsciiImgCache create(final Font font) {
-		return create(font, defaultCharacters);
+		return create(font, DEFAULT_CHARACTERS);
 	}
 
 	/**
@@ -103,12 +100,10 @@ public class AsciiImgCache implements
 			final Font font, final Dimension characterSize,
 			final char[] characters) {
 		// create each image
-		BufferedImage img = new BufferedImage(characterSize.width,
-				characterSize.height, BufferedImage.TYPE_INT_ARGB);
+		BufferedImage img = new BufferedImage(characterSize.width, characterSize.height, BufferedImage.TYPE_INT_ARGB);
 		Graphics g = img.getGraphics();
 		Graphics2D graphics = (Graphics2D) g;
-		graphics.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING,
-				RenderingHints.VALUE_TEXT_ANTIALIAS_ON);
+		graphics.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING, RenderingHints.VALUE_TEXT_ANTIALIAS_ON);
 		graphics.setFont(font);
 		FontMetrics fm = graphics.getFontMetrics();
 
@@ -121,28 +116,24 @@ public class AsciiImgCache implements
 			g.fillRect(0, 0, characterSize.width, characterSize.height);
 			g.setColor(Color.BLACK);
 
-			Rectangle rect = new TextLayout(character, fm.getFont(),
-					fm.getFontRenderContext()).getOutline(null).getBounds();
+			Rectangle rect = new TextLayout(character, fm.getFont(), fm.getFontRenderContext()).getOutline(null).getBounds();
 
-			g.drawString(character, 0,
-					(int) (rect.getHeight() - rect.getMaxY()));
+			g.drawString(character, 0, (int) (rect.getHeight() - rect.getMaxY()));
 
 			int[] pixels = img.getRGB(0, 0, characterSize.width,
 					characterSize.height, null, 0, characterSize.width);
-			GrayscaleMatrix matrix = new GrayscaleMatrix(pixels,
-					characterSize.width, characterSize.height);
+			GrayscaleMatrix matrix = new GrayscaleMatrix(pixels, characterSize.width, characterSize.height);
 			imageCache.put(characters[i], matrix);
 		}
 
 		return imageCache;
 	}
 
-	/** A map of characters to their bitmaps. */
-	protected final Map<Character, GrayscaleMatrix> imageCache;
+	private final Map<Character, GrayscaleMatrix> imageCache;
 
 	/** Some empirically chosen characters that give good results. */
-	private static final char[] defaultCharacters = "$@B%8&WM#*oahkbdpqwmZO0QLCJUYXzcvunxrjft/\\|()1{}[]?-_+~<>i!lI;:,\"^`'. "
-			.toCharArray();
+	private static final char[] DEFAULT_CHARACTERS
+			= "$@B%8&WM#*oahkbdpqwmZO0QLCJUYXzcvunxrjft/\\|()1{}[]?-_+~<>i!lI;:,\"^`'. ".toCharArray();
 
 	/** Dimension of character image data. */
 	private final Dimension characterImageSize;
@@ -171,12 +162,13 @@ public class AsciiImgCache implements
 		return characterImageSize;
 	}
 
-	/**
-	 * @see java.lang.Iterable#iterator()
-	 */
 	@Override
 	public Iterator<Entry<Character, GrayscaleMatrix>> iterator() {
-		return imageCache.entrySet().iterator();
+		return getImageCache().entrySet().iterator();
 	}
 
+	/** A map of characters to their bitmaps. */
+	protected Map<Character, GrayscaleMatrix> getImageCache() {
+		return imageCache;
+	}
 }

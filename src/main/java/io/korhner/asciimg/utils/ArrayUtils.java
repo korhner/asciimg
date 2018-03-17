@@ -5,6 +5,8 @@ package io.korhner.asciimg.utils;
  */
 public class ArrayUtils {
 
+	private ArrayUtils() {}
+
 	/**
 	 * Converts from 1D array index to 1D on x axis.
 	 *

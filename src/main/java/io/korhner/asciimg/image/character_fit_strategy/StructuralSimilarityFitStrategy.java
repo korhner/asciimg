@@ -4,23 +4,23 @@ import io.korhner.asciimg.image.matrix.GrayscaleMatrix;
 
 /**
  * Calculates Structural Similarity index (SSIM) between the images.
- * 
+ *
  * See http://en.wikipedia.org/wiki/Structural_similarity for more info.
  */
 public class StructuralSimilarityFitStrategy implements
 		BestCharacterFitStrategy {
 
-	private final float K1 = 0.01f;
-	private final float K2 = 0.03f;
-	private float L = 255f;
+	private final float k1 = 0.01f;
+	private final float k2 = 0.03f;
+	private float l = 255f;
 
 	@Override
-	public float calculateError(GrayscaleMatrix character, GrayscaleMatrix tile) {
+	public float calculateError(final GrayscaleMatrix character, final GrayscaleMatrix tile) {
 
-		float C1 = K1 * L;
-		C1 *= C1;
-		float C2 = K2 * L;
-		C2 *= C2;
+		float c1 = k1 * l;
+		c1 *= c1;
+		float c2 = k2 * l;
+		c2 *= c2;
 
 		final int imgLength = character.getData().length;
 
@@ -29,8 +29,8 @@ public class StructuralSimilarityFitStrategy implements
 			float pixelImg1 = character.getData()[i];
 			float pixelImg2 = tile.getData()[i];
 
-			score += (2 * pixelImg1 * pixelImg2 + C1) * (2 + C2)
-					/ (pixelImg1 * pixelImg1 + pixelImg2 * pixelImg2 + C1) / C2;
+			score += (2 * pixelImg1 * pixelImg2 + c1) * (2 + c2)
+					/ (pixelImg1 * pixelImg1 + pixelImg2 * pixelImg2 + c1) / c2;
 		}
 
 		// average and convert score to error

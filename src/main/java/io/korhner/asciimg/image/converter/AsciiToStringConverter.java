@@ -25,32 +25,20 @@ public class AsciiToStringConverter extends AsciiConverter<StringBuffer> {
 	}
 
 	/**
-	 * Creates an empty string buffer;
-	 * 
-	 * @see io.korhner.asciimg.image.converter.AsciiConverter#initializeOutput(int,
-	 *      int)
+	 * Creates an empty string buffer.
 	 */
 	@Override
-	protected StringBuffer initializeOutput(final int imageWidth,
-			final int imageHeight) {
+	protected StringBuffer initializeOutput(final int imageWidth, final int imageHeight) {
 		return new StringBuffer();
 	}
 
-	/**
-	 * @see io.korhner.asciimg.image.converter.AsciiConverter#finalizeOutput(int[],
-	 *      int, int)
-	 */
 	@Override
-	protected void finalizeOutput(final int[] sourceImagePixels,
-			final int imageWidth, int imageHeight) {
+	protected void finalizeOutput(final int[] sourceImagePixels, final int imageWidth, final int imageHeight) {
 
 	}
 
 	/**
-	 * Append choosen character to StringBuffer.
-	 * 
-	 * @see io.korhner.asciimg.image.converter.AsciiConverter#addCharacterToOutput(java.util.Map.Entry,
-	 *      int[], int, int, int)
+	 * Append chosen character to StringBuffer.
 	 */
 	@Override
 	public void addCharacterToOutput(
@@ -58,14 +46,12 @@ public class AsciiToStringConverter extends AsciiConverter<StringBuffer> {
 			final int[] sourceImagePixels, final int tileX, final int tileY,
 			final int imageWidth) {
 
-		this.output.append(characterEntry.getKey());
+		this.getOutput().append(characterEntry.getKey());
 
 		// append new line at the end of the row
 		if ((tileX + 1)
-				* this.characterCache.getCharacterImageSize().getWidth() == imageWidth) {
-			this.output.append(System.lineSeparator());
+				* this.getCharacterCache().getCharacterImageSize().getWidth() == imageWidth) {
+			this.getOutput().append(System.lineSeparator());
 		}
-
 	}
-
 }

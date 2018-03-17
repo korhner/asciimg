@@ -7,40 +7,37 @@ import io.korhner.asciimg.utils.GifDecoder;
 
 public class GifToAsciiConvert extends AsciiToImageConverter{
 
-	public GifToAsciiConvert(AsciiImgCache characterCacher,
-			BestCharacterFitStrategy characterFitStrategy) {
+	public GifToAsciiConvert(final AsciiImgCache characterCacher, final BestCharacterFitStrategy characterFitStrategy) {
 		super(characterCacher, characterFitStrategy);
 	}
-	
+
 	/**
-	 * 
 	 * @param srcFilePath
 	 * @param disFilePath
 	 * @param delay－－the delay time(ms) between each frame
-	 * @param repeat－－he number of times the set of GIF frames should be played.0 means play indefinitely. 
+	 * @param repeat－－he number of times the set of GIF frames should be played.0 means play indefinitely.
 	 * @return
 	 */
-	public int  convertGitToAscii(String srcFilePath,String disFilePath,int delay,int repeat){
+	public int  convertGitToAscii(final String srcFilePath, final String disFilePath, final int delay, final int repeat) {
 		GifDecoder decoder = new GifDecoder();
 		int status = decoder.read(srcFilePath);
-		if(status!=0){
-			return -1;//srcfile not exist or open failed!
+		if (status != 0) {
+			return -1; // srcFile does not exist or opening failed!
 		}
 		AnimatedGifEncoder e = new AnimatedGifEncoder();
 		boolean openStatus = e.start(disFilePath);
-		if(openStatus){
+		if (openStatus) {
 			e.setDelay(delay);   // 1 frame per delay(ms)
 			e.setRepeat(repeat);
 			// initialize converters
 			int frameCount = decoder.getFrameCount();
-			for(int i=0;i<frameCount;i++){
-				//convert per frame
+			for (int i = 0; i < frameCount; i++) {
+				// convert per frame
 				e.addFrame(this.convertImage(decoder.getFrame(i)));
 			}
 			e.finish();
-			return 1;//done!
+			return 1; // done!
 		}
-		return 0;//open disfile failed!
-	};
-	
+		return 0; // opening disFile failed!
+	}
 }

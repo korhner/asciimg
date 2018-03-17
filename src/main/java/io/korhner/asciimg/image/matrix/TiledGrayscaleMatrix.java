@@ -1,11 +1,10 @@
 package io.korhner.asciimg.image.matrix;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 
 /**
- * A class for for creating mutliple tiles from an input grayscale matrix.
+ * A class for for creating multiple tiles from an input grayscale matrix.
  */
 public class TiledGrayscaleMatrix {
 
