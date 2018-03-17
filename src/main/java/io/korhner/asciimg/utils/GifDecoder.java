@@ -353,7 +353,7 @@ public class GifDecoder {
 		status = STATUS_OK;
 		try {
 			final String nameTrimmed = name.trim().toLowerCase();
-			if ((nameTrimmed.indexOf("file:") >= 0) || (nameTrimmed.indexOf(":/") > 0)) {
+			if (nameTrimmed.contains("file:") || (nameTrimmed.indexOf(":/") > 0)) {
 				final URL url = new URL(nameTrimmed);
 				input = new BufferedInputStream(url.openStream());
 			} else {

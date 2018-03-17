@@ -44,8 +44,8 @@ public class AsciiImgCache implements Iterable<Entry<Character, GrayScaleMatrix>
 		final FontMetrics fontMetrics = graphics2D.getFontMetrics();
 
 		final Dimension maxCharacter = new Dimension();
-		for (int i = 0; i < characters.length; i++) {
-			final String character = Character.toString(characters[i]);
+		for (final char chr : characters) {
+			final String character = Character.toString(chr);
 
 			final Rectangle characterRectangle = new TextLayout(character, fontMetrics.getFont(),
 					fontMetrics.getFontRenderContext()).getOutline(null).getBounds();
@@ -113,8 +113,8 @@ public class AsciiImgCache implements Iterable<Entry<Character, GrayScaleMatrix>
 
 		final Map<Character, GrayScaleMatrix> imageCache = new HashMap<>();
 
-		for (int i = 0; i < characters.length; i++) {
-			final String character = Character.toString(characters[i]);
+		for (final char chr : characters) {
+			final String character = Character.toString(chr);
 
 			graphics2D.setColor(Color.WHITE);
 			graphics2D.fillRect(0, 0, characterSize.width, characterSize.height);
@@ -128,7 +128,7 @@ public class AsciiImgCache implements Iterable<Entry<Character, GrayScaleMatrix>
 			final int[] pixels = img.getRGB(0, 0, characterSize.width,
 					characterSize.height, null, 0, characterSize.width);
 			final GrayScaleMatrix matrix = new GrayScaleMatrix(pixels, characterSize.width, characterSize.height);
-			imageCache.put(characters[i], matrix);
+			imageCache.put(chr, matrix);
 		}
 
 		return imageCache;

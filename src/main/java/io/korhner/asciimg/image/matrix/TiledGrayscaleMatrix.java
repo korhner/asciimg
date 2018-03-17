@@ -54,7 +54,7 @@ public class TiledGrayscaleMatrix {
 		final int roundedWidth = tilesX * tileWidth;
 		final int roundedHeight = tilesY * tileHeight;
 
-		tiles = new ArrayList<GrayScaleMatrix>(roundedWidth * roundedHeight);
+		tiles = new ArrayList<>(roundedWidth * roundedHeight);
 
 		// create each tile as a subregion from source matrix
 		for (int i = 0; i < tilesY; i++) {
