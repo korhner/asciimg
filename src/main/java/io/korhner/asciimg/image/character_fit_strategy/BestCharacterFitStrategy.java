@@ -1,6 +1,6 @@
 package io.korhner.asciimg.image.character_fit_strategy;
 
-import io.korhner.asciimg.image.matrix.GrayscaleMatrix;
+import io.korhner.asciimg.image.matrix.GrayScaleMatrix;
 
 /**
  * Encapsulates the algorith for choosing best fit character.
@@ -18,6 +18,6 @@ public interface BestCharacterFitStrategy {
 	 * @return error. Less values mean better fit. Least value character will be
 	 *         chosen as best fit.
 	 */
-	float calculateError(final GrayscaleMatrix character,
-			final GrayscaleMatrix tile);
+	float calculateError(final GrayScaleMatrix character,
+			final GrayScaleMatrix tile);
 }

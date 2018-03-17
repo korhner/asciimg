@@ -6,7 +6,7 @@ import io.korhner.asciimg.utils.ArrayUtils;
  * A class that encapsulates a grayscale image. Color values are floats with
  * values between 0.0f and 255.0f.
  */
-public class GrayscaleMatrix {
+public class GrayScaleMatrix {
 
 	/** Grayscale pixel data. Values are between 0.0f and 255.0f. */
 	private final float[] data;
@@ -25,21 +25,21 @@ public class GrayscaleMatrix {
 	 * @param width
 	 *            sub region width
 	 * @param height
-	 *            subregion height
+	 *            sub-region height
 	 * @param startPixelX
 	 *            x coordinate of sub region start
 	 * @param startPixelY
 	 *            y coordinate of sub region start
 	 * @return matrix containing the specified sub region
 	 */
-	public static GrayscaleMatrix createFromRegion(
-			final GrayscaleMatrix source, final int width, final int height,
+	public static GrayScaleMatrix createFromRegion(
+			final GrayScaleMatrix source, final int width, final int height,
 			final int startPixelX, final int startPixelY) {
 		if (width <= 0 || height <= 0 || width > source.width || height > source.height) {
 			throw new IllegalArgumentException("Illegal sub region size!");
 		}
 
-		final GrayscaleMatrix output = new GrayscaleMatrix(width, height);
+		final GrayScaleMatrix output = new GrayScaleMatrix(width, height);
 
 		for (int i = 0; i < output.data.length; i++) {
 			final int xOffset = i % width;
@@ -61,7 +61,7 @@ public class GrayscaleMatrix {
 	 * @param height
 	 *            image height
 	 */
-	public GrayscaleMatrix(final int width, final int height) {
+	public GrayScaleMatrix(final int width, final int height) {
 		this.data = new float[width * height];
 		this.width = width;
 		this.height = height;
@@ -77,7 +77,7 @@ public class GrayscaleMatrix {
 	 * @param height
 	 *            image height
 	 */
-	public GrayscaleMatrix(final int[] pixels, final int width, final int height) {
+	public GrayScaleMatrix(final int[] pixels, final int width, final int height) {
 		this(width, height);
 
 		if (width * height != pixels.length) {

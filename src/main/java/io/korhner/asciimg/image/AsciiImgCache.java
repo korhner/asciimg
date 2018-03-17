@@ -1,6 +1,6 @@
 package io.korhner.asciimg.image;
 
-import io.korhner.asciimg.image.matrix.GrayscaleMatrix;
+import io.korhner.asciimg.image.matrix.GrayScaleMatrix;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
@@ -19,9 +19,9 @@ import java.util.Map.Entry;
  * Character cache that keeps a map of pre-calculated pixel data of each
  * character that is eligible for ASCII art.
  */
-public class AsciiImgCache implements Iterable<Entry<Character, GrayscaleMatrix>> {
+public class AsciiImgCache implements Iterable<Entry<Character, GrayScaleMatrix>> {
 
-	private final Map<Character, GrayscaleMatrix> imageCache;
+	private final Map<Character, GrayScaleMatrix> imageCache;
 
 	/** Some empirically chosen characters that give good results. */
 	private static final char[] DEFAULT_CHARACTERS
@@ -84,7 +84,7 @@ public class AsciiImgCache implements Iterable<Entry<Character, GrayscaleMatrix>
 	public static AsciiImgCache create(final Font font, final char[] characters) {
 
 		final Dimension maxCharacterImageSize = calculateCharacterRectangle(font, characters);
-		final Map<Character, GrayscaleMatrix> imageCache = createCharacterImages(
+		final Map<Character, GrayScaleMatrix> imageCache = createCharacterImages(
 				font, maxCharacterImageSize, characters);
 
 		return new AsciiImgCache(maxCharacterImageSize, imageCache, characters);
@@ -100,7 +100,7 @@ public class AsciiImgCache implements Iterable<Entry<Character, GrayscaleMatrix>
 	 *            the character size
 	 * @return the map
 	 */
-	private static Map<Character, GrayscaleMatrix> createCharacterImages(
+	private static Map<Character, GrayScaleMatrix> createCharacterImages(
 			final Font font,
 			final Dimension characterSize,
 			final char[] characters) {
@@ -111,7 +111,7 @@ public class AsciiImgCache implements Iterable<Entry<Character, GrayscaleMatrix>
 		graphics2D.setFont(font);
 		final FontMetrics fontMetrics = graphics2D.getFontMetrics();
 
-		final Map<Character, GrayscaleMatrix> imageCache = new HashMap<>();
+		final Map<Character, GrayScaleMatrix> imageCache = new HashMap<>();
 
 		for (int i = 0; i < characters.length; i++) {
 			final String character = Character.toString(characters[i]);
@@ -127,7 +127,7 @@ public class AsciiImgCache implements Iterable<Entry<Character, GrayscaleMatrix>
 
 			final int[] pixels = img.getRGB(0, 0, characterSize.width,
 					characterSize.height, null, 0, characterSize.width);
-			final GrayscaleMatrix matrix = new GrayscaleMatrix(pixels, characterSize.width, characterSize.height);
+			final GrayScaleMatrix matrix = new GrayScaleMatrix(pixels, characterSize.width, characterSize.height);
 			imageCache.put(characters[i], matrix);
 		}
 
@@ -144,7 +144,7 @@ public class AsciiImgCache implements Iterable<Entry<Character, GrayscaleMatrix>
 	 */
 	private AsciiImgCache(
 			final Dimension characterImageSize,
-			final Map<Character, GrayscaleMatrix> imageCache,
+			final Map<Character, GrayScaleMatrix> imageCache,
 			final char[] characters) {
 		this.characterImageSize = characterImageSize;
 		this.imageCache = imageCache;
@@ -161,13 +161,13 @@ public class AsciiImgCache implements Iterable<Entry<Character, GrayscaleMatrix>
 	}
 
 	@Override
-	public Iterator<Entry<Character, GrayscaleMatrix>> iterator() {
+	public Iterator<Entry<Character, GrayScaleMatrix>> iterator() {
 
 		return getImageCache().entrySet().iterator();
 	}
 
 	/** A map of characters to their bitmaps. */
-	protected Map<Character, GrayscaleMatrix> getImageCache() {
+	protected Map<Character, GrayScaleMatrix> getImageCache() {
 		return imageCache;
 	}
 }

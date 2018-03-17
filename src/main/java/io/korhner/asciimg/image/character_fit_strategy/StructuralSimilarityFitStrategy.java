@@ -1,6 +1,6 @@
 package io.korhner.asciimg.image.character_fit_strategy;
 
-import io.korhner.asciimg.image.matrix.GrayscaleMatrix;
+import io.korhner.asciimg.image.matrix.GrayScaleMatrix;
 
 /**
  * Calculates Structural Similarity index (SSIM) between the images.
@@ -16,7 +16,7 @@ public class StructuralSimilarityFitStrategy implements BestCharacterFitStrategy
 	private static final float C_2 = (float) Math.pow(K_2 * L, 2);
 
 	@Override
-	public float calculateError(final GrayscaleMatrix character, final GrayscaleMatrix tile) {
+	public float calculateError(final GrayScaleMatrix character, final GrayScaleMatrix tile) {
 
 		final int imgLength = character.getData().length;
 

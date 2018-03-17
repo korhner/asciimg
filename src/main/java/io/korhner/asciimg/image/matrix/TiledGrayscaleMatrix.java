@@ -9,7 +9,7 @@ import java.util.List;
 public class TiledGrayscaleMatrix {
 
 	/** The tiles. */
-	private final List<GrayscaleMatrix> tiles;
+	private final List<GrayScaleMatrix> tiles;
 
 	/** Width of a tile. */
 	private final int tileWidth;
@@ -33,7 +33,7 @@ public class TiledGrayscaleMatrix {
 	 * @param tileHeight
 	 *            the tile height
 	 */
-	public TiledGrayscaleMatrix(final GrayscaleMatrix matrix,
+	public TiledGrayscaleMatrix(final GrayScaleMatrix matrix,
 			final int tileWidth, final int tileHeight) {
 
 		if (matrix.getWidth() < tileWidth || matrix.getHeight() < tileHeight) {
@@ -54,12 +54,12 @@ public class TiledGrayscaleMatrix {
 		final int roundedWidth = tilesX * tileWidth;
 		final int roundedHeight = tilesY * tileHeight;
 
-		tiles = new ArrayList<GrayscaleMatrix>(roundedWidth * roundedHeight);
+		tiles = new ArrayList<GrayScaleMatrix>(roundedWidth * roundedHeight);
 
 		// create each tile as a subregion from source matrix
 		for (int i = 0; i < tilesY; i++) {
 			for (int j = 0; j < tilesX; j++) {
-				tiles.add(GrayscaleMatrix.createFromRegion(matrix, tileWidth,
+				tiles.add(GrayScaleMatrix.createFromRegion(matrix, tileWidth,
 						tileHeight, this.tileWidth * j, this.tileHeight * i));
 			}
 		}
@@ -72,7 +72,7 @@ public class TiledGrayscaleMatrix {
 	 *            tile index
 	 * @return the tile
 	 */
-	public GrayscaleMatrix getTile(final int index) {
+	public GrayScaleMatrix getTile(final int index) {
 		return this.tiles.get(index);
 	}
 

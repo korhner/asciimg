@@ -2,7 +2,7 @@ package io.korhner.asciimg.image.converter;
 
 import io.korhner.asciimg.image.AsciiImgCache;
 import io.korhner.asciimg.image.character_fit_strategy.BestCharacterFitStrategy;
-import io.korhner.asciimg.image.matrix.GrayscaleMatrix;
+import io.korhner.asciimg.image.matrix.GrayScaleMatrix;
 import io.korhner.asciimg.utils.ArrayUtils;
 import java.awt.Color;
 import java.awt.image.BufferedImage;
@@ -30,7 +30,7 @@ public class AsciiToImageConverter extends AsciiConverter<BufferedImage> {
 	 */
 	@Override
 	public void addCharacterToOutput(
-			final Entry<Character, GrayscaleMatrix> characterEntry,
+			final Entry<Character, GrayScaleMatrix> characterEntry,
 			final int[] sourceImagePixels, final int tileX, final int tileY, final int imageWidth) {
 		final int startCoordinateX = tileX
 				* this.getCharacterCache().getCharacterImageSize().width;

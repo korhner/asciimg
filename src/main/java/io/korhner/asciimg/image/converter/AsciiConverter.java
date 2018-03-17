@@ -2,7 +2,7 @@ package io.korhner.asciimg.image.converter;
 
 import io.korhner.asciimg.image.AsciiImgCache;
 import io.korhner.asciimg.image.character_fit_strategy.BestCharacterFitStrategy;
-import io.korhner.asciimg.image.matrix.GrayscaleMatrix;
+import io.korhner.asciimg.image.matrix.GrayScaleMatrix;
 import io.korhner.asciimg.image.matrix.TiledGrayscaleMatrix;
 import io.korhner.asciimg.utils.ArrayUtils;
 import java.awt.Dimension;
@@ -53,7 +53,7 @@ public abstract class AsciiConverter<O> {
 	 *            the image width
 	 */
 	protected abstract void addCharacterToOutput(
-			final Entry<Character, GrayscaleMatrix> characterEntry,
+			final Entry<Character, GrayScaleMatrix> characterEntry,
 			final int[] sourceImagePixels, final int tileX, final int tileY,
 			final int imageWidth);
 
@@ -79,7 +79,7 @@ public abstract class AsciiConverter<O> {
 				0, 0, outputImageWidth, outputImageHeight, null, 0, outputImageWidth);
 
 		// process the pixels to a grayscale matrix
-		final GrayscaleMatrix sourceMatrix = new GrayscaleMatrix(imagePixels,
+		final GrayScaleMatrix sourceMatrix = new GrayScaleMatrix(imagePixels,
 				outputImageWidth, outputImageHeight);
 
 		// divide matrix into tiles for easy processing
@@ -91,13 +91,13 @@ public abstract class AsciiConverter<O> {
 		// compare each tile to every character to determine best fit
 		for (int i = 0; i < tiledMatrix.getTileCount(); i++) {
 
-			final GrayscaleMatrix tile = tiledMatrix.getTile(i);
+			final GrayScaleMatrix tile = tiledMatrix.getTile(i);
 
 			float minError = Float.MAX_VALUE;
-			Entry<Character, GrayscaleMatrix> bestFit = null;
+			Entry<Character, GrayScaleMatrix> bestFit = null;
 
-			for (final Entry<Character, GrayscaleMatrix> charImage : getCharacterCache()) {
-				final GrayscaleMatrix charPixels = charImage.getValue();
+			for (final Entry<Character, GrayScaleMatrix> charImage : getCharacterCache()) {
+				final GrayScaleMatrix charPixels = charImage.getValue();
 
 				final float error = this.getCharacterFitStrategy().calculateError(charPixels, tile);
 
