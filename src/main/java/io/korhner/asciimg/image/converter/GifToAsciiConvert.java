@@ -18,26 +18,30 @@ public class GifToAsciiConvert extends AsciiToImageConverter{
 	 * @param repeat－－he number of times the set of GIF frames should be played.0 means play indefinitely.
 	 * @return
 	 */
-	public int  convertGitToAscii(final String srcFilePath, final String disFilePath, final int delay, final int repeat) {
-		GifDecoder decoder = new GifDecoder();
-		int status = decoder.read(srcFilePath);
-		if (status != 0) {
-			return -1; // srcFile does not exist or opening failed!
-		}
-		AnimatedGifEncoder e = new AnimatedGifEncoder();
-		boolean openStatus = e.start(disFilePath);
-		if (openStatus) {
-			e.setDelay(delay);   // 1 frame per delay(ms)
-			e.setRepeat(repeat);
-			// initialize converters
-			int frameCount = decoder.getFrameCount();
-			for (int i = 0; i < frameCount; i++) {
-				// convert per frame
-				e.addFrame(this.convertImage(decoder.getFrame(i)));
+	public int convertGitToAscii(final String srcFilePath, final String disFilePath, final int delay, final int repeat) {
+		final GifDecoder decoder = new GifDecoder();
+		final int status = decoder.read(srcFilePath);
+		final int ret;
+		if (status == 0) {
+			final AnimatedGifEncoder encoder = new AnimatedGifEncoder();
+			final boolean openStatus = encoder.start(disFilePath);
+			if (openStatus) {
+				encoder.setDelay(delay);   // 1 frame per delay(ms)
+				encoder.setRepeat(repeat);
+				// initialize converters
+				final int frameCount = decoder.getFrameCount();
+				for (int i = 0; i < frameCount; i++) {
+					// convert per frame
+					encoder.addFrame(this.convertImage(decoder.getFrame(i)));
+				}
+				encoder.finish();
+				ret = 1; // done!
+			} else {
+				ret = 0; // opening disFile failed
 			}
-			e.finish();
-			return 1; // done!
+		} else {
+			ret = -1; // srcFile does not exist or opening failed!
 		}
-		return 0; // opening disFile failed!
+		return ret;
 	}
 }

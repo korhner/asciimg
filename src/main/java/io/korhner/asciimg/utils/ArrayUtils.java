@@ -3,7 +3,7 @@ package io.korhner.asciimg.utils;
 /**
  * An utility class used for various array utilities.
  */
-public class ArrayUtils {
+public final class ArrayUtils {
 
 	private ArrayUtils() {}
 
@@ -36,16 +36,15 @@ public class ArrayUtils {
 	/**
 	 * Converts from 2D array index to 1D.
 	 *
-	 * @param x
-	 *            The index on x axis.
-	 * @param y
-	 *            The index on x axis.
+	 * @param xPos
+	 *            The index on xPos axis.
+	 * @param yPos
+	 *            The index on xPos axis.
 	 * @param arrayWidth
-	 *            2D Array width (length of rows on x axis).
+	 *            2D Array width (length of rows on xPos axis).
 	 * @return Corresponding index if the array was 1D.
 	 */
-	public static int convert2DTo1D(final int x, final int y,
-			final int arrayWidth) {
-		return y * arrayWidth + x;
+	public static int convert2DTo1D(final int xPos, final int yPos, final int arrayWidth) {
+		return yPos * arrayWidth + xPos;
 	}
 }

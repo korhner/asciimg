@@ -8,6 +8,15 @@ import io.korhner.asciimg.utils.ArrayUtils;
  */
 public class GrayscaleMatrix {
 
+	/** Grayscale pixel data. Values are between 0.0f and 255.0f. */
+	private final float[] data;
+
+	/** Image width. */
+	private final int width;
+
+	/** Image height. */
+	private final int height;
+
 	/**
 	 * Creates a new matrix from a sub region.
 	 *
@@ -26,33 +35,23 @@ public class GrayscaleMatrix {
 	public static GrayscaleMatrix createFromRegion(
 			final GrayscaleMatrix source, final int width, final int height,
 			final int startPixelX, final int startPixelY) {
-		if (width <= 0 || height <= 0 || width > source.width
-				|| height > source.height) {
+		if (width <= 0 || height <= 0 || width > source.width || height > source.height) {
 			throw new IllegalArgumentException("Illegal sub region size!");
 		}
 
-		GrayscaleMatrix output = new GrayscaleMatrix(width, height);
+		final GrayscaleMatrix output = new GrayscaleMatrix(width, height);
 
 		for (int i = 0; i < output.data.length; i++) {
-			int xOffset = i % width;
-			int yOffset = i / width;
+			final int xOffset = i % width;
+			final int yOffset = i / width;
 
-			int index = ArrayUtils.convert2DTo1D(startPixelX + xOffset,
+			final int index = ArrayUtils.convert2DTo1D(startPixelX + xOffset,
 					startPixelY + yOffset, source.width);
 			output.data[i] = source.data[index];
 		}
 
 		return output;
 	}
-
-	/** Grayscale pixel data. Values are between 0.0f and 255.0f. */
-	private final float[] data;
-
-	/** Image width. */
-	private final int width;
-
-	/** Image height. */
-	private final int height;
 
 	/**
 	 * Creates an empty image with the given dimensions.
@@ -72,7 +71,7 @@ public class GrayscaleMatrix {
 	 * Instantiates a new grayscale matrix from a ARGB bitmap image.
 	 *
 	 * @param pixels
-	 *            pixel data in ARGB format
+	 *            pixel data input ARGB format
 	 * @param width
 	 *            image width
 	 * @param height
@@ -100,9 +99,9 @@ public class GrayscaleMatrix {
 	 */
 	private float convertRGBToGrayscale(final int rgbColor) {
 		// extract components
-		int red = (rgbColor >> 16) & 0xFF;
-		int green = (rgbColor >> 8) & 0xFF;
-		int blue = rgbColor & 0xFF;
+		final int red = (rgbColor >> 16) & 0xFF;
+		final int green = (rgbColor >> 8) & 0xFF;
+		final int blue = rgbColor & 0xFF;
 
 		// convert to grayscale
 		return 0.3f * red + 0.59f * green + 0.11f * blue;

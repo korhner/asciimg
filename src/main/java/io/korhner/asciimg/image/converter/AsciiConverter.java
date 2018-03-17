@@ -5,7 +5,6 @@ import io.korhner.asciimg.image.character_fit_strategy.BestCharacterFitStrategy;
 import io.korhner.asciimg.image.matrix.GrayscaleMatrix;
 import io.korhner.asciimg.image.matrix.TiledGrayscaleMatrix;
 import io.korhner.asciimg.utils.ArrayUtils;
-
 import java.awt.Dimension;
 import java.awt.image.BufferedImage;
 import java.util.Map.Entry;
@@ -14,16 +13,16 @@ import java.util.Map.Entry;
  * A class used to convert an image to an ascii art. Output and conversion
  * algorithm are decoupled.
  *
- * @param <Output>
+ * @param <O>
  *            output type of the ascii art
  */
-public abstract class AsciiConverter<Output> {
+public abstract class AsciiConverter<O> {
 
 	private AsciiImgCache characterCache;
 
 	private BestCharacterFitStrategy characterFitStrategy;
 
-	private Output output;
+	private O output;
 
 	/**
 	 * Instantiates a new ascii converter.
@@ -33,14 +32,13 @@ public abstract class AsciiConverter<Output> {
 	 * @param characterFitStrategy
 	 *            the character fit strategy
 	 */
-	public AsciiConverter(final AsciiImgCache characterCache,
-			final BestCharacterFitStrategy characterFitStrategy) {
+	public AsciiConverter(final AsciiImgCache characterCache, final BestCharacterFitStrategy characterFitStrategy) {
 		this.setCharacterCache(characterCache);
 		this.setCharacterFitStrategy(characterFitStrategy);
 	}
 
 	/**
-	 * Override this to insert the character at a specified position in the
+	 * Override this to insert the character at a specified position input the
 	 * output.
 	 *
 	 * @param characterEntry
@@ -66,26 +64,26 @@ public abstract class AsciiConverter<Output> {
 	 *            the source
 	 * @return the buffered image
 	 */
-	public Output convertImage(final BufferedImage source) {
+	public O convertImage(final BufferedImage source) {
 		// dimension of each tile
-		Dimension tileSize = this.getCharacterCache().getCharacterImageSize();
+		final Dimension tileSize = this.getCharacterCache().getCharacterImageSize();
 
 		// round the width and height so we avoid partial characters
-		int outputImageWidth = (source.getWidth() / tileSize.width)
+		final int outputImageWidth = (source.getWidth() / tileSize.width)
 				* tileSize.width;
-		int outputImageHeight = (source.getHeight() / tileSize.height)
+		final int outputImageHeight = (source.getHeight() / tileSize.height)
 				* tileSize.height;
 
 		// extract pixels from source image
-		int[] imagePixels = source.getRGB(0, 0, outputImageWidth,
-				outputImageHeight, null, 0, outputImageWidth);
+		final int[] imagePixels = source.getRGB(
+				0, 0, outputImageWidth, outputImageHeight, null, 0, outputImageWidth);
 
 		// process the pixels to a grayscale matrix
-		GrayscaleMatrix sourceMatrix = new GrayscaleMatrix(imagePixels,
+		final GrayscaleMatrix sourceMatrix = new GrayscaleMatrix(imagePixels,
 				outputImageWidth, outputImageHeight);
 
 		// divide matrix into tiles for easy processing
-		TiledGrayscaleMatrix tiledMatrix = new TiledGrayscaleMatrix(
+		final TiledGrayscaleMatrix tiledMatrix = new TiledGrayscaleMatrix(
 				sourceMatrix, tileSize.width, tileSize.height);
 
 		this.setOutput(initializeOutput(outputImageWidth, outputImageHeight));
@@ -93,16 +91,15 @@ public abstract class AsciiConverter<Output> {
 		// compare each tile to every character to determine best fit
 		for (int i = 0; i < tiledMatrix.getTileCount(); i++) {
 
-			GrayscaleMatrix tile = tiledMatrix.getTile(i);
+			final GrayscaleMatrix tile = tiledMatrix.getTile(i);
 
 			float minError = Float.MAX_VALUE;
 			Entry<Character, GrayscaleMatrix> bestFit = null;
 
-			for (Entry<Character, GrayscaleMatrix> charImage : getCharacterCache()) {
-				GrayscaleMatrix charPixels = charImage.getValue();
+			for (final Entry<Character, GrayscaleMatrix> charImage : getCharacterCache()) {
+				final GrayscaleMatrix charPixels = charImage.getValue();
 
-				float error = this.getCharacterFitStrategy().calculateError(
-						charPixels, tile);
+				final float error = this.getCharacterFitStrategy().calculateError(charPixels, tile);
 
 				if (error < minError) {
 					minError = error;
@@ -110,18 +107,16 @@ public abstract class AsciiConverter<Output> {
 				}
 			}
 
-			int tileX = ArrayUtils.convert1DtoX(i, tiledMatrix.getTilesX());
-			int tileY = ArrayUtils.convert1DtoY(i, tiledMatrix.getTilesX());
+			final int tileX = ArrayUtils.convert1DtoX(i, tiledMatrix.getTilesX());
+			final int tileY = ArrayUtils.convert1DtoY(i, tiledMatrix.getTilesX());
 
 			// copy character to output
-			addCharacterToOutput(bestFit, imagePixels, tileX, tileY,
-					outputImageWidth);
+			addCharacterToOutput(bestFit, imagePixels, tileX, tileY, outputImageWidth);
 		}
 
 		finalizeOutput(imagePixels, outputImageWidth, outputImageHeight);
 
 		return this.getOutput();
-
 	}
 
 	/**
@@ -158,8 +153,7 @@ public abstract class AsciiConverter<Output> {
 	 *            source image height
 	 * @return the output
 	 */
-	protected abstract Output initializeOutput(final int imageWidth,
-			final int imageHeight);
+	protected abstract O initializeOutput(final int imageWidth, final int imageHeight);
 
 	/**
 	 * Sets the character cache.
@@ -185,11 +179,11 @@ public abstract class AsciiConverter<Output> {
 		return characterCache;
 	}
 
-	protected Output getOutput() {
+	protected O getOutput() {
 		return output;
 	}
 
-	protected void setOutput(final Output output) {
+	protected void setOutput(final O output) {
 		this.output = output;
 	}
 }

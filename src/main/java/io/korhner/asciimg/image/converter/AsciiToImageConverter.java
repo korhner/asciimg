@@ -4,13 +4,12 @@ import io.korhner.asciimg.image.AsciiImgCache;
 import io.korhner.asciimg.image.character_fit_strategy.BestCharacterFitStrategy;
 import io.korhner.asciimg.image.matrix.GrayscaleMatrix;
 import io.korhner.asciimg.utils.ArrayUtils;
-
 import java.awt.Color;
 import java.awt.image.BufferedImage;
 import java.util.Map.Entry;
 
 /**
- * Converts ascii art to a BufferedImage.
+ * Converts ASCII art to a BufferedImage.
  */
 public class AsciiToImageConverter extends AsciiConverter<BufferedImage> {
 
@@ -22,8 +21,7 @@ public class AsciiToImageConverter extends AsciiConverter<BufferedImage> {
 	 * @param characterFitStrategy
 	 *            the character fit strategy
 	 */
-	public AsciiToImageConverter(final AsciiImgCache characterCacher,
-			final BestCharacterFitStrategy characterFitStrategy) {
+	public AsciiToImageConverter(final AsciiImgCache characterCacher, final BestCharacterFitStrategy characterFitStrategy) {
 		super(characterCacher, characterFitStrategy);
 	}
 
@@ -34,32 +32,31 @@ public class AsciiToImageConverter extends AsciiConverter<BufferedImage> {
 	public void addCharacterToOutput(
 			final Entry<Character, GrayscaleMatrix> characterEntry,
 			final int[] sourceImagePixels, final int tileX, final int tileY, final int imageWidth) {
-		int startCoordinateX = tileX
+		final int startCoordinateX = tileX
 				* this.getCharacterCache().getCharacterImageSize().width;
-		int startCoordinateY = tileY
+		final int startCoordinateY = tileY
 				* this.getCharacterCache().getCharacterImageSize().height;
 
 		// copy winner character
 		for (int i = 0; i < characterEntry.getValue().getData().length; i++) {
-			int xOffset = i % this.getCharacterCache().getCharacterImageSize().width;
-			int yOffset = i / this.getCharacterCache().getCharacterImageSize().width;
+			final int xOffset = i % this.getCharacterCache().getCharacterImageSize().width;
+			final int yOffset = i / this.getCharacterCache().getCharacterImageSize().width;
 
-			int component = (int) characterEntry.getValue().getData()[i];
-			sourceImagePixels[ArrayUtils.convert2DTo1D(startCoordinateX
-					+ xOffset, startCoordinateY + yOffset, imageWidth)] = new Color(
-					component, component, component).getRGB();
+			final int component = (int) characterEntry.getValue().getData()[i];
+			sourceImagePixels[ArrayUtils.convert2DTo1D(
+					startCoordinateX + xOffset,
+					startCoordinateY + yOffset,
+					imageWidth)]
+					= new Color(component, component, component).getRGB();
 		}
-
 	}
 
 	/**
 	 * Write pixels to output image.
 	 */
 	@Override
-	protected void finalizeOutput(final int[] sourceImagePixels, final int imageWidth,
-			final int imageHeight) {
-		this.getOutput().setRGB(0, 0, imageWidth, imageHeight, sourceImagePixels, 0,
-				imageWidth);
+	protected void finalizeOutput(final int[] sourceImagePixels, final int imageWidth, final int imageHeight) {
+		this.getOutput().setRGB(0, 0, imageWidth, imageHeight, sourceImagePixels, 0, imageWidth);
 
 	}
 

@@ -33,9 +33,7 @@ public class AsciiToStringConverter extends AsciiConverter<StringBuffer> {
 	}
 
 	@Override
-	protected void finalizeOutput(final int[] sourceImagePixels, final int imageWidth, final int imageHeight) {
-
-	}
+	protected void finalizeOutput(final int[] sourceImagePixels, final int imageWidth, final int imageHeight) {}
 
 	/**
 	 * Append chosen character to StringBuffer.
@@ -49,8 +47,7 @@ public class AsciiToStringConverter extends AsciiConverter<StringBuffer> {
 		this.getOutput().append(characterEntry.getKey());
 
 		// append new line at the end of the row
-		if ((tileX + 1)
-				* this.getCharacterCache().getCharacterImageSize().getWidth() == imageWidth) {
+		if ((tileX + 1) * this.getCharacterCache().getCharacterImageSize().getWidth() == imageWidth) {
 			this.getOutput().append(System.lineSeparator());
 		}
 	}

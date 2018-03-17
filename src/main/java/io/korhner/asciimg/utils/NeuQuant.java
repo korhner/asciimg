@@ -43,7 +43,7 @@ public class NeuQuant {
 
 	/* Program Skeleton
 	   ----------------
-	   [select sampleFac in range 1..30]
+	   [select sampleFac input range 1..30]
 	   [read image from input file]
 	   pic = (unsigned char*) malloc(3*width*height);
 	   initNet(pic,3*width*height,sampleFac);
@@ -125,21 +125,18 @@ public class NeuQuant {
 	protected int[] radPower = new int[INIT_RAD];
 
 	/**
-	 * Initialise network in range (0,0,0) to (255,255,255) and set parameters
+	 * Initialise network input range (0,0,0) to (255,255,255) and set parameters
 	 */
 	public NeuQuant(final byte[] picture, final int lengthCount, final int sampleFac) {
-
-		int i;
-		int[] p;
 
 		this.picture = picture;
 		this.lengthCount = lengthCount;
 		this.sampleFac = sampleFac;
 
 		network = new int[NET_SIZE][];
-		for (i = 0; i < NET_SIZE; i++) {
+		for (int i = 0; i < NET_SIZE; i++) {
 			network[i] = new int[4];
-			p = network[i];
+			final int[] p = network[i];
 			Arrays.fill(p, 0, 3, (i << (NET_BIAS_SHIFT + 8)) / NET_SIZE);
 			freq[i] = INT_BIAS / NET_SIZE; /* 1/NET_SIZE */
 			bias[i] = 0;
@@ -147,13 +144,14 @@ public class NeuQuant {
 	}
 
 	public byte[] colorMap() {
-		byte[] map = new byte[3 * NET_SIZE];
-		int[] index = new int[NET_SIZE];
-		for (int i = 0; i < NET_SIZE; i++)
+		final byte[] map = new byte[3 * NET_SIZE];
+		final int[] index = new int[NET_SIZE];
+		for (int i = 0; i < NET_SIZE; i++) {
 			index[network[i][3]] = i;
+		}
 		int k = 0;
 		for (int i = 0; i < NET_SIZE; i++) {
-			int j = index[i];
+			final int j = index[i];
 			map[k++] = (byte) (network[j][0]);
 			map[k++] = (byte) (network[j][1]);
 			map[k++] = (byte) (network[j][2]);
@@ -166,18 +164,17 @@ public class NeuQuant {
 	 */
 	public void inXBuild() {
 
-		int i, j, smallPos, smallVal;
+		int i;
+		int j;
 		int[] p;
 		int[] q;
-		int previousCol, startPos;
-
-		previousCol = 0;
-		startPos = 0;
+		int previousCol = 0;
+		int startPos = 0;
 		for (i = 0; i < NET_SIZE; i++) {
 			p = network[i];
-			smallPos = i;
-			smallVal = p[1]; /* index on g */
-			/* find smallest in i..NET_SIZE-1 */
+			int smallPos = i;
+			int smallVal = p[1]; /* index on g */
+			/* find smallest input i..NET_SIZE-1 */
 			for (j = i + 1; j < NET_SIZE; j++) {
 				q = network[j];
 				if (q[1] < smallVal) { /* index on g */
@@ -201,18 +198,20 @@ public class NeuQuant {
 				q[3] = p[3];
 				p[3] = j;
 			}
-			/* smallVal entry is now in position i */
+			/* smallVal entry is now input position i */
 			if (smallVal != previousCol) {
 				netIndex[previousCol] = (startPos + i) >> 1;
-				for (j = previousCol + 1; j < smallVal; j++)
+				for (j = previousCol + 1; j < smallVal; j++) {
 					netIndex[j] = i;
+				}
 				previousCol = smallVal;
 				startPos = i;
 			}
 		}
 		netIndex[previousCol] = (startPos + MAX_NET_POS) >> 1;
-		for (j = previousCol + 1; j < 256; j++)
+		for (j = previousCol + 1; j < 256; j++) {
 			netIndex[j] = MAX_NET_POS; /* really 256 */
+		}
 	}
 
 	/**
@@ -220,73 +219,80 @@ public class NeuQuant {
 	 */
 	public void learn() {
 
-		int i, j, b, g, r;
-		int radius, rad, alpha, step, delta, samplePixels;
-		byte[] p;
-		int pix, lim;
-
-		if (lengthCount < MIN_PICTURE_BYTES)
+		if (lengthCount < MIN_PICTURE_BYTES) {
 			sampleFac = 1;
+		}
 		alphaDec = 30 + ((sampleFac - 1) / 3);
-		p = picture;
-		pix = 0;
-		lim = lengthCount;
-		samplePixels = lengthCount / (3 * sampleFac);
-		delta = samplePixels / N_CYCLES;
-		alpha = INIT_ALPHA;
-		radius = INIT_RADIUS;
+		final byte[] p = picture;
+		int pix = 0;
+		final int lim = lengthCount;
+		final int samplePixels = lengthCount / (3 * sampleFac);
+		int delta = samplePixels / N_CYCLES;
+		int alpha = INIT_ALPHA;
+		int radius = INIT_RADIUS;
 
-		rad = radius >> RADIUS_BIAS_SHIFT;
-		if (rad <= 1)
+		int rad = radius >> RADIUS_BIAS_SHIFT;
+		if (rad <= 1) {
 			rad = 0;
-		for (i = 0; i < rad; i++)
-			radPower[i] =
-				alpha * (((rad * rad - i * i) * RAD_BIAS) / (rad * rad));
+		}
+		int i;
+		for (i = 0; i < rad; i++) {
+			radPower[i] = alpha * (((rad * rad - i * i) * RAD_BIAS) / (rad * rad));
+		}
 
 		//fprintf(stderr,"beginning 1D learning: initial radius=%d\n", rad);
 
-		if (lengthCount < MIN_PICTURE_BYTES)
+		final int step;
+		if (lengthCount < MIN_PICTURE_BYTES) {
 			step = 3;
-		else if ((lengthCount % PRIME_1) != 0)
-			step = 3 * PRIME_1;
-		else {
-			if ((lengthCount % PRIME_2) != 0)
-				step = 3 * PRIME_2;
-			else {
-				if ((lengthCount % PRIME_3) != 0)
-					step = 3 * PRIME_3;
-				else
-					step = 3 * PRIME_4;
-			}
+		} else {
+			if ((lengthCount % PRIME_1) == 0) {
+				if ((lengthCount % PRIME_2) == 0) {
+                    if ((lengthCount % PRIME_3) == 0) {
+                        step = 3 * PRIME_4;
+                    } else {
+                        step = 3 * PRIME_3;
+                    }
+                } else {
+                    step = 3 * PRIME_2;
+                }
+			} else {
+                step = 3 * PRIME_1;
+            }
 		}
 
+		int j;
 		i = 0;
 		while (i < samplePixels) {
-			b = (p[pix + 0] & 0xff) << NET_BIAS_SHIFT;
-			g = (p[pix + 1] & 0xff) << NET_BIAS_SHIFT;
-			r = (p[pix + 2] & 0xff) << NET_BIAS_SHIFT;
-			j = contest(b, g, r);
+			final  int blue = (p[pix + 0] & 0xff) << NET_BIAS_SHIFT;
+			final int green = (p[pix + 1] & 0xff) << NET_BIAS_SHIFT;
+			final int red = (p[pix + 2] & 0xff) << NET_BIAS_SHIFT;
+			j = contest(blue, green, red);
 
-			alterSingle(alpha, j, b, g, r);
-			if (rad != 0)
-				alterNeigh(rad, j, b, g, r); /* alter neighbours */
+			alterSingle(alpha, j, blue, green, red);
+			if (rad != 0) {
+				alterNeigh(rad, j, blue, green, red); /* alter neighbours */
+			}
 
 			pix += step;
-			if (pix >= lim)
+			if (pix >= lim) {
 				pix -= lengthCount;
+			}
 
 			i++;
-			if (delta == 0)
+			if (delta == 0) {
 				delta = 1;
+			}
 			if (i % delta == 0) {
 				alpha -= alpha / alphaDec;
 				radius -= radius / RADIUS_DEC;
 				rad = radius >> RADIUS_BIAS_SHIFT;
-				if (rad <= 1)
+				if (rad <= 1) {
 					rad = 0;
-				for (j = 0; j < rad; j++)
-					radPower[j] =
-						alpha * (((rad * rad - j * j) * RAD_BIAS) / (rad * rad));
+				}
+				for (j = 0; j < rad; j++) {
+					radPower[j] = alpha * (((rad * rad - j * j) * RAD_BIAS) / (rad * rad));
+				}
 			}
 		}
 		//fprintf(stderr,"finished 1D learning: final alpha=%f !\n",((float)alpha)/INIT_ALPHA);
@@ -295,35 +301,37 @@ public class NeuQuant {
 	/**
 	 * Search for BGR values 0..255 (after net is unbiased) and return colour index
 	 */
-	public int map(final int b, final int g, final int r) {
+	public int map(final int blue, final int green, final int red) {
 
-		int i, j, dist, a, bestD;
+		int bestD = 1000; /* biggest possible dist is 256*3 */
+		int best = -1;
+		int i = netIndex[green]; /* index on green */
+		int j = i - 1; /* start at netIndex[green] and work outwards */
+
+		int a;
 		int[] p;
-		int best;
-
-		bestD = 1000; /* biggest possible dist is 256*3 */
-		best = -1;
-		i = netIndex[g]; /* index on g */
-		j = i - 1; /* start at netIndex[g] and work outwards */
-
 		while ((i < NET_SIZE) || (j >= 0)) {
+			int dist;
 			if (i < NET_SIZE) {
 				p = network[i];
-				dist = p[1] - g; /* inx key */
-				if (dist >= bestD)
+				dist = p[1] - green; /* inx key */
+				if (dist >= bestD) {
 					i = NET_SIZE; /* stop loop */
-				else {
+				} else {
 					i++;
-					if (dist < 0)
+					if (dist < 0) {
 						dist = -dist;
-					a = p[0] - b;
-					if (a < 0)
+					}
+					a = p[0] - blue;
+					if (a < 0) {
 						a = -a;
+					}
 					dist += a;
 					if (dist < bestD) {
-						a = p[2] - r;
-						if (a < 0)
+						a = p[2] - red;
+						if (a < 0) {
 							a = -a;
+						}
 						dist += a;
 						if (dist < bestD) {
 							bestD = dist;
@@ -334,21 +342,24 @@ public class NeuQuant {
 			}
 			if (j >= 0) {
 				p = network[j];
-				dist = g - p[1]; /* inx key - reverse dif */
-				if (dist >= bestD)
+				dist = green - p[1]; /* inx key - reverse dif */
+				if (dist >= bestD) {
 					j = -1; /* stop loop */
-				else {
+				} else {
 					j--;
-					if (dist < 0)
+					if (dist < 0) {
 						dist = -dist;
-					a = p[0] - b;
-					if (a < 0)
+					}
+					a = p[0] - blue;
+					if (a < 0) {
 						a = -a;
+					}
 					dist += a;
 					if (dist < bestD) {
-						a = p[2] - r;
-						if (a < 0)
+						a = p[2] - red;
+						if (a < 0) {
 							a = -a;
+						}
 						dist += a;
 						if (dist < bestD) {
 							bestD = dist;
@@ -358,8 +369,9 @@ public class NeuQuant {
 				}
 			}
 		}
-		return (best);
+		return best;
 	}
+
 	public byte[] process() {
 		learn();
 		unbiasNet();
@@ -372,9 +384,7 @@ public class NeuQuant {
 	 */
 	public void unbiasNet() {
 
-		int i, j;
-
-		for (i = 0; i < NET_SIZE; i++) {
+		for (int i = 0; i < NET_SIZE; i++) {
 			network[i][0] >>= NET_BIAS_SHIFT;
 			network[i][1] >>= NET_BIAS_SHIFT;
 			network[i][2] >>= NET_BIAS_SHIFT;
@@ -383,105 +393,114 @@ public class NeuQuant {
 	}
 
 	/**
-	 * Move adjacent neurons by precomputed alpha*(1-((i-j)^2/[r]^2)) in radPower[|i-j|]
+	 * Move adjacent neurons by precomputed alpha*(1-((i-j)^2/[red]^2)) input radPower[|i-j|]
 	 */
-	protected void alterNeigh(final int rad, final int i, final int b, final int g, final int r) {
+	protected void alterNeigh(final int rad, final int i, final int blue, final int green, final int red) {
 
-		int j, k, lo, hi, a, m;
-		int[] p;
+		int j;
+		int k;
+		int low;
+		int high;
+		int a;
+		int m;
+		int[] neuron;
 
-		lo = i - rad;
-		if (lo < -1)
-			lo = -1;
-		hi = i + rad;
-		if (hi > NET_SIZE)
-			hi = NET_SIZE;
+		low = i - rad;
+		if (low < -1) {
+			low = -1;
+		}
+		high = i + rad;
+		if (high > NET_SIZE) {
+			high = NET_SIZE;
+		}
 
 		j = i + 1;
 		k = i - 1;
 		m = 1;
-		while ((j < hi) || (k > lo)) {
+		while ((j < high) || (k > low)) {
 			a = radPower[m++];
-			if (j < hi) {
-				p = network[j++];
+			if (j < high) {
+				neuron = network[j++];
 				try {
-					p[0] -= (a * (p[0] - b)) / ALPHA_RAD_BIAS;
-					p[1] -= (a * (p[1] - g)) / ALPHA_RAD_BIAS;
-					p[2] -= (a * (p[2] - r)) / ALPHA_RAD_BIAS;
-				} catch (Exception e) {
-				} // prevents 1.3 miscompilation
+					neuron[0] -= (a * (neuron[0] - blue)) / ALPHA_RAD_BIAS;
+					neuron[1] -= (a * (neuron[1] - green)) / ALPHA_RAD_BIAS;
+					neuron[2] -= (a * (neuron[2] - red)) / ALPHA_RAD_BIAS;
+				} catch (final Exception exc) {
+					// prevents 1.3 mis-compilation
+				}
 			}
-			if (k > lo) {
-				p = network[k--];
+			if (k > low) {
+				neuron = network[k--];
 				try {
-					p[0] -= (a * (p[0] - b)) / ALPHA_RAD_BIAS;
-					p[1] -= (a * (p[1] - g)) / ALPHA_RAD_BIAS;
-					p[2] -= (a * (p[2] - r)) / ALPHA_RAD_BIAS;
-				} catch (Exception e) {
+					neuron[0] -= (a * (neuron[0] - blue)) / ALPHA_RAD_BIAS;
+					neuron[1] -= (a * (neuron[1] - green)) / ALPHA_RAD_BIAS;
+					neuron[2] -= (a * (neuron[2] - red)) / ALPHA_RAD_BIAS;
+				} catch (final Exception exc) {
 				}
 			}
 		}
 	}
 
 	/**
-	 * Move neuron i towards biased (b,g,r) by factor alpha
+	 * Move neuron neuronIdx towards biased (blue,green,red) by factor alpha
 	 */
-	protected void alterSingle(final int alpha, final int i, final int b, final int g, final int r) {
+	protected void alterSingle(final int alpha, final int neuronIdx, final int blue, final int green, final int red) {
 
 		/* alter hit neuron */
-		int[] n = network[i];
-		n[0] -= (alpha * (n[0] - b)) / INIT_ALPHA;
-		n[1] -= (alpha * (n[1] - g)) / INIT_ALPHA;
-		n[2] -= (alpha * (n[2] - r)) / INIT_ALPHA;
+		final int[] neuron = network[neuronIdx];
+		neuron[0] -= (alpha * (neuron[0] - blue)) / INIT_ALPHA;
+		neuron[1] -= (alpha * (neuron[1] - green)) / INIT_ALPHA;
+		neuron[2] -= (alpha * (neuron[2] - red)) / INIT_ALPHA;
 	}
 
 	/**
 	 * Search for biased BGR values
 	 */
-	protected int contest(final int b, final int g, final int r) {
+	protected int contest(final int blue, final int green, final int red) {
 
 		/* finds closest neuron (min dist) and updates freq */
 		/* finds best neuron (min dist-bias) and returns position */
 		/* for frequently chosen neurons, freq[i] is high and bias[i] is negative */
 		/* bias[i] = GAMMA*((1/NET_SIZE)-freq[i]) */
 
-		int i, dist, a, biasDist, betaFreq;
-		int bestPos, bestBiasPos, bestD, bestBiasd;
-		int[] n;
+		int a;
 
-		bestD = ~(((int) 1) << 31);
-		bestBiasd = bestD;
-		bestPos = -1;
-		bestBiasPos = bestPos;
+		int bestD = ~(((int) 1) << 31);
+		int bestBiasd = bestD;
+		int bestPos = -1;
+		int bestBiasPos = bestPos;
 
-		for (i = 0; i < NET_SIZE; i++) {
-			n = network[i];
-			dist = n[0] - b;
-			if (dist < 0)
+		for (int i = 0; i < NET_SIZE; i++) {
+			final int[] neuron = network[i];
+			int dist = neuron[0] - blue;
+			if (dist < 0) {
 				dist = -dist;
-			a = n[1] - g;
-			if (a < 0)
+			}
+			a = neuron[1] - green;
+			if (a < 0) {
 				a = -a;
+			}
 			dist += a;
-			a = n[2] - r;
-			if (a < 0)
+			a = neuron[2] - red;
+			if (a < 0) {
 				a = -a;
+			}
 			dist += a;
 			if (dist < bestD) {
 				bestD = dist;
 				bestPos = i;
 			}
-			biasDist = dist - ((bias[i]) >> (INT_BIAS_SHIFT - NET_BIAS_SHIFT));
+			final int biasDist = dist - ((bias[i]) >> (INT_BIAS_SHIFT - NET_BIAS_SHIFT));
 			if (biasDist < bestBiasd) {
 				bestBiasd = biasDist;
 				bestBiasPos = i;
 			}
-			betaFreq = (freq[i] >> BETA_SHIFT);
+			final int betaFreq = (freq[i] >> BETA_SHIFT);
 			freq[i] -= betaFreq;
 			bias[i] += (betaFreq << GAMMA_SHIFT);
 		}
 		freq[bestPos] += BETA;
 		bias[bestPos] -= BETA_GAMMA;
-		return (bestBiasPos);
+		return bestBiasPos;
 	}
 }

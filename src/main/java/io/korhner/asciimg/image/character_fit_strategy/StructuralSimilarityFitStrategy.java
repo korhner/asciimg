@@ -7,35 +7,29 @@ import io.korhner.asciimg.image.matrix.GrayscaleMatrix;
  *
  * See http://en.wikipedia.org/wiki/Structural_similarity for more info.
  */
-public class StructuralSimilarityFitStrategy implements
-		BestCharacterFitStrategy {
+public class StructuralSimilarityFitStrategy implements BestCharacterFitStrategy {
 
-	private final float k1 = 0.01f;
-	private final float k2 = 0.03f;
-	private float l = 255f;
+	private static final float K_1 = 0.01f;
+	private static final float K_2 = 0.03f;
+	private static final float L = 255f;
+	private static final float C_1 = (float) Math.pow(K_1 * L, 2);
+	private static final float C_2 = (float) Math.pow(K_2 * L, 2);
 
 	@Override
 	public float calculateError(final GrayscaleMatrix character, final GrayscaleMatrix tile) {
-
-		float c1 = k1 * l;
-		c1 *= c1;
-		float c2 = k2 * l;
-		c2 *= c2;
 
 		final int imgLength = character.getData().length;
 
 		float score = 0f;
 		for (int i = 0; i < imgLength; i++) {
-			float pixelImg1 = character.getData()[i];
-			float pixelImg2 = tile.getData()[i];
+			final float pixelImg1 = character.getData()[i];
+			final float pixelImg2 = tile.getData()[i];
 
-			score += (2 * pixelImg1 * pixelImg2 + c1) * (2 + c2)
-					/ (pixelImg1 * pixelImg1 + pixelImg2 * pixelImg2 + c1) / c2;
+			score += (2 * pixelImg1 * pixelImg2 + C_1) * (2 + C_2)
+					/ (pixelImg1 * pixelImg1 + pixelImg2 * pixelImg2 + C_1) / C_2;
 		}
 
 		// average and convert score to error
 		return 1 - (score / imgLength);
-
 	}
-
 }

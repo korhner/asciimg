@@ -51,8 +51,8 @@ public class TiledGrayscaleMatrix {
 		// we won't allow partial tiles
 		this.tilesX = matrix.getWidth() / tileWidth;
 		this.tilesY = matrix.getHeight() / tileHeight;
-		int roundedWidth = tilesX * tileWidth;
-		int roundedHeight = tilesY * tileHeight;
+		final int roundedWidth = tilesX * tileWidth;
+		final int roundedHeight = tilesY * tileHeight;
 
 		tiles = new ArrayList<GrayscaleMatrix>(roundedWidth * roundedHeight);
 
