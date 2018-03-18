@@ -127,21 +127,21 @@ public class AnimatedGifEncoder {
 	 * frames.  If <code>setSize</code> was not invoked, the size of the
 	 * first image is used for all subsequent frames.
 	 *
-	 * @param image BufferedImage containing frame to write.
+	 * @param img BufferedImage containing frame to write.
 	 * @return true if successful.
 	 */
-	public boolean addFrame(final BufferedImage image) {
+	public boolean addFrame(final BufferedImage img) {
 
 		boolean success;
-		if ((image == null) || !started) {
+		if ((img == null) || !started) {
 			success = false;
 		} else {
 			try {
 				if (!sizeSet) {
 					// use first frame's size
-					setSize(image.getWidth(), image.getHeight());
+					setSize(img.getWidth(), img.getHeight());
 				}
-				this.image = image;
+				this.image = img;
 				getImagePixels(); // convert to correct format if necessary
 				analyzePixels(); // build color table & map pixels
 				if (firstFrame) {

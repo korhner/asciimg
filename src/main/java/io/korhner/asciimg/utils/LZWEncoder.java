@@ -158,8 +158,8 @@ class LZWEncoder {
 	}
 
 	/** reset code table */
-	private void clHash(final int hSize) {
-		for (int i = 0; i < hSize; ++i) {
+	private void clHash(final int hSizeReset) {
+		for (int i = 0; i < hSizeReset; ++i) {
 			hTab[i] = -1;
 		}
 	}

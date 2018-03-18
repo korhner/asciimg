@@ -266,11 +266,11 @@ public class GifDecoder {
 	 * @return BufferedImage representation of frame, or null if frameNum is invalid.
 	 */
 	public BufferedImage getFrame(final int frameNum) {
-		BufferedImage image = null;
+		BufferedImage img = null;
 		if ((frameNum >= 0) && (frameNum < frameCount)) {
-			image = frames.get(frameNum).image;
+			img = frames.get(frameNum).image;
 		}
-		return image;
+		return img;
 	}
 
 	/**
@@ -286,15 +286,15 @@ public class GifDecoder {
 	/**
 	 * Reads GIF image from stream
 	 *
-	 * @param input containing GIF file.
+	 * @param inp containing GIF file.
 	 * @return read status code (0 = no errors)
 	 */
-	public int read(final BufferedInputStream input) {
+	public int read(final BufferedInputStream inp) {
 		init();
-		if (input == null) {
+		if (inp == null) {
 			status = STATUS_OPEN_ERROR;
 		} else {
-			this.input = input;
+			this.input = inp;
 			readHeader();
 			if (!err()) {
 				readContents();
@@ -303,7 +303,7 @@ public class GifDecoder {
 				}
 			}
 			try {
-				input.close();
+				inp.close();
 			} catch (final IOException exc) {
 			}
 		}
@@ -314,18 +314,18 @@ public class GifDecoder {
 	/**
 	 * Reads GIF image from stream
 	 *
-	 * @param input containing GIF file.
+	 * @param inp containing GIF file.
 	 * @return read status code (0 = no errors)
 	 */
-	public int read(final InputStream input) {
+	public int read(final InputStream inp) {
 		init();
-		if (input == null) {
+		if (inp == null) {
 			status = STATUS_OPEN_ERROR;
 		} else {
-			if (input instanceof BufferedInputStream) {
-				this.input = (BufferedInputStream) input;
+			if (inp instanceof BufferedInputStream) {
+				this.input = (BufferedInputStream) inp;
 			} else {
-				this.input = new BufferedInputStream(input);
+				this.input = new BufferedInputStream(inp);
 			}
 			readHeader();
 			if (!err()) {
@@ -335,7 +335,7 @@ public class GifDecoder {
 				}
 			}
 			try {
-				input.close();
+				inp.close();
 			} catch (final IOException exc) {
 			}
 		}
