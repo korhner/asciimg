@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * A class for for creating multiple tiles from an input gray-scale matrix.
+ * Creates multiple tiles from an input gray-scale matrix.
  */
 public class TiledGrayScaleMatrix {
 
@@ -33,8 +33,7 @@ public class TiledGrayScaleMatrix {
 	 * @param tileHeight
 	 *            the tile height
 	 */
-	public TiledGrayScaleMatrix(final GrayScaleMatrix matrix,
-								final int tileWidth, final int tileHeight) {
+	public TiledGrayScaleMatrix(final GrayScaleMatrix matrix, final int tileWidth, final int tileHeight) {
 
 		if (matrix.getWidth() < tileWidth || matrix.getHeight() < tileHeight) {
 			throw new IllegalArgumentException(

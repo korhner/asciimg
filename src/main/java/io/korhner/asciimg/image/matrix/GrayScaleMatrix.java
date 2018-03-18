@@ -3,8 +3,8 @@ package io.korhner.asciimg.image.matrix;
 import io.korhner.asciimg.utils.ArrayUtils;
 
 /**
- * A class that encapsulates a gray-scale image. Color values are floats with
- * values between 0.0f and 255.0f.
+ * Encapsulates a gray-scale image.
+ * Color values are floats with values between 0.0f and 255.0f.
  */
 public class GrayScaleMatrix {
 
@@ -103,7 +103,7 @@ public class GrayScaleMatrix {
 		final int green = (rgbColor >> 8) & 0xFF;
 		final int blue = rgbColor & 0xFF;
 
-		// convert to grayscale
+		// convert to gray-scale
 		return 0.3f * red + 0.59f * green + 0.11f * blue;
 	}
 
@@ -133,5 +133,4 @@ public class GrayScaleMatrix {
 	public int getWidth() {
 		return this.width;
 	}
-
 }
