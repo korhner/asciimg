@@ -9,7 +9,7 @@ import java.util.Map.Entry;
 /**
  * Converts ASCII art to String.
  */
-public class AsciiToStringConverter extends AsciiConverter<StringBuffer> {
+public class AsciiToStringConverter extends AsciiConverter<StringBuilder> {
 
 	/**
 	 * Instantiates a new ASCII to string converter.
@@ -24,19 +24,17 @@ public class AsciiToStringConverter extends AsciiConverter<StringBuffer> {
 		super(characterCacher, characterFitStrategy);
 	}
 
-	/**
-	 * Creates an empty string buffer.
-	 */
 	@Override
-	protected StringBuffer initializeOutput(final int imageWidth, final int imageHeight) {
-		return new StringBuffer();
+	protected StringBuilder initializeOutput(final int imageWidth, final int imageHeight) {
+
+		return new StringBuilder();
 	}
 
 	@Override
 	protected void finalizeOutput(final int[] sourceImagePixels, final int imageWidth, final int imageHeight) {}
 
 	/**
-	 * Append chosen character to StringBuffer.
+	 * Append chosen character to the output buffer.
 	 */
 	@Override
 	public void addCharacterToOutput(
@@ -44,11 +42,11 @@ public class AsciiToStringConverter extends AsciiConverter<StringBuffer> {
 			final int[] sourceImagePixels, final int tileX, final int tileY,
 			final int imageWidth) {
 
-		this.getOutput().append(characterEntry.getKey());
+		getOutput().append(characterEntry.getKey());
 
 		// append new line at the end of the row
-		if ((tileX + 1) * this.getCharacterCache().getCharacterImageSize().width == imageWidth) {
-			this.getOutput().append(System.lineSeparator());
+		if ((tileX + 1) * getCharacterCache().getCharacterImageSize().width == imageWidth) {
+			getOutput().append(System.lineSeparator());
 		}
 	}
 }
