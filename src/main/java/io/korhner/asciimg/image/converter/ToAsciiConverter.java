@@ -1,7 +1,7 @@
 package io.korhner.asciimg.image.converter;
 
 import io.korhner.asciimg.image.AsciiImgCache;
-import io.korhner.asciimg.image.character_fit_strategy.BestCharacterFitStrategy;
+import io.korhner.asciimg.image.strategy.BestCharacterFitStrategy;
 import io.korhner.asciimg.image.exporter.AsciiExporter;
 
 import java.io.IOException;

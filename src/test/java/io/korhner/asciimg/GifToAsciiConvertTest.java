@@ -1,14 +1,12 @@
 package io.korhner.asciimg;
 
 import io.korhner.asciimg.image.AsciiImgCache;
-import io.korhner.asciimg.image.character_fit_strategy.BestCharacterFitStrategy;
-import io.korhner.asciimg.image.character_fit_strategy.StructuralSimilarityFitStrategy;
+import io.korhner.asciimg.image.strategy.BestCharacterFitStrategy;
+import io.korhner.asciimg.image.strategy.StructuralSimilarityFitStrategy;
 import io.korhner.asciimg.image.converter.GifToAsciiConvert;
 import io.korhner.asciimg.image.exporter.AnimatedGifMultiFrameAsciiExporter;
-import org.junit.Assert;
 import org.junit.Test;
 
-import javax.imageio.ImageIO;
 import java.awt.Font;
 import java.io.*;
 

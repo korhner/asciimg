@@ -1,4 +1,4 @@
-package io.korhner.asciimg.image.character_fit_strategy;
+package io.korhner.asciimg.image.strategy;
 
 import io.korhner.asciimg.image.matrix.GrayScaleMatrix;
 

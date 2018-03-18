@@ -1,9 +1,9 @@
 package io.korhner.asciimg;
 
 import io.korhner.asciimg.image.AsciiImgCache;
-import io.korhner.asciimg.image.character_fit_strategy.BestCharacterFitStrategy;
-import io.korhner.asciimg.image.character_fit_strategy.ColorSquareErrorFitStrategy;
-import io.korhner.asciimg.image.character_fit_strategy.StructuralSimilarityFitStrategy;
+import io.korhner.asciimg.image.strategy.BestCharacterFitStrategy;
+import io.korhner.asciimg.image.strategy.ColorSquareErrorFitStrategy;
+import io.korhner.asciimg.image.strategy.StructuralSimilarityFitStrategy;
 import io.korhner.asciimg.image.exporter.ImageAsciiExporter;
 import io.korhner.asciimg.image.converter.ImageToAsciiConverter;
 import io.korhner.asciimg.image.exporter.TextAsciiExporter;
