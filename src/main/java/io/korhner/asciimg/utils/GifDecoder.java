@@ -413,7 +413,7 @@ public class GifDecoder {
 		int pixelIdx;
 		int byteIdx = 0;
 
-		for (pixelIdx = 0; pixelIdx < nPix; ) {
+		for (pixelIdx = 0; pixelIdx < nPix;) {
 			if (top == 0) {
 				if (bits < codeSize) {
 					//  Load bytes until there are enough bits for a code.
