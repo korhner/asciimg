@@ -252,17 +252,17 @@ public class NeuQuant {
 		} else {
 			if ((lengthCount % PRIME_1) == 0) {
 				if ((lengthCount % PRIME_2) == 0) {
-                    if ((lengthCount % PRIME_3) == 0) {
-                        step = 3 * PRIME_4;
-                    } else {
-                        step = 3 * PRIME_3;
-                    }
-                } else {
-                    step = 3 * PRIME_2;
-                }
+					if ((lengthCount % PRIME_3) == 0) {
+						step = 3 * PRIME_4;
+					} else {
+						step = 3 * PRIME_3;
+					}
+				} else {
+					step = 3 * PRIME_2;
+				}
 			} else {
-                step = 3 * PRIME_1;
-            }
+				step = 3 * PRIME_1;
+			}
 		}
 
 		int j;
