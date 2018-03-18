@@ -21,6 +21,6 @@ public class GifExamples {
 		
 		GifToAsciiConvert asciiConvert = new GifToAsciiConvert(smallFontCache, ssimStrategy);
 		
-		asciiConvert.convertGitToAscii(srcFilePath, disFilePath, delay,0);
+		asciiConvert.convertGifToAscii(srcFilePath, disFilePath, delay,0);
 	}
 }

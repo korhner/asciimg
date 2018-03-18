@@ -19,7 +19,7 @@ public class GifToAsciiConvert extends AsciiToImageConverter{
 	 *   0:  opening disFile failed
 	 *   -1: srcFile does not exist or opening failed
 	 */
-	public int convertGitToAscii(final String srcFilePath, final String disFilePath, final int delay, final int repeat) {
+	public int convertGifToAscii(final String srcFilePath, final String disFilePath, final int delay, final int repeat) {
 		final GifDecoder decoder = new GifDecoder();
 		final int status = decoder.read(srcFilePath);
 		final int ret;
