@@ -15,8 +15,8 @@ public class GifExamples {
 		// initialize ssimStrategy
 		BestCharacterFitStrategy ssimStrategy = new StructuralSimilarityFitStrategy();
 		
-		String srcFilePath = "examples/test.gif";
-		String disFilePath = "examples/test-ascii.gif";
+		String srcFilePath = "examples/animation/orig.gif";
+		String disFilePath = "examples/animation/converted.gif";
 		int delay = 100; // ms
 		
 		GifToAsciiConvert asciiConvert = new GifToAsciiConvert(smallFontCache, ssimStrategy);

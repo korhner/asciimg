@@ -26,7 +26,7 @@ public class Examples {
 
 		// load image
 		BufferedImage portraitImage = ImageIO.read(new File(
-				"examples/portrait.png"));
+				"examples/portrait/orig.png"));
 
 		// initialize algorithms
 		BestCharacterFitStrategy squareErrorStrategy = new ColorSquareErrorFitStrategy();
@@ -42,37 +42,37 @@ public class Examples {
 		imageConverter.setCharacterCache(smallFontCache);
 		imageConverter.setCharacterFitStrategy(squareErrorStrategy);
 		ImageIO.write(imageConverter.convertImage(portraitImage), "png",
-				new File("examples/portrait_small_square_error.png"));
+				new File("examples/portrait/converted_small_square_error.png"));
 
 		// medium font images, square error
 		imageConverter.setCharacterCache(mediumBlackAndWhiteCache);
 		imageConverter.setCharacterFitStrategy(squareErrorStrategy);
 		ImageIO.write(imageConverter.convertImage(portraitImage), "png",
-				new File("examples/portrait_medium_square_error.png"));
+				new File("examples/portrait/converted_medium_square_error.png"));
 
 		// large font images, square error
 		imageConverter.setCharacterCache(largeFontCache);
 		imageConverter.setCharacterFitStrategy(squareErrorStrategy);
 		ImageIO.write(imageConverter.convertImage(portraitImage), "png",
-				new File("examples/portrait_large_square_error.png"));
+				new File("examples/portrait/converted_large_square_error.png"));
 
 		// small font images, ssim
 		imageConverter.setCharacterCache(smallFontCache);
 		imageConverter.setCharacterFitStrategy(ssimStrategy);
 		ImageIO.write(imageConverter.convertImage(portraitImage), "png",
-				new File("examples/portrait_small_ssim.png"));
+				new File("examples/portrait/converted_small_ssim.png"));
 
 		// medium font images, ssim error
 		imageConverter.setCharacterCache(mediumBlackAndWhiteCache);
 		imageConverter.setCharacterFitStrategy(ssimStrategy);
 		ImageIO.write(imageConverter.convertImage(portraitImage), "png",
-				new File("examples/portrait_medium_ssim.png"));
+				new File("examples/portrait/converted_medium_ssim.png"));
 
 		// large font images, ssim
 		imageConverter.setCharacterCache(largeFontCache);
 		imageConverter.setCharacterFitStrategy(ssimStrategy);
 		ImageIO.write(imageConverter.convertImage(portraitImage), "png",
-				new File("examples/portrait_large_ssim.png"));
+				new File("examples/portrait/converted_large_ssim.png"));
 
 		// string converter, output to console
 		System.out.println(stringConverter.convertImage(portraitImage));
