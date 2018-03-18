@@ -3,7 +3,7 @@ package io.korhner.asciimg.image.converter;
 import io.korhner.asciimg.image.AsciiImgCache;
 import io.korhner.asciimg.image.character_fit_strategy.BestCharacterFitStrategy;
 import io.korhner.asciimg.image.matrix.GrayScaleMatrix;
-import io.korhner.asciimg.image.matrix.TiledGrayscaleMatrix;
+import io.korhner.asciimg.image.matrix.TiledGrayScaleMatrix;
 import io.korhner.asciimg.utils.ArrayUtils;
 import java.awt.Dimension;
 import java.awt.image.BufferedImage;
@@ -42,7 +42,7 @@ public abstract class AsciiConverter<O> {
 	 * output.
 	 *
 	 * @param characterEntry
-	 *            character choosen as best fit
+	 *            character chosen as best fit
 	 * @param sourceImagePixels
 	 *            source image pixels. Can be
 	 * @param tileX
@@ -78,12 +78,12 @@ public abstract class AsciiConverter<O> {
 		final int[] imagePixels = source.getRGB(
 				0, 0, outputImageWidth, outputImageHeight, null, 0, outputImageWidth);
 
-		// process the pixels to a grayscale matrix
+		// process the pixels to a gray-scale matrix
 		final GrayScaleMatrix sourceMatrix = new GrayScaleMatrix(imagePixels,
 				outputImageWidth, outputImageHeight);
 
 		// divide matrix into tiles for easy processing
-		final TiledGrayscaleMatrix tiledMatrix = new TiledGrayscaleMatrix(
+		final TiledGrayScaleMatrix tiledMatrix = new TiledGrayScaleMatrix(
 				sourceMatrix, tileSize.width, tileSize.height);
 
 		this.setOutput(initializeOutput(outputImageWidth, outputImageHeight));

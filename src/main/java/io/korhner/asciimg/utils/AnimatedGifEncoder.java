@@ -145,7 +145,7 @@ public class AnimatedGifEncoder {
 				getImagePixels(); // convert to correct format if necessary
 				analyzePixels(); // build color table & map pixels
 				if (firstFrame) {
-					writeLSD(); // logical screen descriptior
+					writeLSD(); // logical screen descriptor
 					writePalette(); // global color table
 					if (repeat >= 0) {
 						// use NS app extension to indicate reps
@@ -400,26 +400,26 @@ public class AnimatedGifEncoder {
 		out.write(0x21); // extension introducer
 		out.write(0xf9); // GCE label
 		out.write(4); // data block size
-		final int transp;
-		int disp;
+		final int trans;
+		int dis;
 		if (transparent == null) {
-			transp = 0;
-			disp = 0; // dispose = no action
+			trans = 0;
+			dis = 0; // dispose = no action
 		} else {
-			transp = 1;
-			disp = 2; // force clear if using transparent color
+			trans = 1;
+			dis = 2; // force clear if using transparent color
 		}
 		if (dispose >= 0) {
-			disp = dispose & 7; // user override
+			dis = dispose & 7; // user override
 		}
-		disp <<= 2;
+		dis <<= 2;
 
 		// packed fields
 		out.write(
 				0 | // 1:3 reserved
-				disp | // 4:6 disposal
+				dis | // 4:6 disposal
 				0 | // 7   user input - 0 = none
-				transp); // 8   transparency flag
+				trans); // 8   transparency flag
 
 		writeShort(delay); // delay x 1/100 sec
 		out.write(transIndex); // transparent color index

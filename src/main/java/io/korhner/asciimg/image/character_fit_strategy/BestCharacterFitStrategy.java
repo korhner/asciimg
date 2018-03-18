@@ -3,13 +3,13 @@ package io.korhner.asciimg.image.character_fit_strategy;
 import io.korhner.asciimg.image.matrix.GrayScaleMatrix;
 
 /**
- * Encapsulates the algorith for choosing best fit character.
+ * Encapsulates the algorithm for choosing best fit character.
  */
 public interface BestCharacterFitStrategy {
 
 	/**
-	 * Returns the error between the character and tile matrices. The character
-	 * with minimun error wins.
+	 * Returns the error between the character and tile matrices.
+	 * The character with minimum error wins.
 	 *
 	 * @param character
 	 *            the character

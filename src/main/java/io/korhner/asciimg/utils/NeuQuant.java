@@ -62,7 +62,7 @@ public class NeuQuant {
 	/** no. of learning cycles */
 	protected static final int N_CYCLES = 100;
 
-	/* defs for freq and bias */
+	/* definitions for freq and bias */
 	/** bias for fractions */
 	protected static final int INT_BIAS_SHIFT = 16;
 	protected static final int INT_BIAS = (1 << INT_BIAS_SHIFT);
@@ -74,7 +74,7 @@ public class NeuQuant {
 	protected static final int BETA = (INT_BIAS >> BETA_SHIFT);
 	protected static final int BETA_GAMMA = (INT_BIAS << (GAMMA_SHIFT - BETA_SHIFT));
 
-	/* defs for decreasing radius factor */
+	/* definitions for decreasing radius factor */
 	/** for 256 cols, radius starts */
 	protected static final int INIT_RAD = (NET_SIZE >> 3);
 	/** at 32.0 biased by 6 bits */
@@ -85,7 +85,7 @@ public class NeuQuant {
 	/** factor of 1/30 each cycle */
 	protected static final int RADIUS_DEC = 30;
 
-	/* defs for decreasing alpha factor */
+	/* definitions for decreasing alpha factor */
 	/** alpha starts at 1.0 */
 	protected static final int ALPHA_BIAS_SHIFT = 10;
 	protected static final int INIT_ALPHA = (1 << ALPHA_BIAS_SHIFT);
@@ -470,7 +470,7 @@ public class NeuQuant {
 		int a;
 
 		@SuppressWarnings("NumericOverflow") int bestD = ~(1 << 31);
-		int bestBiasd = bestD;
+		int bestBiasD = bestD;
 		int bestPos = -1;
 		int bestBiasPos = bestPos;
 
@@ -495,8 +495,8 @@ public class NeuQuant {
 				bestPos = i;
 			}
 			final int biasDist = dist - ((bias[i]) >> (INT_BIAS_SHIFT - NET_BIAS_SHIFT));
-			if (biasDist < bestBiasd) {
-				bestBiasd = biasDist;
+			if (biasDist < bestBiasD) {
+				bestBiasD = biasDist;
 				bestBiasPos = i;
 			}
 			final int betaFreq = (freq[i] >> BETA_SHIFT);

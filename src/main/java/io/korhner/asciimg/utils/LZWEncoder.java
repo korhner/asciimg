@@ -78,7 +78,7 @@ class LZWEncoder {
 	// Output the given code.
 	// Inputs:
 	//      code:   A nBits-bit integer.  If == -1, then EOF.  This assumes
-	//              that nBits =< wordsize - 1.
+	//              that nBits =< wordSize - 1.
 	// Outputs:
 	//      Outputs code to the file.
 	// Assumptions:
@@ -158,8 +158,8 @@ class LZWEncoder {
 	}
 
 	/** reset code table */
-	private void clHash(final int hsize) {
-		for (int i = 0; i < hsize; ++i) {
+	private void clHash(final int hSize) {
+		for (int i = 0; i < hSize; ++i) {
 			hTab[i] = -1;
 		}
 	}

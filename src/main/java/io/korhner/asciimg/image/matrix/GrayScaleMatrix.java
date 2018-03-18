@@ -3,12 +3,12 @@ package io.korhner.asciimg.image.matrix;
 import io.korhner.asciimg.utils.ArrayUtils;
 
 /**
- * A class that encapsulates a grayscale image. Color values are floats with
+ * A class that encapsulates a gray-scale image. Color values are floats with
  * values between 0.0f and 255.0f.
  */
 public class GrayScaleMatrix {
 
-	/** Grayscale pixel data. Values are between 0.0f and 255.0f. */
+	/** Gray-scale pixel data. Values are between 0.0f and 255.0f. */
 	private final float[] data;
 
 	/** Image width. */
@@ -68,7 +68,7 @@ public class GrayScaleMatrix {
 	}
 
 	/**
-	 * Instantiates a new grayscale matrix from a ARGB bitmap image.
+	 * Instantiates a new gray-scale matrix from a ARGB bitmap image.
 	 *
 	 * @param pixels
 	 *            pixel data input ARGB format
@@ -86,18 +86,18 @@ public class GrayScaleMatrix {
 		}
 
 		for (int i = 0; i < this.data.length; i++) {
-			this.data[i] = convertRGBToGrayscale(pixels[i]);
+			this.data[i] = convertRGBToGrayScale(pixels[i]);
 		}
 	}
 
 	/**
-	 * Convert ARGB color to grayscale float.
+	 * Convert ARGB color to gray-scale float.
 	 *
 	 * @param rgbColor
 	 *            ARGB color
-	 * @return Grayscale float with value between 0.0f and 255.0f.
+	 * @return gray-scale float with value between 0.0f and 255.0f.
 	 */
-	private float convertRGBToGrayscale(final int rgbColor) {
+	private float convertRGBToGrayScale(final int rgbColor) {
 		// extract components
 		final int red = (rgbColor >> 16) & 0xFF;
 		final int green = (rgbColor >> 8) & 0xFF;

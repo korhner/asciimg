@@ -161,7 +161,7 @@ public class GifDecoder {
 
 	/**
 	 * Gets the "Netscape" iteration count, if any.
-	 * A count of 0 means repeat indefinitiely.
+	 * A count of 0 means repeat indefinitely.
 	 *
 	 * @return iteration count if one was specified, else 1.
 	 */
@@ -751,7 +751,7 @@ public class GifDecoder {
 	}
 
 	/**
-	 * Reads Netscape extenstion to obtain iteration count
+	 * Reads Netscape extension to obtain iteration count
 	 */
 	protected void readNetscapeExt() {
 		do {
