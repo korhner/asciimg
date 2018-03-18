@@ -5,15 +5,15 @@ import io.korhner.asciimg.image.character_fit_strategy.BestCharacterFitStrategy;
 import io.korhner.asciimg.utils.AnimatedGifEncoder;
 import io.korhner.asciimg.utils.GifDecoder;
 
-public class GifToAsciiConvert extends AsciiToImageConverter{
+public class GifToAsciiConvert extends AsciiToImageConverter {
 
 	public GifToAsciiConvert(final AsciiImgCache characterCacher, final BestCharacterFitStrategy characterFitStrategy) {
 		super(characterCacher, characterFitStrategy);
 	}
 
 	/**
-	 * @param delay－－the delay time(ms) between each frame
-	 * @param repeat－－he number of times the set of GIF frames should be played.0 means play indefinitely.
+	 * @param delay the delay time(ms) between each frame
+	 * @param repeat the number of times the set of GIF frames should be played; 0 means play indefinitely.
 	 * @return
 	 *   1:  done
 	 *   0:  opening disFile failed
