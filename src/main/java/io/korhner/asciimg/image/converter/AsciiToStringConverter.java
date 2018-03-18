@@ -7,12 +7,12 @@ import io.korhner.asciimg.image.matrix.GrayScaleMatrix;
 import java.util.Map.Entry;
 
 /**
- * Converts ascii art to String.
+ * Converts ASCII art to String.
  */
 public class AsciiToStringConverter extends AsciiConverter<StringBuffer> {
 
 	/**
-	 * Instantiates a new ascii to string converter.
+	 * Instantiates a new ASCII to string converter.
 	 *
 	 * @param characterCacher
 	 *            the character cacher

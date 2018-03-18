@@ -21,7 +21,7 @@
     <packaging>bundle</packaging>
 
     <name>ASCII-Img</name>
-    <description>An ascii image generator written in Java</description>
+    <description>An ASCII image generator written in Java</description>
     <url>https://github.com/hoijui/asciimg</url>
     <inceptionYear>2015</inceptionYear>
 

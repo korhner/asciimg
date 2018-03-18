@@ -14,7 +14,7 @@ import java.util.Map.Entry;
 public class AsciiToImageConverter extends AsciiConverter<BufferedImage> {
 
 	/**
-	 * Instantiates a new ascii to image converter.
+	 * Instantiates a new ASCII to image converter.
 	 *
 	 * @param characterCacher
 	 *            the character cacher

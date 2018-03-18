@@ -67,7 +67,7 @@ public class AsciiImgCache implements Iterable<Entry<Character, GrayScaleMatrix>
 	 *
 	 * @param font
 	 *            the font
-	 * @return the ascii img cache
+	 * @return the ASCII img cache
 	 */
 	public static AsciiImgCache create(final Font font) {
 
@@ -79,7 +79,7 @@ public class AsciiImgCache implements Iterable<Entry<Character, GrayScaleMatrix>
 	 *
 	 * @param font
 	 *            the font
-	 * @return the ascii img cache
+	 * @return the ASCII img cache
 	 */
 	public static AsciiImgCache create(final Font font, final char[] characters) {
 
@@ -135,7 +135,7 @@ public class AsciiImgCache implements Iterable<Entry<Character, GrayScaleMatrix>
 	}
 
 	/**
-	 * Instantiates a new ascii img cache.
+	 * Instantiates a new ASCII img cache.
 	 *
 	 * @param characterImageSize
 	 *            the character image size

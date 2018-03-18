@@ -10,11 +10,11 @@ import java.awt.image.BufferedImage;
 import java.util.Map.Entry;
 
 /**
- * A class used to convert an image to an ascii art. Output and conversion
+ * A class used to convert an image to an ASCII art. Output and conversion
  * algorithm are decoupled.
  *
  * @param <O>
- *            output type of the ascii art
+ *            output type of the ASCII art
  */
 public abstract class AsciiConverter<O> {
 
@@ -25,7 +25,7 @@ public abstract class AsciiConverter<O> {
 	private O output;
 
 	/**
-	 * Instantiates a new ascii converter.
+	 * Instantiates a new ASCII converter.
 	 *
 	 * @param characterCache
 	 *            the character cache
@@ -58,7 +58,7 @@ public abstract class AsciiConverter<O> {
 			final int imageWidth);
 
 	/**
-	 * Produces an output that is an ascii art of the supplied image.
+	 * Produces an output that is an ASCII art of the supplied image.
 	 *
 	 * @param source
 	 *            the source
@@ -145,7 +145,7 @@ public abstract class AsciiConverter<O> {
 
 	/**
 	 * Override this to return an empty output object that will be filled during
-	 * the ascii art conversion.
+	 * the ASCII art conversion.
 	 *
 	 * @param imageWidth
 	 *            source image width
