@@ -23,7 +23,7 @@ public interface AsciiExporter<O> {
 	 * @param imageHeight
 	 *            source image height in pixels
 	 */
-	void init(int imageWidth, int imageHeight);
+	void init(int imageWidth, int imageHeight); // TODO dest size makes more sense, but even that is not an optimal set of args for this method
 
 	/**
 	 * Appends one ASCII art character to the internal output.
@@ -56,7 +56,7 @@ public interface AsciiExporter<O> {
 	 * @param imageHeight
 	 *            source image height
 	 */
-	void finalize(int[] sourceImagePixels, int imageWidth, int imageHeight);
+	void imageEnd(int[] sourceImagePixels, int imageWidth, int imageHeight);
 
 	/**
 	 * Returns the output container.

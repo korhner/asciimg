@@ -77,7 +77,7 @@ public class ImageToAsciiConverter implements ToAsciiConverter<BufferedImage> {
 			getExporter().addCharacter(bestFit, imagePixels, tileX, tileY, truncatedPixelsSize.width);
 		}
 
-		getExporter().finalize(imagePixels, truncatedPixelsSize.width, truncatedPixelsSize.height);
+		getExporter().imageEnd(imagePixels, truncatedPixelsSize.width, truncatedPixelsSize.height);
 	}
 
 	@Override

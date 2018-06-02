@@ -50,7 +50,7 @@ public class AnimatedGifEncoder {
 	protected final boolean[] usedEntry; // active palette entries
 	protected int palSize; // color table size (bits-1)
 	protected int dispose; // disposal code (-1 = use default)
-	protected boolean closeStream; // close stream when finished
+	protected boolean closeStream; // imageEnd stream when finished
 	protected boolean firstFrame;
 	protected boolean sizeSet; // if false, get size from first frame
 	protected int sample; // default sample interval for quantizer

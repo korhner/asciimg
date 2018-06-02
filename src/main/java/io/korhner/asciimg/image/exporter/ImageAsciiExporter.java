@@ -54,7 +54,7 @@ public class ImageAsciiExporter implements AsciiExporter<BufferedImage> {
 	 * Write pixels to output image.
 	 */
 	@Override
-	public void finalize(final int[] sourceImagePixels, final int imageWidth, final int imageHeight) {
+	public void imageEnd(final int[] sourceImagePixels, final int imageWidth, final int imageHeight) {
 		this.getOutput().setRGB(0, 0, imageWidth, imageHeight, sourceImagePixels, 0, imageWidth);
 
 	}

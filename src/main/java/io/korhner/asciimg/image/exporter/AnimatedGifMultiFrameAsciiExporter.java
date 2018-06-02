@@ -65,9 +65,9 @@ public class AnimatedGifMultiFrameAsciiExporter implements MultiFrameAsciiExport
 	 * Called at the end of a frame.
 	 */
 	@Override
-	public void finalize(final int[] sourceImagePixels, final int imageWidth, final int imageHeight) {
+	public void imageEnd(final int[] sourceImagePixels, final int imageWidth, final int imageHeight) {
 
-		frameExporter.finalize(sourceImagePixels, imageWidth, imageHeight);
+		frameExporter.imageEnd(sourceImagePixels, imageWidth, imageHeight);
 		encoder.addFrame(frameExporter.getOutput());
 		frameExporter = null;
 	}

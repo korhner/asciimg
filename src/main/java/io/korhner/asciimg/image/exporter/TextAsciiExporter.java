@@ -25,7 +25,7 @@ public class TextAsciiExporter implements AsciiExporter<String> {
 	}
 
 	@Override
-	public void finalize(final int[] sourceImagePixels, final int imageWidth, final int imageHeight) {}
+	public void imageEnd(final int[] sourceImagePixels, final int imageWidth, final int imageHeight) {}
 
 	/**
 	 * Append chosen character to the output buffer.
