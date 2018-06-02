@@ -19,9 +19,9 @@ public interface AsciiExporter<O> {
 	 * to be ready to call {@link #addCharacter}.
 	 *
 	 * @param imageWidth
-	 *            source image width
+	 *            source image width in pixels
 	 * @param imageHeight
-	 *            source image height
+	 *            source image height in pixels
 	 */
 	void init(int imageWidth, int imageHeight);
 
@@ -33,9 +33,9 @@ public interface AsciiExporter<O> {
 	 * @param sourceImagePixels
 	 *            source image pixels. Can be
 	 * @param tileX
-	 *            the tile x
+	 *            the tile x position
 	 * @param tileY
-	 *            the tile y
+	 *            the tile y position
 	 * @param imageWidth
 	 *            the image width
 	 */

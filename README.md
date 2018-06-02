@@ -6,10 +6,10 @@ For more info refer to [this blog post](http://korhner.github.io/java/image-proc
 ## Example usage
 
 	// initialize cache
-	AsciiImgCache cache = AsciiImgCache.create(new Font("Courier",Font.BOLD, 6));
+	AsciiImgCache cache = AsciiImgCache.create(new Font("Courier", Font.BOLD, 6));
 
 	// load image
-	BufferedImage portraitImage = ImageIO.read(new File("image.png"));
+	BufferedImage portraitImage = ImageIO.read(new File("input_image.png"));
 
 	// initialize converters
 	AsciiToImageConverter imageConverter =
