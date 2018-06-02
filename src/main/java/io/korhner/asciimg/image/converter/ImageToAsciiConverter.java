@@ -27,26 +27,29 @@ public class ImageToAsciiConverter implements ToAsciiConverter<BufferedImage> {
 		// dimension of each tile
 		final Dimension tileSize = this.getCharacterCache().getCharacterImageSize();
 
-		// round the width and height so we avoid partial characters
-		final int outputImageWidth = (source.getWidth() / tileSize.width)
-				* tileSize.width;
-		final int outputImageHeight = (source.getHeight() / tileSize.height)
-				* tileSize.height;
+		final Dimension sourcePixelsSize = new Dimension(source.getWidth(), source.getHeight());
+		// the number of characters that fit fully into the source image
+		final Dimension destCharactersSize = new Dimension(
+				sourcePixelsSize.width / tileSize.width,
+				sourcePixelsSize.height / tileSize.height);
+		// destination image width and height, truncated, so we avoid partial characters
+		final Dimension truncatedPixelsSize = new Dimension(
+				destCharactersSize.width * tileSize.width,
+				destCharactersSize.height * tileSize.height);
 
 		// extract pixels from source image
 		final int[] imagePixels = source.getRGB(
-				0, 0, outputImageWidth, outputImageHeight, null, 0, outputImageWidth);
+				0, 0, truncatedPixelsSize.width, truncatedPixelsSize.height, null, 0, truncatedPixelsSize.width);
 
 		// process the pixels to a gray-scale matrix
-		final GrayScaleMatrix sourceMatrix = new GrayScaleMatrix(imagePixels,
-				outputImageWidth, outputImageHeight);
+		final GrayScaleMatrix sourceMatrix = new GrayScaleMatrix(imagePixels, truncatedPixelsSize.width, truncatedPixelsSize.height);
 
 		// divide matrix into tiles for easy processing
 		final TiledGrayScaleMatrix tiledMatrix = new TiledGrayScaleMatrix(
 				sourceMatrix, tileSize.width, tileSize.height);
 
 		getExporter().setCharacterCache(getCharacterCache());
-		getExporter().init(outputImageWidth, outputImageHeight);
+		getExporter().init(truncatedPixelsSize.width, truncatedPixelsSize.height);
 
 		// compare each tile to every character to determine best fit
 		for (int i = 0; i < tiledMatrix.getTileCount(); i++) {
@@ -71,10 +74,10 @@ public class ImageToAsciiConverter implements ToAsciiConverter<BufferedImage> {
 			final int tileY = ArrayUtils.convert1DtoY(i, tiledMatrix.getTilesX());
 
 			// copy character to output
-			getExporter().addCharacter(bestFit, imagePixels, tileX, tileY, outputImageWidth);
+			getExporter().addCharacter(bestFit, imagePixels, tileX, tileY, truncatedPixelsSize.width);
 		}
 
-		getExporter().finalize(imagePixels, outputImageWidth, outputImageHeight);
+		getExporter().finalize(imagePixels, truncatedPixelsSize.width, truncatedPixelsSize.height);
 	}
 
 	@Override
