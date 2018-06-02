@@ -20,8 +20,8 @@ public class TextAsciiExporter implements AsciiExporter<String> {
 	}
 
 	@Override
-	public void init(final int imageWidth, final int imageHeight) {
-		output = new StringBuilder();
+	public void init(final int srcPxWidth, final int srcPxHeight, final int charsWidth, final int charsHeight) {
+		output = new StringBuilder(charsWidth* charsHeight);
 	}
 
 	@Override

@@ -63,8 +63,8 @@ public class ImageAsciiExporter implements AsciiExporter<BufferedImage> {
 	 * Create an empty buffered image.
 	 */
 	@Override
-	public void init(final int imageWidth, final int imageHeight) {
-		output = new BufferedImage(imageWidth, imageHeight, BufferedImage.TYPE_INT_ARGB);
+	public void init(final int srcPxWidth, final int srcPxHeight, final int charsWidth, final int charsHeight) {
+		output = new BufferedImage(srcPxWidth, srcPxHeight, BufferedImage.TYPE_INT_ARGB);
 	}
 
 	@Override

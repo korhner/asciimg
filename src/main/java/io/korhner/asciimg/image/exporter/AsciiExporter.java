@@ -18,12 +18,16 @@ public interface AsciiExporter<O> {
 	 * Initializes the inner state of this exporter
 	 * to be ready to call {@link #addCharacter}.
 	 *
-	 * @param imageWidth
+	 * @param srcPxWidth
 	 *            source image width in pixels
-	 * @param imageHeight
+	 * @param srcPxHeight
 	 *            source image height in pixels
+	 * @param charsWidth
+	 *            image width in (ASCII art) characters
+	 * @param charsHeight
+	 *            image height in (ASCII art) characters
 	 */
-	void init(int imageWidth, int imageHeight); // TODO dest size makes more sense, but even that is not an optimal set of args for this method
+	void init(int srcPxWidth, int srcPxHeight, int charsWidth, int charsHeight);
 
 	/**
 	 * Appends one ASCII art character to the internal output.

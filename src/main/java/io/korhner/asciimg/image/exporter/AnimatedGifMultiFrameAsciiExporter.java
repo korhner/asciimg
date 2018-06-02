@@ -54,11 +54,11 @@ public class AnimatedGifMultiFrameAsciiExporter implements MultiFrameAsciiExport
 	 * Called at the beginning of a frame an empty buffered image.
 	 */
 	@Override
-	public void init(final int imageWidth, final int imageHeight) {
+	public void init(final int srcPxWidth, final int srcPxHeight, final int charsWidth, final int charsHeight) {
 
 		frameExporter = new ImageAsciiExporter();
 		frameExporter.setCharacterCache(characterCache);
-		frameExporter.init(imageWidth, imageHeight);
+		frameExporter.init(srcPxWidth, srcPxHeight, charsWidth, charsHeight);
 	}
 
 	/**

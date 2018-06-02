@@ -49,7 +49,7 @@ public class ImageToAsciiConverter implements ToAsciiConverter<BufferedImage> {
 				sourceMatrix, tileSize.width, tileSize.height);
 
 		getExporter().setCharacterCache(getCharacterCache());
-		getExporter().init(truncatedPixelsSize.width, truncatedPixelsSize.height);
+		getExporter().init(truncatedPixelsSize.width, truncatedPixelsSize.height, destCharactersSize.width, destCharactersSize.height);
 
 		// compare each tile to every character to determine best fit
 		for (int i = 0; i < tiledMatrix.getTileCount(); i++) {
