@@ -3,18 +3,27 @@ package io.korhner.asciimg.image.strategy;
 import io.korhner.asciimg.image.matrix.GrayScaleMatrix;
 
 /**
- * Calculates squared mean error between each pixel.
+ * Calculates the squared mean error over all pixels between two images.
  */
 public class ColorSquareErrorFitStrategy implements BestCharacterFitStrategy {
 
 	@Override
 	public float calculateError(final GrayScaleMatrix character, final GrayScaleMatrix tile) {
+
 		float error = 0;
-		for (int i = 0; i < character.getData().length; i++) {
-			error += (character.getData()[i] - tile.getData()[i])
-					* (character.getData()[i] - tile.getData()[i]);
+
+		// calculate sum of squared difference over all character pixels
+		for (int cpx = 0; cpx < character.getWidth(); cpx++) {
+			for (int cpy = 0; cpy < character.getHeight(); cpy++) {
+				final float pixelVal1 = character.getValue(cpx, cpy);
+				final float pixelVal2 = tile.getValue(cpx, cpy);
+
+				final float colorDiff = pixelVal1 - pixelVal2;
+				error += colorDiff * colorDiff;
+			}
 		}
 
-		return error / character.getData().length;
+		final int numPixels = character.getWidth() * character.getHeight();
+		return error / numPixels;
 	}
 }

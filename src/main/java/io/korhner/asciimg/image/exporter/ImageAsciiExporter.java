@@ -37,16 +37,15 @@ public class ImageAsciiExporter implements AsciiExporter<BufferedImage> {
 				* characterCache.getCharacterImageSize().height;
 
 		// copy winner character
-		for (int i = 0; i < characterEntry.getValue().getData().length; i++) {
-			final int xOffset = i % characterCache.getCharacterImageSize().width;
-			final int yOffset = i / characterCache.getCharacterImageSize().width;
-
-			final int component = (int) characterEntry.getValue().getData()[i];
-			sourceImagePixels[ArrayUtils.convert2DTo1D(
-					startCoordinateX + xOffset,
-					startCoordinateY + yOffset,
-					imageWidth)]
-					= new Color(component, component, component).getRGB();
+		for (int cpx = 0; cpx < characterEntry.getValue().getWidth(); cpx++) {
+			for (int cpy = 0; cpy < characterEntry.getValue().getHeight(); cpy++) {
+				final int component = (int) characterEntry.getValue().getValue(cpx, cpy);
+				sourceImagePixels[ArrayUtils.convert2DTo1D(
+						startCoordinateX + cpx,
+						startCoordinateY + cpy,
+						imageWidth)]
+						= new Color(component, component, component).getRGB();
+			}
 		}
 	}
 

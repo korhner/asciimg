@@ -18,18 +18,19 @@ public class StructuralSimilarityFitStrategy implements BestCharacterFitStrategy
 	@Override
 	public float calculateError(final GrayScaleMatrix character, final GrayScaleMatrix tile) {
 
-		final int imgLength = character.getData().length;
-
 		float score = 0f;
-		for (int i = 0; i < imgLength; i++) {
-			final float pixelImg1 = character.getData()[i];
-			final float pixelImg2 = tile.getData()[i];
+		for (int cpx = 0; cpx < character.getWidth(); cpx++) {
+			for (int cpy = 0; cpy < character.getHeight(); cpy++) {
+				final float pixelVal1 = character.getValue(cpx, cpy);
+				final float pixelVal2 = tile.getValue(cpx, cpy);
 
-			score += (2 * pixelImg1 * pixelImg2 + C_1) * (2 + C_2)
-					/ (pixelImg1 * pixelImg1 + pixelImg2 * pixelImg2 + C_1) / C_2;
+				score += (2 * pixelVal1 * pixelVal2 + C_1) * (2 + C_2)
+						/ (pixelVal1 * pixelVal1 + pixelVal2 * pixelVal2 + C_1) / C_2;
+			}
 		}
 
+		final int numPixels = character.getWidth() * character.getHeight();
 		// average and convert score to error
-		return 1 - (score / imgLength);
+		return 1 - (score / numPixels);
 	}
 }

@@ -112,8 +112,17 @@ public class GrayScaleMatrix {
 	 *
 	 * @return pixel array
 	 */
-	public float[] getData() {
+	private float[] getData() {
 		return this.data;
+	}
+
+	/**
+	 * Returns the pixel value at a specified position.
+	 *
+	 * @return pixel gray-scale value
+	 */
+	public float getValue(final int posX, final int posY) {
+		return data[posX + (posY * getWidth())];
 	}
 
 	/**
