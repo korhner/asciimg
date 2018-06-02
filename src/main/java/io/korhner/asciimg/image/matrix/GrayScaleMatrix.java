@@ -101,6 +101,8 @@ public class GrayScaleMatrix {
 	/**
 	 * Returns the pixel value at a specified position.
 	 *
+	 * @param posX x-coordinate of the pixel to fetch
+	 * @param posY y-coordinate of the pixel to fetch
 	 * @return pixel gray-scale value
 	 */
 	public float getValue(final int posX, final int posY) {

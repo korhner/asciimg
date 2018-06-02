@@ -126,6 +126,10 @@ public class NeuQuant {
 
 	/**
 	 * Initialise network input range (0,0,0) to (255,255,255) and set parameters
+	 *
+	 * @param picture the input image itself
+	 * @param lengthCount H*W*3
+	 * @param sampleFac sampling factor 1..30
 	 */
 	public NeuQuant(final byte[] picture, final int lengthCount, final int sampleFac) {
 
@@ -303,7 +307,12 @@ public class NeuQuant {
 	}
 
 	/**
-	 * Search for BGR values 0..255 (after net is unbiased) and return colour index
+	 * Search for BGR values (after net is unbiased).
+	 *
+	 * @param blue intensity of blue 0..255
+	 * @param green intensity of green 0..255
+	 * @param red intensity of red 0..255
+	 * @return colour index
 	 */
 	public int map(final int blue, final int green, final int red) {
 
@@ -397,7 +406,13 @@ public class NeuQuant {
 	}
 
 	/**
-	 * Move adjacent neurons by precomputed alpha*(1-((i-j)^2/[red]^2)) input radPower[|i-j|]
+	 * Move adjacent neurons by precomputed <code>alpha*(1-((i-j)^2/[red]^2)) input radPower[|i-j|]</code>.
+	 *
+	 * @param rad TODO document this
+	 * @param i index of the central neuron
+	 * @param blue TODO document this
+	 * @param green TODO document this
+	 * @param red TODO document this
 	 */
 	protected void alterNeigh(final int rad, final int i, final int blue, final int green, final int red) {
 
@@ -446,7 +461,13 @@ public class NeuQuant {
 	}
 
 	/**
-	 * Move neuron neuronIdx towards biased (blue,green,red) by factor alpha
+	 * Move neuron neuronIdx towards biased (blue,green,red) by factor alpha.
+	 *
+	 * @param alpha how much to move
+	 * @param neuronIdx index of the neuron to be moved
+	 * @param blue blue part of the bias
+	 * @param green green part of the bias
+	 * @param red red part of the bias
 	 */
 	protected void alterSingle(final int alpha, final int neuronIdx, final int blue, final int green, final int red) {
 
@@ -459,6 +480,11 @@ public class NeuQuant {
 
 	/**
 	 * Search for biased BGR values
+	 *
+	 * @param blue intensity of blue 0..255
+	 * @param green intensity of green 0..255
+	 * @param red intensity of red 0..255
+	 * @return position of the best bias
 	 */
 	protected int contest(final int blue, final int green, final int red) {
 

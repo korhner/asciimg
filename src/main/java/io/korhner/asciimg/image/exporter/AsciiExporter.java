@@ -63,7 +63,7 @@ public interface AsciiExporter<O> {
 	void imageEnd(int[] sourceImagePixels, int imageWidth, int imageHeight);
 
 	/**
-	 * Returns the output container.
+	 * @return the output container.
 	 */
 	O getOutput();
 }

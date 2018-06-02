@@ -17,7 +17,8 @@ import java.util.List;
 
 /**
  * Class GifDecoder - Decodes a GIF file into one or more frames.
- * <br><pre>
+ *
+ * <blockquote><pre>{@code
  * Example:
  *    GifDecoder d = new GifDecoder();
  *    d.read("sample.gif");
@@ -27,7 +28,7 @@ import java.util.List;
  *       int t = d.getDelay(i);  // display duration of frame input milliseconds
  *       // do something with frame
  *    }
- * </pre>
+ * }</pre></blockquote>
  * No copyright asserted on the source code of this class.  May be used for
  * any purpose, however, refer to the Unisys LZW patent for any additional
  * restrictions.  Please forward any corrections to questions at fmsware.com.
@@ -263,6 +264,7 @@ public class GifDecoder {
 	/**
 	 * Gets the image contents of frame frameNum.
 	 *
+	 * @param frameNum number of the frame to be fetched
 	 * @return BufferedImage representation of frame, or null if frameNum is invalid.
 	 */
 	public BufferedImage getFrame(final int frameNum) {
@@ -497,7 +499,8 @@ public class GifDecoder {
 	}
 
 	/**
-	 * Returns true if an error was encountered during reading/decoding
+	 * Checks if an error was encountered during reading/decoding
+	 * @return <code>true</code> if an error was encountered, <code>false</code> otherwise
 	 */
 	protected boolean err() {
 		return status != STATUS_OK;
@@ -516,6 +519,7 @@ public class GifDecoder {
 
 	/**
 	 * Reads a single byte from the input stream.
+	 * @return the byte read
 	 */
 	protected int read() {
 		int curByte = 0;
@@ -766,7 +770,8 @@ public class GifDecoder {
 	}
 
 	/**
-	 * Reads next 16-bit value, LSB first
+	 * Reads next 16-bit value, LSB first.
+	 * @return the double-byte read
 	 */
 	protected int readShort() {
 		// read 16-bit value, LSB first

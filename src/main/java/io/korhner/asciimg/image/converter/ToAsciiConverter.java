@@ -33,8 +33,8 @@ public interface ToAsciiConverter<I> {
 	/**
 	 * Produces an output that is an ASCII art of the supplied image.
 	 *
-	 * @param source
-	 *            the source, non-ASCII image
+	 * @param source the source, non-ASCII image
+	 * @throws IOException on any kind of source input error, or output error
 	 */
 	void convert(I source) throws IOException;
 }

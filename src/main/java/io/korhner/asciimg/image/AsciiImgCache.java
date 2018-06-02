@@ -75,10 +75,10 @@ public class AsciiImgCache implements Iterable<Entry<Character, GrayScaleMatrix>
 	}
 
 	/**
-	 * Initialize a new character cache with supplied font.
+	 * Initialize a new character cache with the supplied font.
 	 *
-	 * @param font
-	 *            the font
+	 * @param font the font used for the characters
+	 * @param characters the characters whose images are to be cached
 	 * @return the ASCII img cache
 	 */
 	public static AsciiImgCache create(final Font font, final char[] characters) {
@@ -166,7 +166,10 @@ public class AsciiImgCache implements Iterable<Entry<Character, GrayScaleMatrix>
 		return getImageCache().entrySet().iterator();
 	}
 
-	/** A map of characters to their bitmaps. */
+	/**
+	 * Returns the image cache.
+	 * @return a map of characters to their bitmaps
+	 */
 	protected Map<Character, GrayScaleMatrix> getImageCache() {
 		return imageCache;
 	}
