@@ -1,7 +1,7 @@
 package io.korhner.asciimg.image.converter;
 
 import io.korhner.asciimg.image.AsciiImgCache;
-import io.korhner.asciimg.image.strategy.BestCharacterFitStrategy;
+import io.korhner.asciimg.image.strategy.CharacterFitStrategy;
 import io.korhner.asciimg.image.exporter.AsciiExporter;
 import io.korhner.asciimg.image.exporter.MultiFrameAsciiExporter;
 import io.korhner.asciimg.utils.GifDecoder;
@@ -10,7 +10,7 @@ import java.io.InputStream;
 
 public class GifToAsciiConvert implements ToAsciiConverter<InputStream> {
 
-	private BestCharacterFitStrategy characterFitStrategy;
+	private CharacterFitStrategy characterFitStrategy;
 	private AsciiImgCache characterCache;
 	private MultiFrameAsciiExporter exporter;
 
@@ -38,7 +38,7 @@ public class GifToAsciiConvert implements ToAsciiConverter<InputStream> {
 	}
 
 	@Override
-	public BestCharacterFitStrategy getCharacterFitStrategy() {
+	public CharacterFitStrategy getCharacterFitStrategy() {
 		return this.characterFitStrategy;
 	}
 
@@ -48,7 +48,7 @@ public class GifToAsciiConvert implements ToAsciiConverter<InputStream> {
 	}
 
 	@Override
-	public void setCharacterFitStrategy(final BestCharacterFitStrategy characterFitStrategy) {
+	public void setCharacterFitStrategy(final CharacterFitStrategy characterFitStrategy) {
 		this.characterFitStrategy = characterFitStrategy;
 	}
 

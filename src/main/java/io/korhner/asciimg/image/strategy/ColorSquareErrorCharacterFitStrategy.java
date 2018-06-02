@@ -5,7 +5,7 @@ import io.korhner.asciimg.image.matrix.GrayScaleMatrix;
 /**
  * Calculates the squared mean error over all pixels between two images.
  */
-public class ColorSquareErrorFitStrategy implements BestCharacterFitStrategy {
+public class ColorSquareErrorCharacterFitStrategy implements CharacterFitStrategy {
 
 	@Override
 	public float calculateError(final GrayScaleMatrix character, final GrayScaleMatrix tile) {

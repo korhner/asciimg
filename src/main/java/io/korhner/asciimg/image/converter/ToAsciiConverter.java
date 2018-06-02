@@ -1,7 +1,7 @@
 package io.korhner.asciimg.image.converter;
 
 import io.korhner.asciimg.image.AsciiImgCache;
-import io.korhner.asciimg.image.strategy.BestCharacterFitStrategy;
+import io.korhner.asciimg.image.strategy.CharacterFitStrategy;
 import io.korhner.asciimg.image.exporter.AsciiExporter;
 
 import java.io.IOException;
@@ -20,9 +20,9 @@ public interface ToAsciiConverter<I> {
 	 *
 	 * @return the character fit strategy
 	 */
-	BestCharacterFitStrategy getCharacterFitStrategy();
+	CharacterFitStrategy getCharacterFitStrategy();
 
-	void setCharacterFitStrategy(BestCharacterFitStrategy characterFitStrategy);
+	void setCharacterFitStrategy(CharacterFitStrategy characterFitStrategy);
 
 	void setCharacterCache(AsciiImgCache characterCache);
 

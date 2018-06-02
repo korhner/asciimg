@@ -1,7 +1,7 @@
 package io.korhner.asciimg.image.converter;
 
 import io.korhner.asciimg.image.AsciiImgCache;
-import io.korhner.asciimg.image.strategy.BestCharacterFitStrategy;
+import io.korhner.asciimg.image.strategy.CharacterFitStrategy;
 import io.korhner.asciimg.image.exporter.AsciiExporter;
 import io.korhner.asciimg.image.matrix.GrayScaleMatrix;
 import io.korhner.asciimg.image.matrix.TiledGrayScaleMatrix;
@@ -16,7 +16,7 @@ import java.util.Map.Entry;
  */
 public class ImageToAsciiConverter implements ToAsciiConverter<BufferedImage> {
 
-	private BestCharacterFitStrategy characterFitStrategy;
+	private CharacterFitStrategy characterFitStrategy;
 	private AsciiImgCache characterCache;
 	private AsciiExporter exporter;
 
@@ -81,7 +81,7 @@ public class ImageToAsciiConverter implements ToAsciiConverter<BufferedImage> {
 	}
 
 	@Override
-	public BestCharacterFitStrategy getCharacterFitStrategy() {
+	public CharacterFitStrategy getCharacterFitStrategy() {
 		return this.characterFitStrategy;
 	}
 
@@ -91,7 +91,7 @@ public class ImageToAsciiConverter implements ToAsciiConverter<BufferedImage> {
 	}
 
 	@Override
-	public void setCharacterFitStrategy(final BestCharacterFitStrategy characterFitStrategy) {
+	public void setCharacterFitStrategy(final CharacterFitStrategy characterFitStrategy) {
 		this.characterFitStrategy = characterFitStrategy;
 	}
 

@@ -5,7 +5,7 @@ import io.korhner.asciimg.image.matrix.GrayScaleMatrix;
 /**
  * Encapsulates the algorithm for choosing best fit character.
  */
-public interface BestCharacterFitStrategy {
+public interface CharacterFitStrategy {
 
 	/**
 	 * Returns the error between the character and tile matrices.

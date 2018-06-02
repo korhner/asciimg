@@ -1,8 +1,8 @@
 package io.korhner.asciimg;
 
 import io.korhner.asciimg.image.AsciiImgCache;
-import io.korhner.asciimg.image.strategy.BestCharacterFitStrategy;
-import io.korhner.asciimg.image.strategy.StructuralSimilarityFitStrategy;
+import io.korhner.asciimg.image.strategy.CharacterFitStrategy;
+import io.korhner.asciimg.image.strategy.StructuralSimilarityCharacterFitStrategy;
 import io.korhner.asciimg.image.converter.GifToAsciiConvert;
 import io.korhner.asciimg.image.exporter.AnimatedGifMultiFrameAsciiExporter;
 import org.junit.Test;
@@ -18,7 +18,7 @@ public class GifToAsciiConvertTest {
 		// initialize caches
 		final AsciiImgCache smallFontCache = AsciiImgCache.create(new Font("Courier",Font.BOLD, 6));
 		// initialize ssimStrategy
-		final BestCharacterFitStrategy ssimStrategy = new StructuralSimilarityFitStrategy();
+		final CharacterFitStrategy ssimStrategy = new StructuralSimilarityCharacterFitStrategy();
 		final AnimatedGifMultiFrameAsciiExporter exporter = new AnimatedGifMultiFrameAsciiExporter();
 
 

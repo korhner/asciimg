@@ -1,9 +1,9 @@
 package io.korhner.asciimg;
 
 import io.korhner.asciimg.image.AsciiImgCache;
-import io.korhner.asciimg.image.strategy.BestCharacterFitStrategy;
-import io.korhner.asciimg.image.strategy.ColorSquareErrorFitStrategy;
-import io.korhner.asciimg.image.strategy.StructuralSimilarityFitStrategy;
+import io.korhner.asciimg.image.strategy.CharacterFitStrategy;
+import io.korhner.asciimg.image.strategy.ColorSquareErrorCharacterFitStrategy;
+import io.korhner.asciimg.image.strategy.StructuralSimilarityCharacterFitStrategy;
 import io.korhner.asciimg.image.exporter.ImageAsciiExporter;
 import io.korhner.asciimg.image.converter.ImageToAsciiConverter;
 import io.korhner.asciimg.image.exporter.TextAsciiExporter;
@@ -42,13 +42,13 @@ public class ImageToAsciiConverterTest {
 	private Object convert(
 			final BufferedImage origImage,
 			final String expectedResourcePath,
-			final BestCharacterFitStrategy fitStrategy,
+			final CharacterFitStrategy characterFitStrategy,
 			final AsciiImgCache cache,
 			final ImageToAsciiConverter converter)
 			throws IOException {
 
 		converter.setCharacterCache(cache);
-		converter.setCharacterFitStrategy(fitStrategy);
+		converter.setCharacterFitStrategy(characterFitStrategy);
 		converter.convert(origImage);
 
 		return converter.getExporter().getOutput();
@@ -57,13 +57,13 @@ public class ImageToAsciiConverterTest {
 	private void convertToImageAndCheck(
 			final BufferedImage origImage,
 			final String expectedResourcePath,
-			final BestCharacterFitStrategy fitStrategy,
+			final CharacterFitStrategy characterFitStrategy,
 			final AsciiImgCache cache,
 			final ImageToAsciiConverter converter)
 			throws IOException {
 
 		converter.setCharacterCache(cache);
-		converter.setCharacterFitStrategy(fitStrategy);
+		converter.setCharacterFitStrategy(characterFitStrategy);
 		final ImageAsciiExporter imageAsciiExporter = new ImageAsciiExporter();
 		converter.setExporter(imageAsciiExporter);
 
@@ -86,8 +86,8 @@ public class ImageToAsciiConverterTest {
 	private static AsciiImgCache mediumBlackAndWhiteCache;
 	private static AsciiImgCache largeFontCache;
 	private static BufferedImage portraitImage;
-	private static BestCharacterFitStrategy squareErrorStrategy;
-	private static BestCharacterFitStrategy ssimStrategy;
+	private static CharacterFitStrategy squareErrorStrategy;
+	private static CharacterFitStrategy ssimStrategy;
 	private static ImageToAsciiConverter imageConverter;
 	private static ImageToAsciiConverter stringConverter;
 
@@ -107,8 +107,8 @@ public class ImageToAsciiConverterTest {
 				"/examples/portrait/orig.png"));
 
 		// initialize algorithms
-		squareErrorStrategy = new ColorSquareErrorFitStrategy();
-		ssimStrategy = new StructuralSimilarityFitStrategy();
+		squareErrorStrategy = new ColorSquareErrorCharacterFitStrategy();
+		ssimStrategy = new StructuralSimilarityCharacterFitStrategy();
 
 		// initialize converters
 		imageConverter = new ImageToAsciiConverter();

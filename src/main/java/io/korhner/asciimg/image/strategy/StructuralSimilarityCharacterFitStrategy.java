@@ -7,7 +7,7 @@ import io.korhner.asciimg.image.matrix.GrayScaleMatrix;
  *
  * See http://en.wikipedia.org/wiki/Structural_similarity for more info.
  */
-public class StructuralSimilarityFitStrategy implements BestCharacterFitStrategy {
+public class StructuralSimilarityCharacterFitStrategy implements CharacterFitStrategy {
 
 	private static final float K_1 = 0.01f;
 	private static final float K_2 = 0.03f;
