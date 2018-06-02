@@ -9,13 +9,7 @@ import io.korhner.asciimg.utils.ArrayUtils;
 public class GrayScaleMatrix {
 
 	/** Gray-scale pixel data. Values are between 0.0f and 255.0f. */
-	private final float[] data;
-
-	/** Image width. */
-	private final int width;
-
-	/** Image height. */
-	private final int height;
+	private final float[][] data;
 
 	/**
 	 * Creates a new matrix from a sub region.
@@ -35,19 +29,16 @@ public class GrayScaleMatrix {
 	public static GrayScaleMatrix createFromRegion(
 			final GrayScaleMatrix source, final int width, final int height,
 			final int startPixelX, final int startPixelY) {
-		if (width <= 0 || height <= 0 || width > source.width || height > source.height) {
+		if (width <= 0 || height <= 0 || width > source.getWidth() || height > source.getHeight()) {
 			throw new IllegalArgumentException("Illegal sub region size!");
 		}
 
 		final GrayScaleMatrix output = new GrayScaleMatrix(width, height);
 
-		for (int i = 0; i < output.data.length; i++) {
-			final int xOffset = i % width;
-			final int yOffset = i / width;
-
-			final int index = ArrayUtils.convert2DTo1D(startPixelX + xOffset,
-					startPixelY + yOffset, source.width);
-			output.data[i] = source.data[index];
+		for (int cpx = 0; cpx < width; cpx++) {
+			for (int cpy = 0; cpy < height; cpy++) {
+				output.data[cpx][cpy] = source.data[startPixelX + cpx][startPixelY + cpy];
+			}
 		}
 
 		return output;
@@ -62,9 +53,7 @@ public class GrayScaleMatrix {
 	 *            image height
 	 */
 	public GrayScaleMatrix(final int width, final int height) {
-		this.data = new float[width * height];
-		this.width = width;
-		this.height = height;
+		this.data = new float[width][height];
 	}
 
 	/**
@@ -85,8 +74,10 @@ public class GrayScaleMatrix {
 					"Pixels array does not match specified width and height!");
 		}
 
-		for (int i = 0; i < this.data.length; i++) {
-			this.data[i] = convertRGBToGrayScale(pixels[i]);
+		for (int cpx = 0; cpx < width; cpx++) {
+			for (int cpy = 0; cpy < height; cpy++) {
+				data[cpx][cpy] = convertRGBToGrayScale(pixels[ArrayUtils.convert2DTo1D(cpx, cpy, width)]);
+			}
 		}
 	}
 
@@ -108,21 +99,12 @@ public class GrayScaleMatrix {
 	}
 
 	/**
-	 * Gets a reference to pixel array.
-	 *
-	 * @return pixel array
-	 */
-	private float[] getData() {
-		return this.data;
-	}
-
-	/**
 	 * Returns the pixel value at a specified position.
 	 *
 	 * @return pixel gray-scale value
 	 */
 	public float getValue(final int posX, final int posY) {
-		return data[posX + (posY * getWidth())];
+		return data[posX][posY];
 	}
 
 	/**
@@ -131,7 +113,7 @@ public class GrayScaleMatrix {
 	 * @return the height
 	 */
 	public int getHeight() {
-		return this.height;
+		return data[0].length;
 	}
 
 	/**
@@ -140,6 +122,6 @@ public class GrayScaleMatrix {
 	 * @return image width
 	 */
 	public int getWidth() {
-		return this.width;
+		return data.length;
 	}
 }
