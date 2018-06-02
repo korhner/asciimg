@@ -97,7 +97,7 @@ public class GrayScaleMatrix {
 	 *            ARGB color
 	 * @return gray-scale float with value between 0.0f and 255.0f.
 	 */
-	private float convertRGBToGrayScale(final int rgbColor) {
+	private static float convertRGBToGrayScale(final int rgbColor) {
 		// extract components
 		final int red = (rgbColor >> 16) & 0xFF;
 		final int green = (rgbColor >> 8) & 0xFF;
