@@ -48,7 +48,7 @@ public class GifToAsciiConvertTest {
 		final InputStream expectedSrc = getClass().getResourceAsStream(expectedResourcePath);
 		final byte[] expected = ImageToAsciiConverterTest.readFully(expectedSrc);
 
-		// it is very unlikely that we will get the exact same result, so we can ot test like this
+		// it is very unlikely that we will get the exact same result, so we can not test like this
 //		Assert.assertArrayEquals("generated and expected animated giff differ", expected, actual);
 	}
 }
