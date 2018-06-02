@@ -320,28 +320,14 @@ public class GifDecoder {
 	 * @return read status code (0 = no errors)
 	 */
 	public int read(final InputStream inp) {
-		init();
-		if (inp == null) {
-			status = STATUS_OPEN_ERROR;
+
+		BufferedInputStream binp;
+		if (inp instanceof BufferedInputStream) {
+			binp = (BufferedInputStream) inp;
 		} else {
-			if (inp instanceof BufferedInputStream) {
-				this.input = (BufferedInputStream) inp;
-			} else {
-				this.input = new BufferedInputStream(inp);
-			}
-			readHeader();
-			if (!err()) {
-				readContents();
-				if (frameCount < 0) {
-					status = STATUS_FORMAT_ERROR;
-				}
-			}
-			try {
-				inp.close();
-			} catch (final IOException exc) {
-			}
+			binp = new BufferedInputStream(inp);
 		}
-		return status;
+		return read(binp);
 	}
 
 	/**

@@ -1,8 +1,5 @@
 package io.korhner.asciimg.image.converter;
 
-import io.korhner.asciimg.image.AsciiImgCache;
-import io.korhner.asciimg.image.strategy.CharacterFitStrategy;
-import io.korhner.asciimg.image.exporter.AsciiExporter;
 import io.korhner.asciimg.image.matrix.GrayScaleMatrix;
 import io.korhner.asciimg.image.matrix.TiledGrayScaleMatrix;
 import io.korhner.asciimg.utils.ArrayUtils;
@@ -14,11 +11,7 @@ import java.util.Map.Entry;
  * A class used to convert an image to an ASCII art. Output and conversion
  * algorithm are decoupled.
  */
-public class ImageToAsciiConverter implements ToAsciiConverter<BufferedImage> {
-
-	private CharacterFitStrategy characterFitStrategy;
-	private AsciiImgCache characterCache;
-	private AsciiExporter exporter;
+public class ImageToAsciiConverter extends AbstractToAsciiConverter<BufferedImage> {
 
 	public ImageToAsciiConverter() {}
 
@@ -78,34 +71,5 @@ public class ImageToAsciiConverter implements ToAsciiConverter<BufferedImage> {
 		}
 
 		getExporter().imageEnd(imagePixels, truncatedPixelsSize.width, truncatedPixelsSize.height);
-	}
-
-	@Override
-	public CharacterFitStrategy getCharacterFitStrategy() {
-		return this.characterFitStrategy;
-	}
-
-	@Override
-	public void setCharacterCache(final AsciiImgCache characterCache) {
-		this.characterCache = characterCache;
-	}
-
-	@Override
-	public void setCharacterFitStrategy(final CharacterFitStrategy characterFitStrategy) {
-		this.characterFitStrategy = characterFitStrategy;
-	}
-
-	protected AsciiImgCache getCharacterCache() {
-		return characterCache;
-	}
-
-	@Override
-	public AsciiExporter getExporter() {
-		return exporter;
-	}
-
-	@Override
-	public void setExporter(final AsciiExporter exporter) {
-		this.exporter = exporter;
 	}
 }

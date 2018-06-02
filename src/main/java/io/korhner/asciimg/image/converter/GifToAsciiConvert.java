@@ -1,18 +1,12 @@
 package io.korhner.asciimg.image.converter;
 
-import io.korhner.asciimg.image.AsciiImgCache;
-import io.korhner.asciimg.image.strategy.CharacterFitStrategy;
 import io.korhner.asciimg.image.exporter.AsciiExporter;
 import io.korhner.asciimg.image.exporter.MultiFrameAsciiExporter;
 import io.korhner.asciimg.utils.GifDecoder;
 import java.io.IOException;
 import java.io.InputStream;
 
-public class GifToAsciiConvert implements ToAsciiConverter<InputStream> {
-
-	private CharacterFitStrategy characterFitStrategy;
-	private AsciiImgCache characterCache;
-	private MultiFrameAsciiExporter exporter;
+public class GifToAsciiConvert extends AbstractToAsciiConverter<InputStream> {
 
 	public GifToAsciiConvert() {}
 
@@ -25,6 +19,7 @@ public class GifToAsciiConvert implements ToAsciiConverter<InputStream> {
 		}
 		// initialize converters
 		final int frameCount = decoder.getFrameCount();
+		final MultiFrameAsciiExporter exporter = (MultiFrameAsciiExporter) getExporter();
 		exporter.setCharacterCache(getCharacterCache());
 		exporter.initFrames(frameCount);
 		for (int i = 0; i < frameCount; i++) {
@@ -38,36 +33,11 @@ public class GifToAsciiConvert implements ToAsciiConverter<InputStream> {
 	}
 
 	@Override
-	public CharacterFitStrategy getCharacterFitStrategy() {
-		return this.characterFitStrategy;
-	}
-
-	@Override
-	public void setCharacterCache(final AsciiImgCache characterCache) {
-		this.characterCache = characterCache;
-	}
-
-	@Override
-	public void setCharacterFitStrategy(final CharacterFitStrategy characterFitStrategy) {
-		this.characterFitStrategy = characterFitStrategy;
-	}
-
-	protected AsciiImgCache getCharacterCache() {
-		return characterCache;
-	}
-
-	@Override
-	public AsciiExporter getExporter() {
-		return exporter;
-	}
-
-	@Override
 	public void setExporter(final AsciiExporter exporter) {
 
-		if (exporter instanceof MultiFrameAsciiExporter) {
-			this.exporter = (MultiFrameAsciiExporter) exporter;
-		} else {
+		if (!(exporter instanceof MultiFrameAsciiExporter)) {
 			throw new IllegalArgumentException("We need an instance of " + MultiFrameAsciiExporter.class.getSimpleName());
 		}
+		super.setExporter(exporter);
 	}
 }
