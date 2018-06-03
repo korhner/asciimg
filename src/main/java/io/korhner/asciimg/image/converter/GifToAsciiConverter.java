@@ -6,9 +6,9 @@ import io.korhner.asciimg.utils.GifDecoder;
 import java.io.IOException;
 import java.io.InputStream;
 
-public class GifToAsciiConvert extends AbstractToAsciiConverter<InputStream> {
+public class GifToAsciiConverter extends AbstractToAsciiConverter<InputStream> {
 
-	public GifToAsciiConvert() {}
+	public GifToAsciiConverter() {}
 
 	@Override
 	public void convert(final InputStream source) throws IOException {

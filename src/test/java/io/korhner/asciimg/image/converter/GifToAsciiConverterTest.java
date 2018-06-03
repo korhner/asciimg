@@ -3,14 +3,14 @@ package io.korhner.asciimg;
 import io.korhner.asciimg.image.AsciiImgCache;
 import io.korhner.asciimg.image.strategy.CharacterFitStrategy;
 import io.korhner.asciimg.image.strategy.StructuralSimilarityCharacterFitStrategy;
-import io.korhner.asciimg.image.converter.GifToAsciiConvert;
+import io.korhner.asciimg.image.converter.GifToAsciiConverter;
 import io.korhner.asciimg.image.exporter.AnimatedGifMultiFrameAsciiExporter;
 import org.junit.Test;
 
 import java.awt.Font;
 import java.io.*;
 
-public class GifToAsciiConvertTest {
+public class GifToAsciiConverterTest {
 
 	@Test
 	public void testAnimationConversion() throws IOException {
@@ -27,7 +27,7 @@ public class GifToAsciiConvertTest {
 		final int delay = 100; // ms
 		final int repeat = 0; // times
 
-		final GifToAsciiConvert asciiConvert = new GifToAsciiConvert();
+		final GifToAsciiConverter asciiConvert = new GifToAsciiConverter();
 		asciiConvert.setCharacterFitStrategy(ssimStrategy);
 		asciiConvert.setCharacterCache(smallFontCache);
 		asciiConvert.setExporter(exporter);
