@@ -418,9 +418,9 @@ public class AnimatedGifEncoder {
 
 		// packed fields
 		out.write(
-				0 | // 1:3 reserved
+//				0 | // 1:3 reserved
 				dis | // 4:6 disposal
-				0 | // 7   user input - 0 = none
+//				0 | // 7   user input - 0 = none
 				trans); // 8   transparency flag
 
 		writeShort(delay); // delay x 1/100 sec

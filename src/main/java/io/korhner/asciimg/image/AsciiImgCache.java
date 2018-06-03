@@ -19,7 +19,7 @@ import java.util.Map.Entry;
  * Character cache that keeps a map of pre-calculated pixel data of each
  * character that is eligible for ASCII art.
  */
-public class AsciiImgCache implements Iterable<Entry<Character, GrayScaleMatrix>> {
+public final class AsciiImgCache implements Iterable<Entry<Character, GrayScaleMatrix>> {
 
 	private final Map<Character, GrayScaleMatrix> imageCache;
 
@@ -87,7 +87,7 @@ public class AsciiImgCache implements Iterable<Entry<Character, GrayScaleMatrix>
 		final Map<Character, GrayScaleMatrix> imageCache = createCharacterImages(
 				font, maxCharacterImageSize, characters);
 
-		return new AsciiImgCache(maxCharacterImageSize, imageCache, characters);
+		return new AsciiImgCache(maxCharacterImageSize, imageCache);
 
 	}
 
@@ -142,10 +142,7 @@ public class AsciiImgCache implements Iterable<Entry<Character, GrayScaleMatrix>
 	 * @param imageCache
 	 *            the image cache
 	 */
-	private AsciiImgCache(
-			final Dimension characterImageSize,
-			final Map<Character, GrayScaleMatrix> imageCache,
-			final char[] characters) {
+	private AsciiImgCache(final Dimension characterImageSize, final Map<Character, GrayScaleMatrix> imageCache) {
 		this.characterImageSize = characterImageSize;
 		this.imageCache = imageCache;
 	}

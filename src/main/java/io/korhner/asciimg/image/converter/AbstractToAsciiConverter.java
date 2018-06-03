@@ -15,6 +15,8 @@ public abstract class AbstractToAsciiConverter<I> implements ToAsciiConverter<I>
 	private AsciiImgCache characterCache;
 	private AsciiExporter exporter;
 
+	protected AbstractToAsciiConverter() { }
+
 	@Override
 	public CharacterFitStrategy getCharacterFitStrategy() {
 		return this.characterFitStrategy;
