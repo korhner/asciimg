@@ -8,8 +8,8 @@ import java.awt.image.BufferedImage;
 import java.util.Map.Entry;
 
 /**
- * A class used to convert an image to an ASCII art. Output and conversion
- * algorithm are decoupled.
+ * A class used to convert an image to an ASCII art.
+ * Output and conversion algorithm are decoupled.
  */
 public class ImageToAsciiConverter extends AbstractToAsciiConverter<BufferedImage> {
 
@@ -25,7 +25,7 @@ public class ImageToAsciiConverter extends AbstractToAsciiConverter<BufferedImag
 		final Dimension destCharactersSize = new Dimension(
 				sourcePixelsSize.width / tileSize.width,
 				sourcePixelsSize.height / tileSize.height);
-		// destination image width and height, truncated, so we avoid partial characters
+		// destination image width and height; truncated, so we avoid partial characters
 		final Dimension truncatedPixelsSize = new Dimension(
 				destCharactersSize.width * tileSize.width,
 				destCharactersSize.height * tileSize.height);

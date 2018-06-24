@@ -18,6 +18,5 @@ public interface CharacterFitStrategy {
 	 * @return error. Less values mean better fit. Least value character will be
 	 *         chosen as best fit.
 	 */
-	float calculateError(final GrayScaleMatrix character,
-			final GrayScaleMatrix tile);
+	float calculateError(final GrayScaleMatrix character, final GrayScaleMatrix tile);
 }

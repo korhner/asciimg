@@ -88,7 +88,6 @@ public final class AsciiImgCache implements Iterable<Entry<Character, GrayScaleM
 				font, maxCharacterImageSize, characters);
 
 		return new AsciiImgCache(maxCharacterImageSize, imageCache);
-
 	}
 
 	/**
