@@ -1,9 +1,8 @@
-package io.korhner.asciimg;
+package io.korhner.asciimg.image.converter;
 
 import io.korhner.asciimg.image.AsciiImgCache;
 import io.korhner.asciimg.image.strategy.CharacterFitStrategy;
 import io.korhner.asciimg.image.strategy.StructuralSimilarityCharacterFitStrategy;
-import io.korhner.asciimg.image.converter.GifToAsciiConverter;
 import io.korhner.asciimg.image.exporter.AnimatedGifMultiFrameAsciiExporter;
 import org.junit.Test;
 

@@ -1,11 +1,10 @@
-package io.korhner.asciimg;
+package io.korhner.asciimg.image.converter;
 
 import io.korhner.asciimg.image.AsciiImgCache;
 import io.korhner.asciimg.image.strategy.CharacterFitStrategy;
 import io.korhner.asciimg.image.strategy.ColorSquareErrorCharacterFitStrategy;
 import io.korhner.asciimg.image.strategy.StructuralSimilarityCharacterFitStrategy;
 import io.korhner.asciimg.image.exporter.ImageAsciiExporter;
-import io.korhner.asciimg.image.converter.ImageToAsciiConverter;
 import io.korhner.asciimg.image.exporter.TextAsciiExporter;
 import org.junit.BeforeClass;
 import org.junit.Test;
