@@ -43,7 +43,7 @@ public class ImageToAsciiConverterTest {
 			final String expectedResourcePath,
 			final CharacterFitStrategy characterFitStrategy,
 			final AsciiImgCache cache,
-			final ImageToAsciiConverter converter)
+			final BufferedImageToAsciiConverter converter)
 			throws IOException {
 
 		converter.setCharacterCache(cache);
@@ -58,7 +58,7 @@ public class ImageToAsciiConverterTest {
 			final String expectedResourcePath,
 			final CharacterFitStrategy characterFitStrategy,
 			final AsciiImgCache cache,
-			final ImageToAsciiConverter converter)
+			final BufferedImageToAsciiConverter converter)
 			throws IOException {
 
 		converter.setCharacterCache(cache);
@@ -87,8 +87,8 @@ public class ImageToAsciiConverterTest {
 	private static BufferedImage portraitImage;
 	private static CharacterFitStrategy squareErrorStrategy;
 	private static CharacterFitStrategy ssimStrategy;
-	private static ImageToAsciiConverter imageConverter;
-	private static ImageToAsciiConverter stringConverter;
+	private static BufferedImageToAsciiConverter imageConverter;
+	private static BufferedImageToAsciiConverter stringConverter;
 
 	@BeforeClass
 	public static void imagesConversion() throws IOException {
@@ -110,8 +110,8 @@ public class ImageToAsciiConverterTest {
 		ssimStrategy = new StructuralSimilarityCharacterFitStrategy();
 
 		// initialize converters
-		imageConverter = new ImageToAsciiConverter();
-		stringConverter = new ImageToAsciiConverter();
+		imageConverter = new BufferedImageToAsciiConverter();
+		stringConverter = new BufferedImageToAsciiConverter();
 	}
 
 	@Test

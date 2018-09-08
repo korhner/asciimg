@@ -23,7 +23,7 @@ public class GifToAsciiConverter extends AbstractToAsciiConverter<InputStream> {
 		exporter.setCharacterCache(getCharacterCache());
 		exporter.initFrames(frameCount);
 		for (int i = 0; i < frameCount; i++) {
-			final ImageToAsciiConverter frameConverter = new ImageToAsciiConverter();
+			final BufferedImageToAsciiConverter frameConverter = new BufferedImageToAsciiConverter();
 			frameConverter.setCharacterFitStrategy(getCharacterFitStrategy());
 			frameConverter.setCharacterCache(getCharacterCache());
 			frameConverter.setExporter(exporter);

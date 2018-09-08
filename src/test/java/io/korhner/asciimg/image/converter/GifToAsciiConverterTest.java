@@ -21,7 +21,7 @@ public class GifToAsciiConverterTest {
 		final AnimatedGifMultiFrameAsciiExporter exporter = new AnimatedGifMultiFrameAsciiExporter();
 
 
-		final String origiResourcePath = "/examples/animation/orig.gif";
+		final String originResourcePath = "/examples/animation/orig.gif";
 		final String expectedResourcePath = "/examples/animation/converted.gif";
 		final int delay = 100; // ms
 		final int repeat = 0; // times
@@ -33,7 +33,7 @@ public class GifToAsciiConverterTest {
 		exporter.setDelay(delay);
 		exporter.setRepeat(repeat);
 
-		final InputStream origSrc = getClass().getResourceAsStream(origiResourcePath);
+		final InputStream origSrc = getClass().getResourceAsStream(originResourcePath);
 		asciiConvert.convert(origSrc);
 		final byte[] actual = exporter.getOutput();
 		if (ImageToAsciiConverterTest.DEBUG) {

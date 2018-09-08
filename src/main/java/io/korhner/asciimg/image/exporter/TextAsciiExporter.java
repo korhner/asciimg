@@ -1,7 +1,9 @@
 package io.korhner.asciimg.image.exporter;
 
 import io.korhner.asciimg.image.AsciiImgCache;
-import io.korhner.asciimg.image.matrix.GrayScaleMatrix;
+import io.korhner.asciimg.image.matrix.ImageMatrix;
+import io.korhner.asciimg.image.matrix.TiledImageMatrix;
+
 import java.util.Map.Entry;
 
 /**
@@ -21,28 +23,29 @@ public class TextAsciiExporter implements AsciiExporter<String> {
 	}
 
 	@Override
-	public void init(final int srcPxWidth, final int srcPxHeight, final int charsWidth, final int charsHeight, final int[] sourceImagePixels, final int imageWidth) {
+	public void init(final TiledImageMatrix<?> source) {
 
-		this.imageWidth = imageWidth;
-		output = new StringBuilder(charsWidth * charsHeight);
+		this.imageWidth = source.getTileWidth() * source.getTilesX();
+		// each tile and each new-line is a char
+		output = new StringBuilder(source.getTileCount() + source.getTilesY());
 	}
 
 	@Override
-	public void imageEnd(final int imageWidth, final int imageHeight) {}
+	public void imageEnd() {}
 
 	/**
 	 * Append chosen character to the output buffer.
 	 */
 	@Override
 	public void addCharacter(
-			final Entry<Character, GrayScaleMatrix> characterEntry,
+			final Entry<Character, ImageMatrix<Short>> characterEntry,
 			final int tileX,
-			final int tileY) {
-
+			final int tileY)
+	{
 		output.append(characterEntry.getKey());
 
 		// append new line at the end of the row
-		if ((tileX + 1) * characterCache.getCharacterImageSize().width == imageWidth) {
+		if ((tileX + 1) * characterCache.getCharacterImageSize().getWidth() == imageWidth) {
 			output.append(System.lineSeparator());
 		}
 	}

@@ -1,59 +1,41 @@
 package io.korhner.asciimg.image.converter;
 
-import io.korhner.asciimg.image.matrix.GrayScaleMatrix;
-import io.korhner.asciimg.image.matrix.TiledGrayScaleMatrix;
+import io.korhner.asciimg.image.matrix.*;
 import io.korhner.asciimg.utils.ArrayUtils;
-import java.awt.Dimension;
-import java.awt.image.BufferedImage;
 import java.util.Map.Entry;
 
 /**
- * A class used to convert an image to an ASCII art.
+ * A class used to convert an abstract 32bit ARGB image to an ASCII art.
  * Output and conversion algorithm are decoupled.
  */
-public class ImageToAsciiConverter extends AbstractToAsciiConverter<BufferedImage> {
+public class ImageToAsciiConverter extends AbstractToAsciiConverter<ImageMatrix<Short>> {
 
 	public ImageToAsciiConverter() {}
 
 	@Override
-	public void convert(final BufferedImage source) {
+	public void convert(final ImageMatrix<Short> source) {
+
 		// dimension of each tile
-		final Dimension tileSize = this.getCharacterCache().getCharacterImageSize();
-
-		final Dimension sourcePixelsSize = new Dimension(source.getWidth(), source.getHeight());
-		// the number of characters that fit fully into the source image
-		final Dimension destCharactersSize = new Dimension(
-				sourcePixelsSize.width / tileSize.width,
-				sourcePixelsSize.height / tileSize.height);
-		// destination image width and height; truncated, so we avoid partial characters
-		final Dimension truncatedPixelsSize = new Dimension(
-				destCharactersSize.width * tileSize.width,
-				destCharactersSize.height * tileSize.height);
-
-		// extract pixels from source image
-		final int[] imagePixels = source.getRGB(
-				0, 0, truncatedPixelsSize.width, truncatedPixelsSize.height, null, 0, truncatedPixelsSize.width);
-
-		// process the pixels to a gray-scale matrix
-		final GrayScaleMatrix sourceMatrix = new GrayScaleMatrix(imagePixels, truncatedPixelsSize.width, truncatedPixelsSize.height);
+		final ImageMatrixDimensions tileSize = this.getCharacterCache().getCharacterImageSize();
 
 		// divide matrix into tiles for easy processing
-		final TiledGrayScaleMatrix tiledMatrix = new TiledGrayScaleMatrix(
-				sourceMatrix, tileSize.width, tileSize.height);
+		final ReferencingTiledImageMatrix<Short> tiledMatrix = new ReferencingTiledImageMatrix<>(
+				source.getMetaData(), source, tileSize);
 
 		getExporter().setCharacterCache(getCharacterCache());
-		getExporter().init(truncatedPixelsSize.width, truncatedPixelsSize.height, destCharactersSize.width, destCharactersSize.height, imagePixels, truncatedPixelsSize.width);
+		getExporter().init(tiledMatrix);
 
 		// compare each tile to every character to determine best fit
+		// XXX This could be speed up (in case of a large character set), by arranging characters in a tree, with the non-leafs being lower-resolution representations of their children. this requires creating a lower-resolution version of each tile, though.
 		for (int i = 0; i < tiledMatrix.getTileCount(); i++) {
 
-			final GrayScaleMatrix tile = tiledMatrix.getTile(i);
+			final ImageMatrix<Short> tile = tiledMatrix.getTile(i);
 
 			float minError = Float.MAX_VALUE;
-			Entry<Character, GrayScaleMatrix> bestFit = null;
+			Entry<Character, ImageMatrix<Short>> bestFit = null;
 
-			for (final Entry<Character, GrayScaleMatrix> charImage : getCharacterCache()) {
-				final GrayScaleMatrix charPixels = charImage.getValue();
+			for (final Entry<Character, ImageMatrix<Short>> charImage : getCharacterCache()) {
+				final ImageMatrix<Short> charPixels = charImage.getValue();
 
 				final float error = this.getCharacterFitStrategy().calculateError(charPixels, tile);
 
@@ -70,6 +52,6 @@ public class ImageToAsciiConverter extends AbstractToAsciiConverter<BufferedImag
 			getExporter().addCharacter(bestFit, tileX, tileY);
 		}
 
-		getExporter().imageEnd(truncatedPixelsSize.width, truncatedPixelsSize.height);
+		getExporter().imageEnd();
 	}
 }

@@ -1,7 +1,8 @@
 package io.korhner.asciimg.image.exporter;
 
 import io.korhner.asciimg.image.AsciiImgCache;
-import io.korhner.asciimg.image.matrix.GrayScaleMatrix;
+import io.korhner.asciimg.image.matrix.ImageMatrix;
+import io.korhner.asciimg.image.matrix.TiledImageMatrix;
 import io.korhner.asciimg.utils.ArrayUtils;
 import java.awt.Color;
 import java.awt.image.BufferedImage;
@@ -13,8 +14,9 @@ import java.util.Map.Entry;
 public class ImageAsciiExporter implements AsciiExporter<BufferedImage> {
 
 	private AsciiImgCache characterCache;
-	private int[] sourceImagePixels;
 	private int imageWidth;
+	private int imageHeight;
+	private int[] outputImagePixels;
 	private BufferedImage output;
 
 	public ImageAsciiExporter() {}
@@ -29,17 +31,18 @@ public class ImageAsciiExporter implements AsciiExporter<BufferedImage> {
 	 */
 	@Override
 	public void addCharacter(
-			final Entry<Character, GrayScaleMatrix> characterEntry,
+			final Entry<Character, ImageMatrix<Short>> characterEntry,
 			final int tileX,
-			final int tileY) {
-		final int startCoordinateX = tileX * characterCache.getCharacterImageSize().width;
-		final int startCoordinateY = tileY * characterCache.getCharacterImageSize().height;
+			final int tileY)
+	{
+		final int startCoordinateX = tileX * characterCache.getCharacterImageSize().getWidth();
+		final int startCoordinateY = tileY * characterCache.getCharacterImageSize().getHeight();
 
 		// copy winner character
-		for (int cpx = 0; cpx < characterEntry.getValue().getWidth(); cpx++) {
-			for (int cpy = 0; cpy < characterEntry.getValue().getHeight(); cpy++) {
+		for (int cpx = 0; cpx < characterEntry.getValue().getDimensions().getWidth(); cpx++) {
+			for (int cpy = 0; cpy < characterEntry.getValue().getDimensions().getHeight(); cpy++) {
 				final int component = (int) characterEntry.getValue().getValue(cpx, cpy);
-				sourceImagePixels[ArrayUtils.convert2DTo1D(
+				outputImagePixels[ArrayUtils.convert2DTo1D(
 						startCoordinateX + cpx,
 						startCoordinateY + cpy,
 						imageWidth)]
@@ -52,8 +55,8 @@ public class ImageAsciiExporter implements AsciiExporter<BufferedImage> {
 	 * Write pixels to output image.
 	 */
 	@Override
-	public void imageEnd(final int imageWidth, final int imageHeight) {
-		this.getOutput().setRGB(0, 0, imageWidth, imageHeight, sourceImagePixels, 0, imageWidth);
+	public void imageEnd() {
+		this.getOutput().setRGB(0, 0, imageWidth, imageHeight, outputImagePixels, 0, imageWidth);
 
 	}
 
@@ -61,11 +64,12 @@ public class ImageAsciiExporter implements AsciiExporter<BufferedImage> {
 	 * Create an empty buffered image.
 	 */
 	@Override
-	public void init(final int srcPxWidth, final int srcPxHeight, final int charsWidth, final int charsHeight, final int[] sourceImagePixels, final int imageWidth) {
+	public void init(final TiledImageMatrix<?> source) {
 
-		this.sourceImagePixels = sourceImagePixels;
-		this.imageWidth = imageWidth;
-		output = new BufferedImage(srcPxWidth, srcPxHeight, BufferedImage.TYPE_INT_ARGB);
+		this.imageWidth = source.getImageDimensions().getWidth();
+		this.imageHeight = source.getImageDimensions().getHeight();
+		this.outputImagePixels = new int[imageWidth * imageHeight];
+		this.output = new BufferedImage(imageWidth, imageHeight, BufferedImage.TYPE_INT_ARGB);
 	}
 
 	@Override

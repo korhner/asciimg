@@ -1,8 +1,8 @@
 package io.korhner.asciimg.image;
 
-import io.korhner.asciimg.image.matrix.GrayScaleMatrix;
+import io.korhner.asciimg.image.matrix.*;
+
 import java.awt.Color;
-import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.FontMetrics;
 import java.awt.Graphics2D;
@@ -19,16 +19,16 @@ import java.util.Map.Entry;
  * Character cache that keeps a map of pre-calculated pixel data of each
  * character that is eligible for ASCII art.
  */
-public final class AsciiImgCache implements Iterable<Entry<Character, GrayScaleMatrix>> {
+public final class AsciiImgCache implements Iterable<Entry<Character, ImageMatrix<Short>>> {
 
-	private final Map<Character, GrayScaleMatrix> imageCache;
+	private final Map<Character, ImageMatrix<Short>> imageCache;
 
 	/** Some empirically chosen characters that give good results. */
 	private static final char[] DEFAULT_CHARACTERS
 			= "$@B%8&WM#*oahkbdpqwmZO0QLCJUYXzcvunxrjft/\\|()1{}[]?-_+~<>i!lI;:,\"^`'. ".toCharArray();
 
 	/** Dimension of character image data. */
-	private final Dimension characterImageSize;
+	private final ImageMatrixDimensions characterImageSize;
 
 	/**
 	 * Calculate character rectangle for the given font metrics.
@@ -36,30 +36,31 @@ public final class AsciiImgCache implements Iterable<Entry<Character, GrayScaleM
 	 * @param font used to calculate the font metrics
 	 * @return the rectangle
 	 */
-	private static Dimension calculateCharacterRectangle(final Font font, final char[] characters) {
+	private static ImageMatrixDimensions calculateCharacterRectangle(final Font font, final char[] characters) {
 		final BufferedImage img = new BufferedImage(1, 1, BufferedImage.TYPE_INT_ARGB);
 		final Graphics2D graphics2D = (Graphics2D) img.getGraphics();
 		graphics2D.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING, RenderingHints.VALUE_TEXT_ANTIALIAS_ON);
 		graphics2D.setFont(font);
 		final FontMetrics fontMetrics = graphics2D.getFontMetrics();
 
-		final Dimension maxCharacter = new Dimension();
+		int maxCharacterWidth = 0;
+		int maxCharacterHeight = 0;
 		for (final char chr : characters) {
 			final String character = Character.toString(chr);
 
 			final Rectangle characterRectangle = new TextLayout(character, fontMetrics.getFont(),
 					fontMetrics.getFontRenderContext()).getOutline(null).getBounds();
 
-			if (maxCharacter.width < characterRectangle.getWidth()) {
-				maxCharacter.width = (int) characterRectangle.getWidth();
+			if (maxCharacterWidth < characterRectangle.getWidth()) {
+				maxCharacterWidth = (int) characterRectangle.getWidth();
 			}
 
-			if (maxCharacter.height < characterRectangle.getHeight()) {
-				maxCharacter.height = (int) characterRectangle.getHeight();
+			if (maxCharacterHeight < characterRectangle.getHeight()) {
+				maxCharacterHeight = (int) characterRectangle.getHeight();
 			}
 		}
 
-		return maxCharacter;
+		return new ImageMatrixDimensions(maxCharacterWidth, maxCharacterHeight);
 	}
 
 	/**
@@ -83,8 +84,8 @@ public final class AsciiImgCache implements Iterable<Entry<Character, GrayScaleM
 	 */
 	public static AsciiImgCache create(final Font font, final char[] characters) {
 
-		final Dimension maxCharacterImageSize = calculateCharacterRectangle(font, characters);
-		final Map<Character, GrayScaleMatrix> imageCache = createCharacterImages(
+		final ImageMatrixDimensions maxCharacterImageSize = calculateCharacterRectangle(font, characters);
+		final Map<Character, ImageMatrix<Short>> imageCache = createCharacterImages(
 				font, maxCharacterImageSize, characters);
 
 		return new AsciiImgCache(maxCharacterImageSize, imageCache);
@@ -99,24 +100,24 @@ public final class AsciiImgCache implements Iterable<Entry<Character, GrayScaleM
 	 *            the character size
 	 * @return the map
 	 */
-	private static Map<Character, GrayScaleMatrix> createCharacterImages(
+	private static Map<Character, ImageMatrix<Short>> createCharacterImages(
 			final Font font,
-			final Dimension characterSize,
+			final ImageMatrixDimensions characterSize,
 			final char[] characters) {
 		// create each image
-		final BufferedImage img = new BufferedImage(characterSize.width, characterSize.height, BufferedImage.TYPE_INT_ARGB);
+		final BufferedImage img = new BufferedImage(characterSize.getWidth(), characterSize.getHeight(), BufferedImage.TYPE_INT_ARGB);
 		final Graphics2D graphics2D = (Graphics2D) img.getGraphics();
 		graphics2D.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING, RenderingHints.VALUE_TEXT_ANTIALIAS_ON);
 		graphics2D.setFont(font);
 		final FontMetrics fontMetrics = graphics2D.getFontMetrics();
 
-		final Map<Character, GrayScaleMatrix> imageCache = new HashMap<>();
+		final Map<Character, ImageMatrix<Short>> imageCache = new HashMap<>();
 
 		for (final char chr : characters) {
 			final String character = Character.toString(chr);
 
 			graphics2D.setColor(Color.WHITE);
-			graphics2D.fillRect(0, 0, characterSize.width, characterSize.height);
+			graphics2D.fillRect(0, 0, characterSize.getWidth(), characterSize.getHeight());
 			graphics2D.setColor(Color.BLACK);
 
 			final Rectangle rect = new TextLayout(character, fontMetrics.getFont(),
@@ -124,9 +125,12 @@ public final class AsciiImgCache implements Iterable<Entry<Character, GrayScaleM
 
 			graphics2D.drawString(character, 0, (int) (rect.getHeight() - rect.getMaxY()));
 
-			final int[] pixels = img.getRGB(0, 0, characterSize.width,
-					characterSize.height, null, 0, characterSize.width);
-			final GrayScaleMatrix matrix = new GrayScaleMatrix(pixels, characterSize.width, characterSize.height);
+			final int[] imagePixels = img.getRGB(0, 0, characterSize.getWidth(),
+					characterSize.getHeight(), null, 0, characterSize.getWidth());
+			final ImageMatrix<Integer> argbMatrix = new BasicInt1DImageMatrix(
+					new BasicImageMatrixInfo(4, Integer.class, 8),
+					imagePixels, characterSize.getWidth());
+			final GrayScaleMatrix matrix = new GrayScaleMatrix(argbMatrix);
 			imageCache.put(chr, matrix);
 		}
 
@@ -141,7 +145,7 @@ public final class AsciiImgCache implements Iterable<Entry<Character, GrayScaleM
 	 * @param imageCache
 	 *            the image cache
 	 */
-	private AsciiImgCache(final Dimension characterImageSize, final Map<Character, GrayScaleMatrix> imageCache) {
+	private AsciiImgCache(final ImageMatrixDimensions characterImageSize, final Map<Character, ImageMatrix<Short>> imageCache) {
 		this.characterImageSize = characterImageSize;
 		this.imageCache = imageCache;
 	}
@@ -151,13 +155,13 @@ public final class AsciiImgCache implements Iterable<Entry<Character, GrayScaleM
 	 *
 	 * @return character image dimensions
 	 */
-	public Dimension getCharacterImageSize() {
+	public ImageMatrixDimensions getCharacterImageSize() {
 
 		return characterImageSize;
 	}
 
 	@Override
-	public Iterator<Entry<Character, GrayScaleMatrix>> iterator() {
+	public Iterator<Entry<Character, ImageMatrix<Short>>> iterator() {
 
 		return getImageCache().entrySet().iterator();
 	}
@@ -166,7 +170,7 @@ public final class AsciiImgCache implements Iterable<Entry<Character, GrayScaleM
 	 * Returns the image cache.
 	 * @return a map of characters to their bitmaps
 	 */
-	protected Map<Character, GrayScaleMatrix> getImageCache() {
+	protected Map<Character, ImageMatrix<Short>> getImageCache() {
 		return imageCache;
 	}
 }

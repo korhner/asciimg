@@ -2,6 +2,9 @@ package io.korhner.asciimg.image.exporter;
 
 import io.korhner.asciimg.image.AsciiImgCache;
 import io.korhner.asciimg.image.matrix.GrayScaleMatrix;
+import io.korhner.asciimg.image.matrix.ImageMatrix;
+import io.korhner.asciimg.image.matrix.TiledImageMatrix;
+
 import java.util.Map.Entry;
 
 /**
@@ -20,20 +23,10 @@ public interface AsciiExporter<O> {
 	 * Initializes the inner state of this exporter
 	 * to be ready to call {@link #addCharacter}.
 	 *
-	 * @param srcPxWidth
-	 *            source image width in pixels
-	 * @param srcPxHeight
-	 *            source image height in pixels
-	 * @param charsWidth
-	 *            image width in (ASCII art) characters
-	 * @param charsHeight
-	 *            image height in (ASCII art) characters
-	 * @param sourceImagePixels
-	 *            source image pixels. Can be modified, and therefore be used as output buffer
-	 * @param imageWidth
-	 *            the image width
+	 * @param source
+	 *            tiled source image data
 	 */
-	void init(int srcPxWidth, int srcPxHeight, int charsWidth, int charsHeight, int[] sourceImagePixels, int imageWidth);
+	void init(TiledImageMatrix<?> source);
 
 	/**
 	 * Appends one ASCII art character to the internal output.
@@ -46,19 +39,14 @@ public interface AsciiExporter<O> {
 	 *            the tile y position
 	 */
 	void addCharacter(
-			Entry<Character, GrayScaleMatrix> characterEntry,
+			Entry<Character, ImageMatrix<Short>> characterEntry,
 			int tileX,
 			int tileY);
 
 	/**
 	 * Finalizes the inner state, including the output of this exporter.
-	 *
-	 * @param imageWidth
-	 *            source image width
-	 * @param imageHeight
-	 *            source image height
 	 */
-	void imageEnd(int imageWidth, int imageHeight);
+	void imageEnd();
 
 	/**
 	 * @return the output container.

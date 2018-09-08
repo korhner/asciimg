@@ -1,7 +1,8 @@
 package io.korhner.asciimg.image.exporter;
 
 import io.korhner.asciimg.image.AsciiImgCache;
-import io.korhner.asciimg.image.matrix.GrayScaleMatrix;
+import io.korhner.asciimg.image.matrix.ImageMatrix;
+import io.korhner.asciimg.image.matrix.TiledImageMatrix;
 import io.korhner.asciimg.utils.AnimatedGifEncoder;
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayOutputStream;
@@ -42,7 +43,7 @@ public class AnimatedGifMultiFrameAsciiExporter implements MultiFrameAsciiExport
 	 */
 	@Override
 	public void addCharacter(
-			final Map.Entry<Character, GrayScaleMatrix> characterEntry,
+			final Map.Entry<Character, ImageMatrix<Short>> characterEntry,
 			final int tileX,
 			final int tileY) {
 		frameExporter.addCharacter(characterEntry, tileX, tileY);
@@ -52,20 +53,20 @@ public class AnimatedGifMultiFrameAsciiExporter implements MultiFrameAsciiExport
 	 * Called at the beginning of a frame an empty buffered image. TODO fix this sentence <
 	 */
 	@Override
-	public void init(final int srcPxWidth, final int srcPxHeight, final int charsWidth, final int charsHeight, final int[] sourceImagePixels, final int imageWidth) {
+	public void init(final TiledImageMatrix<?> source) {
 
 		frameExporter = new ImageAsciiExporter();
 		frameExporter.setCharacterCache(characterCache);
-		frameExporter.init(srcPxWidth, srcPxHeight, charsWidth, charsHeight, sourceImagePixels, imageWidth);
+		frameExporter.init(source);
 	}
 
 	/**
 	 * Called at the end of a frame.
 	 */
 	@Override
-	public void imageEnd(final int imageWidth, final int imageHeight) {
+	public void imageEnd() {
 
-		frameExporter.imageEnd(imageWidth, imageHeight);
+		frameExporter.imageEnd();
 		encoder.addFrame(frameExporter.getOutput());
 		frameExporter = null;
 	}
