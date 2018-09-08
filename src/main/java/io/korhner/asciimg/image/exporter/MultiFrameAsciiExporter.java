@@ -22,7 +22,6 @@ public interface MultiFrameAsciiExporter<O> extends AsciiExporter<O> {
 
 	/**
 	 * Tells this exporter to finalize the current frame.
-	 *            source image height
 	 */
 	void finalizeFrames();
 }

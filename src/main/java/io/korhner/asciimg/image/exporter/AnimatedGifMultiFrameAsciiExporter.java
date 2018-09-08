@@ -49,7 +49,7 @@ public class AnimatedGifMultiFrameAsciiExporter implements MultiFrameAsciiExport
 	}
 
 	/**
-	 * Called at the beginning of a frame an empty buffered image.
+	 * Called at the beginning of a frame an empty buffered image. TODO fix this sentence <
 	 */
 	@Override
 	public void init(final int srcPxWidth, final int srcPxHeight, final int charsWidth, final int charsHeight, final int[] sourceImagePixels, final int imageWidth) {
@@ -71,7 +71,7 @@ public class AnimatedGifMultiFrameAsciiExporter implements MultiFrameAsciiExport
 	}
 
 	/**
-	 * Called at the beginning of the animation (before hte first frame.
+	 * Called at the beginning of the animation (before the first frame).
 	 */
 	@Override
 	public void initFrames(final int numFrames) {
