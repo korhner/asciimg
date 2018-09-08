@@ -43,31 +43,29 @@ public class AnimatedGifMultiFrameAsciiExporter implements MultiFrameAsciiExport
 	@Override
 	public void addCharacter(
 			final Map.Entry<Character, GrayScaleMatrix> characterEntry,
-			final int[] sourceImagePixels,
 			final int tileX,
-			final int tileY,
-			final int imageWidth) {
-		frameExporter.addCharacter(characterEntry, sourceImagePixels, tileX, tileY, imageWidth);
+			final int tileY) {
+		frameExporter.addCharacter(characterEntry, tileX, tileY);
 	}
 
 	/**
 	 * Called at the beginning of a frame an empty buffered image.
 	 */
 	@Override
-	public void init(final int srcPxWidth, final int srcPxHeight, final int charsWidth, final int charsHeight) {
+	public void init(final int srcPxWidth, final int srcPxHeight, final int charsWidth, final int charsHeight, final int[] sourceImagePixels, final int imageWidth) {
 
 		frameExporter = new ImageAsciiExporter();
 		frameExporter.setCharacterCache(characterCache);
-		frameExporter.init(srcPxWidth, srcPxHeight, charsWidth, charsHeight);
+		frameExporter.init(srcPxWidth, srcPxHeight, charsWidth, charsHeight, sourceImagePixels, imageWidth);
 	}
 
 	/**
 	 * Called at the end of a frame.
 	 */
 	@Override
-	public void imageEnd(final int[] sourceImagePixels, final int imageWidth, final int imageHeight) {
+	public void imageEnd(final int imageWidth, final int imageHeight) {
 
-		frameExporter.imageEnd(sourceImagePixels, imageWidth, imageHeight);
+		frameExporter.imageEnd(imageWidth, imageHeight);
 		encoder.addFrame(frameExporter.getOutput());
 		frameExporter = null;
 	}

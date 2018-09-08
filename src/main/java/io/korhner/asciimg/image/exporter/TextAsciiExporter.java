@@ -10,6 +10,7 @@ import java.util.Map.Entry;
 public class TextAsciiExporter implements AsciiExporter<String> {
 
 	private AsciiImgCache characterCache;
+	private int imageWidth;
 	private StringBuilder output;
 
 	public TextAsciiExporter() {}
@@ -20,12 +21,14 @@ public class TextAsciiExporter implements AsciiExporter<String> {
 	}
 
 	@Override
-	public void init(final int srcPxWidth, final int srcPxHeight, final int charsWidth, final int charsHeight) {
-		output = new StringBuilder(charsWidth* charsHeight);
+	public void init(final int srcPxWidth, final int srcPxHeight, final int charsWidth, final int charsHeight, final int[] sourceImagePixels, final int imageWidth) {
+
+		this.imageWidth = imageWidth;
+		output = new StringBuilder(charsWidth * charsHeight);
 	}
 
 	@Override
-	public void imageEnd(final int[] sourceImagePixels, final int imageWidth, final int imageHeight) {}
+	public void imageEnd(final int imageWidth, final int imageHeight) {}
 
 	/**
 	 * Append chosen character to the output buffer.
@@ -33,10 +36,8 @@ public class TextAsciiExporter implements AsciiExporter<String> {
 	@Override
 	public void addCharacter(
 			final Entry<Character, GrayScaleMatrix> characterEntry,
-			final int[] sourceImagePixels,
 			final int tileX,
-			final int tileY,
-			final int imageWidth) {
+			final int tileY) {
 
 		output.append(characterEntry.getKey());
 

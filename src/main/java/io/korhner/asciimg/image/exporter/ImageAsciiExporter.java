@@ -13,6 +13,8 @@ import java.util.Map.Entry;
 public class ImageAsciiExporter implements AsciiExporter<BufferedImage> {
 
 	private AsciiImgCache characterCache;
+	private int[] sourceImagePixels;
+	private int imageWidth;
 	private BufferedImage output;
 
 	public ImageAsciiExporter() {}
@@ -28,10 +30,8 @@ public class ImageAsciiExporter implements AsciiExporter<BufferedImage> {
 	@Override
 	public void addCharacter(
 			final Entry<Character, GrayScaleMatrix> characterEntry,
-			final int[] sourceImagePixels,
 			final int tileX,
-			final int tileY,
-			final int imageWidth) {
+			final int tileY) {
 		final int startCoordinateX = tileX * characterCache.getCharacterImageSize().width;
 		final int startCoordinateY = tileY
 				* characterCache.getCharacterImageSize().height;
@@ -53,7 +53,7 @@ public class ImageAsciiExporter implements AsciiExporter<BufferedImage> {
 	 * Write pixels to output image.
 	 */
 	@Override
-	public void imageEnd(final int[] sourceImagePixels, final int imageWidth, final int imageHeight) {
+	public void imageEnd(final int imageWidth, final int imageHeight) {
 		this.getOutput().setRGB(0, 0, imageWidth, imageHeight, sourceImagePixels, 0, imageWidth);
 
 	}
@@ -62,7 +62,10 @@ public class ImageAsciiExporter implements AsciiExporter<BufferedImage> {
 	 * Create an empty buffered image.
 	 */
 	@Override
-	public void init(final int srcPxWidth, final int srcPxHeight, final int charsWidth, final int charsHeight) {
+	public void init(final int srcPxWidth, final int srcPxHeight, final int charsWidth, final int charsHeight, final int[] sourceImagePixels, final int imageWidth) {
+
+		this.sourceImagePixels = sourceImagePixels;
+		this.imageWidth = imageWidth;
 		output = new BufferedImage(srcPxWidth, srcPxHeight, BufferedImage.TYPE_INT_ARGB);
 	}
 

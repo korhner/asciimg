@@ -42,7 +42,7 @@ public class ImageToAsciiConverter extends AbstractToAsciiConverter<BufferedImag
 				sourceMatrix, tileSize.width, tileSize.height);
 
 		getExporter().setCharacterCache(getCharacterCache());
-		getExporter().init(truncatedPixelsSize.width, truncatedPixelsSize.height, destCharactersSize.width, destCharactersSize.height);
+		getExporter().init(truncatedPixelsSize.width, truncatedPixelsSize.height, destCharactersSize.width, destCharactersSize.height, imagePixels, truncatedPixelsSize.width);
 
 		// compare each tile to every character to determine best fit
 		for (int i = 0; i < tiledMatrix.getTileCount(); i++) {
@@ -67,9 +67,9 @@ public class ImageToAsciiConverter extends AbstractToAsciiConverter<BufferedImag
 			final int tileY = ArrayUtils.convert1DtoY(i, tiledMatrix.getTilesX());
 
 			// copy character to output
-			getExporter().addCharacter(bestFit, imagePixels, tileX, tileY, truncatedPixelsSize.width);
+			getExporter().addCharacter(bestFit, tileX, tileY);
 		}
 
-		getExporter().imageEnd(imagePixels, truncatedPixelsSize.width, truncatedPixelsSize.height);
+		getExporter().imageEnd(truncatedPixelsSize.width, truncatedPixelsSize.height);
 	}
 }
