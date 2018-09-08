@@ -33,8 +33,7 @@ public class ImageAsciiExporter implements AsciiExporter<BufferedImage> {
 			final int tileX,
 			final int tileY) {
 		final int startCoordinateX = tileX * characterCache.getCharacterImageSize().width;
-		final int startCoordinateY = tileY
-				* characterCache.getCharacterImageSize().height;
+		final int startCoordinateY = tileY * characterCache.getCharacterImageSize().height;
 
 		// copy winner character
 		for (int cpx = 0; cpx < characterEntry.getValue().getWidth(); cpx++) {
