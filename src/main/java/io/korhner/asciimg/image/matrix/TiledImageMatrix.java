@@ -5,7 +5,7 @@ package io.korhner.asciimg.image.matrix;
  * You may want ot think of the original image a sa chess-board,
  * and the tiles as the fields of the board.
  */
-public interface TiledImageMatrix<V> {
+public interface TiledImageMatrix<V> extends Iterable<ImageMatrix<V>> {
 
 	ImageMatrixInfo getMetadata();
 

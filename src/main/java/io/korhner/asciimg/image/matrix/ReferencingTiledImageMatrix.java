@@ -2,13 +2,14 @@ package io.korhner.asciimg.image.matrix;
 
 import io.korhner.asciimg.utils.ArrayUtils;
 
+import java.util.AbstractList;
 import java.util.ArrayList;
 import java.util.List;
 
 /**
  * Referencing implementation of {@link TiledImageMatrix}.
  */
-public class ReferencingTiledImageMatrix<V> implements TiledImageMatrix<V> {
+public class ReferencingTiledImageMatrix<V> extends AbstractList<ImageMatrix<V>> implements TiledImageMatrix<V> {
 
 	private final ImageMatrix<V> original;
 	private final ImageMatrixInfo metaData;
@@ -132,5 +133,15 @@ public class ReferencingTiledImageMatrix<V> implements TiledImageMatrix<V> {
 	@Override
 	public ImageMatrixDimensions getImageDimensions() {
 		return original.getDimensions();
+	}
+
+	@Override
+	public ImageMatrix<V> get(int index) {
+		return getTile(index);
+	}
+
+	@Override
+	public int size() {
+		return getTileCount();
 	}
 }
