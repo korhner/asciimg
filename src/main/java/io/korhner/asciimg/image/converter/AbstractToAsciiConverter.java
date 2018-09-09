@@ -23,17 +23,17 @@ public abstract class AbstractToAsciiConverter<I> implements ToAsciiConverter<I>
 	}
 
 	@Override
-	public void setCharacterCache(final AsciiImgCache characterCache) {
-		this.characterCache = characterCache;
-	}
-
-	@Override
 	public void setCharacterFitStrategy(final CharacterFitStrategy characterFitStrategy) {
 		this.characterFitStrategy = characterFitStrategy;
 	}
 
 	protected AsciiImgCache getCharacterCache() {
 		return characterCache;
+	}
+
+	@Override
+	public void setCharacterCache(final AsciiImgCache characterCache) {
+		this.characterCache = characterCache;
 	}
 
 	@Override
