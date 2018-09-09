@@ -45,7 +45,8 @@ public class AnimatedGifMultiFrameAsciiExporter implements MultiFrameAsciiExport
 	public void addCharacter(
 			final Map.Entry<Character, ImageMatrix<Short>> characterEntry,
 			final int tileX,
-			final int tileY) {
+			final int tileY)
+	{
 		frameExporter.addCharacter(characterEntry, tileX, tileY);
 	}
 
