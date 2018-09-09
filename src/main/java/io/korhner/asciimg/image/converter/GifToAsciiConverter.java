@@ -2,7 +2,7 @@ package io.korhner.asciimg.image.converter;
 
 import io.korhner.asciimg.image.exporter.AsciiExporter;
 import io.korhner.asciimg.image.exporter.MultiFrameAsciiExporter;
-import io.korhner.asciimg.utils.GifDecoder;
+import io.korhner.asciimg.image.importer.GifImageImporter;
 import java.io.IOException;
 import java.io.InputStream;
 
@@ -12,22 +12,21 @@ public class GifToAsciiConverter extends AbstractToAsciiConverter<InputStream> {
 
 	@Override
 	public void convert(final InputStream source) throws IOException {
-		final GifDecoder decoder = new GifDecoder();
-		final int status = decoder.read(source);
-		if (status != 0) {
-			throw new IOException("Failed to read GIF source from " + String.valueOf(source));
-		}
+
+		final GifImageImporter importer = new GifImageImporter();
+		importer.setSource(source);
+
 		// initialize converters
-		final int frameCount = decoder.getFrameCount();
+		final int frameCount = importer.getFrames();
 		final MultiFrameAsciiExporter exporter = (MultiFrameAsciiExporter) getExporter();
 		exporter.setCharacterCache(getCharacterCache());
 		exporter.initFrames(frameCount);
 		for (int i = 0; i < frameCount; i++) {
-			final BufferedImageToAsciiConverter frameConverter = new BufferedImageToAsciiConverter();
+			final TruncatingImageToAsciiConverter frameConverter = new TruncatingImageToAsciiConverter();
 			frameConverter.setCharacterFitStrategy(getCharacterFitStrategy());
 			frameConverter.setCharacterCache(getCharacterCache());
 			frameConverter.setExporter(exporter);
-			frameConverter.convert(decoder.getFrame(i));
+			frameConverter.convert(importer.read());
 		}
 		exporter.finalizeFrames();
 	}
