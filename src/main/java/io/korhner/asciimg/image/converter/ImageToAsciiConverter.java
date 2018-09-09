@@ -1,7 +1,7 @@
 package io.korhner.asciimg.image.converter;
 
 import io.korhner.asciimg.image.matrix.*;
-import io.korhner.asciimg.utils.ArrayUtils;
+import io.korhner.asciimg.image.strategy.CharacterFinder;
 import java.util.Map.Entry;
 
 /**
@@ -25,31 +25,19 @@ public class ImageToAsciiConverter extends AbstractToAsciiConverter<ImageMatrix<
 		getExporter().setCharacterCache(getCharacterCache());
 		getExporter().init(tiledMatrix);
 
-		// compare each tile to every character to determine best fit
-		// XXX This could be speed up (in case of a large character set), by arranging characters in a tree, with the non-leafs being lower-resolution representations of their children. this requires creating a lower-resolution version of each tile, though.
-		for (int i = 0; i < tiledMatrix.getTileCount(); i++) {
+		// find best fitting character for each tile
+		// NOTE We go through Y in the outer loop to improve locality
+		//      -> low level performance optimization
+		for (int tileY = 0; tileY < tiledMatrix.getTilesY(); tileY++) {
+			for (int tileX = 0; tileX < tiledMatrix.getTilesX(); tileX++) {
+				// find best fit
+				final Entry<Character, ImageMatrix<Short>> bestFit = new CharacterFinder(
+						getCharacterCache(),
+						getCharacterFitStrategy()).findBestFit(tiledMatrix.getTile(tileX, tileY));
 
-			final ImageMatrix<Short> tile = tiledMatrix.getTile(i);
-
-			float minError = Float.MAX_VALUE;
-			Entry<Character, ImageMatrix<Short>> bestFit = null;
-
-			for (final Entry<Character, ImageMatrix<Short>> charImage : getCharacterCache()) {
-				final ImageMatrix<Short> charPixels = charImage.getValue();
-
-				final float error = this.getCharacterFitStrategy().calculateError(charPixels, tile);
-
-				if (error < minError) {
-					minError = error;
-					bestFit = charImage;
-				}
+				// copy character to output
+				getExporter().addCharacter(bestFit, tileX, tileY);
 			}
-
-			final int tileX = ArrayUtils.convert1DtoX(i, tiledMatrix.getTilesX());
-			final int tileY = ArrayUtils.convert1DtoY(i, tiledMatrix.getTilesX());
-
-			// copy character to output
-			getExporter().addCharacter(bestFit, tileX, tileY);
 		}
 
 		getExporter().imageEnd();

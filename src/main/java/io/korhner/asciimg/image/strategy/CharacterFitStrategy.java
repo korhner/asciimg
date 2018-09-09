@@ -3,7 +3,7 @@ package io.korhner.asciimg.image.strategy;
 import io.korhner.asciimg.image.matrix.ImageMatrix;
 
 /**
- * Encapsulates the algorithm for choosing best fit character.
+ * Evaluates how well a given character fits to a tile (part of an image).
  */
 public interface CharacterFitStrategy {
 
