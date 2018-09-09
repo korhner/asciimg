@@ -5,8 +5,6 @@ import io.korhner.asciimg.image.exporter.AsciiExporter;
 import io.korhner.asciimg.image.matrix.*;
 import io.korhner.asciimg.image.strategy.CharacterFitStrategy;
 
-import java.awt.image.BufferedImage;
-
 /**
  * A class used to convert an arbitrary sized image to an ASCII art,
  * discarding superfluous pixels on the right and on the top of the image.
