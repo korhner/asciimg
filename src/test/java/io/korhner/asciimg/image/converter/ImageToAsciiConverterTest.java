@@ -23,6 +23,8 @@ public class ImageToAsciiConverterTest {
 
 	public static final boolean DEBUG = true;
 	public static final String DEBUG_OUTPUT_DIR = "/tmp";
+	public static final String ORIGIN_RESOURCE_PATH = "/examples/portrait/orig.gif";
+	public static final String EXPECTED_RESOURCE_PATH = "/examples/portrait/ascii_expected_%s.png";
 
 	public static byte[] readFully(final InputStream input) throws IOException {
 
@@ -107,7 +109,7 @@ public class ImageToAsciiConverterTest {
 
 		// load image
 		portraitImage = ImageIO.read(ImageToAsciiConverterTest.class.getResourceAsStream(
-				"/examples/portrait/orig.png"));
+				ORIGIN_RESOURCE_PATH));
 
 		// initialize algorithms
 		squareErrorStrategy = new ColorSquareErrorCharacterFitStrategy();
@@ -123,7 +125,7 @@ public class ImageToAsciiConverterTest {
 
 		convertToImageAndCheck(
 				portraitImage,
-				"/examples/portrait/converted_small_square_error.png",
+				String.format(EXPECTED_RESOURCE_PATH, "small_square_error"),
 				squareErrorStrategy,
 				smallFontCache,
 				imageConverter);
@@ -134,7 +136,7 @@ public class ImageToAsciiConverterTest {
 
 		convertToImageAndCheck(
 				portraitImage,
-				"/examples/portrait/converted_medium_square_error.png",
+				String.format(EXPECTED_RESOURCE_PATH, "medium_square_error"),
 				squareErrorStrategy,
 				mediumBlackAndWhiteCache,
 				imageConverter);
@@ -145,7 +147,7 @@ public class ImageToAsciiConverterTest {
 
 		convertToImageAndCheck(
 				portraitImage,
-				"/examples/portrait/converted_large_square_error.png",
+				String.format(EXPECTED_RESOURCE_PATH, "large_square_error"),
 				squareErrorStrategy,
 				largeFontCache,
 				imageConverter);
@@ -156,7 +158,7 @@ public class ImageToAsciiConverterTest {
 
 		convertToImageAndCheck(
 				portraitImage,
-				"/examples/portrait/converted_small_ssim.png",
+				String.format(EXPECTED_RESOURCE_PATH, "small_ssim"),
 				ssimStrategy,
 				smallFontCache,
 				imageConverter);
@@ -167,7 +169,7 @@ public class ImageToAsciiConverterTest {
 
 		convertToImageAndCheck(
 				portraitImage,
-				"/examples/portrait/converted_medium_ssim.png",
+				String.format(EXPECTED_RESOURCE_PATH, "medium_ssim"),
 				ssimStrategy,
 				mediumBlackAndWhiteCache,
 				imageConverter);
@@ -178,7 +180,7 @@ public class ImageToAsciiConverterTest {
 
 		convertToImageAndCheck(
 				portraitImage,
-				"/examples/portrait/converted_large_ssim.png",
+				String.format(EXPECTED_RESOURCE_PATH, "large_ssim"),
 				ssimStrategy,
 				largeFontCache,
 				imageConverter);
@@ -191,7 +193,7 @@ public class ImageToAsciiConverterTest {
 		stringConverter.setExporter(textAsciiExporter);
 		final List<String> actual = (List<String>) convert(
 				portraitImage,
-				"/examples/portrait/converted_large_ssim.png",
+				String.format(EXPECTED_RESOURCE_PATH, "large_ssim"),
 				ssimStrategy,
 				largeFontCache,
 				stringConverter);
