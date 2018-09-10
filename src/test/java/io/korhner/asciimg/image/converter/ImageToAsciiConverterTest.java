@@ -21,7 +21,7 @@ import javax.imageio.ImageIO;
 
 public class ImageToAsciiConverterTest {
 
-	public static final boolean DEBUG = false;
+	public static final boolean DEBUG = true;
 	public static final String DEBUG_OUTPUT_DIR = "/tmp";
 
 	public static byte[] readFully(final InputStream input) throws IOException {
