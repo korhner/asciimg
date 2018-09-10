@@ -32,13 +32,4 @@ public class GifToAsciiConverter extends AbstractToAsciiConverter<InputStream> {
 		}
 		exporter.finalizeFrames();
 	}
-
-	@Override
-	public void setExporter(final AsciiExporter exporter) {
-
-		if (!(exporter instanceof MultiFrameAsciiExporter)) {
-			throw new IllegalArgumentException("We need an instance of " + MultiFrameAsciiExporter.class.getSimpleName());
-		}
-		super.setExporter(exporter);
-	}
 }

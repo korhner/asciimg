@@ -59,9 +59,13 @@ public class ImageToAsciiConverter extends AbstractToAsciiConverter<BufferedImag
 	@Override
 	public void convert(final BufferedImage source) throws IOException {
 
+		getExporter().initFrames(1);
+
 		getImporter().setSource(source);
 		final ImageMatrix input = getImporter().read();
 
 		convert(input);
+
+		getExporter().finalizeFrames();
 	}
 }

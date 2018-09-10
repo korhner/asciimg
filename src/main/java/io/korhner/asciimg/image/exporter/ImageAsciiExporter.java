@@ -5,21 +5,29 @@ import io.korhner.asciimg.image.matrix.ImageMatrix;
 import io.korhner.asciimg.image.matrix.TiledImageMatrix;
 import java.awt.Color;
 import java.awt.image.BufferedImage;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map.Entry;
 
 /**
  * Converts ASCII art to a BufferedImage.
  */
-public class ImageAsciiExporter implements AsciiExporter<BufferedImage> {
+public class ImageAsciiExporter implements MultiFrameAsciiExporter<List<BufferedImage>> {
 
 	private AsciiImgCache characterCache;
-	private BufferedImage output;
+	private List<BufferedImage> output;
+	private BufferedImage currentOutput;
 
 	public ImageAsciiExporter() {}
 
 	@Override
 	public void setCharacterCache(final AsciiImgCache characterCache) {
 		this.characterCache = characterCache;
+	}
+
+	@Override
+	public void initFrames(int numFrame) {
+		output = new ArrayList<>(numFrame);
 	}
 
 	/**
@@ -38,7 +46,7 @@ public class ImageAsciiExporter implements AsciiExporter<BufferedImage> {
 		for (int cpx = 0; cpx < characterEntry.getValue().getDimensions().getWidth(); cpx++) {
 			for (int cpy = 0; cpy < characterEntry.getValue().getDimensions().getHeight(); cpy++) {
 				final int component = (int) characterEntry.getValue().getValue(cpx, cpy);
-				getOutput().setRGB(
+				currentOutput.setRGB(
 						startCoordinateX + cpx,
 						startCoordinateY + cpy,
 						new Color(component, component, component).getRGB());
@@ -57,11 +65,15 @@ public class ImageAsciiExporter implements AsciiExporter<BufferedImage> {
 
 		final int imageWidth = source.getImageDimensions().getWidth();
 		final int imageHeight = source.getImageDimensions().getHeight();
-		output = new BufferedImage(imageWidth, imageHeight, BufferedImage.TYPE_INT_ARGB);
+		currentOutput = new BufferedImage(imageWidth, imageHeight, BufferedImage.TYPE_INT_ARGB);
+		output.add(currentOutput);
 	}
 
 	@Override
-	public BufferedImage getOutput() {
+	public List<BufferedImage> getOutput() {
 		return output;
 	}
+
+	@Override
+	public void finalizeFrames() {}
 }

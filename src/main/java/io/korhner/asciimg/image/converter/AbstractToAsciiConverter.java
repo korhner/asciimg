@@ -1,7 +1,7 @@
 package io.korhner.asciimg.image.converter;
 
 import io.korhner.asciimg.image.AsciiImgCache;
-import io.korhner.asciimg.image.exporter.AsciiExporter;
+import io.korhner.asciimg.image.exporter.MultiFrameAsciiExporter;
 import io.korhner.asciimg.image.importer.ImageImporter;
 import io.korhner.asciimg.image.strategy.CharacterFitStrategy;
 
@@ -15,7 +15,7 @@ public abstract class AbstractToAsciiConverter<I> implements ToAsciiConverter<I>
 	private ImageImporter importer;
 	private CharacterFitStrategy characterFitStrategy;
 	private AsciiImgCache characterCache;
-	private AsciiExporter exporter;
+	private MultiFrameAsciiExporter exporter;
 
 	protected AbstractToAsciiConverter() { }
 
@@ -49,12 +49,12 @@ public abstract class AbstractToAsciiConverter<I> implements ToAsciiConverter<I>
 	}
 
 	@Override
-	public AsciiExporter getExporter() {
+	public MultiFrameAsciiExporter getExporter() {
 		return exporter;
 	}
 
 	@Override
-	public void setExporter(final AsciiExporter exporter) {
+	public void setExporter(final MultiFrameAsciiExporter exporter) {
 		this.exporter = exporter;
 	}
 }

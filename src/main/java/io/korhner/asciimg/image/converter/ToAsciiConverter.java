@@ -1,9 +1,9 @@
 package io.korhner.asciimg.image.converter;
 
 import io.korhner.asciimg.image.AsciiImgCache;
+import io.korhner.asciimg.image.exporter.MultiFrameAsciiExporter;
 import io.korhner.asciimg.image.importer.ImageImporter;
 import io.korhner.asciimg.image.strategy.CharacterFitStrategy;
-import io.korhner.asciimg.image.exporter.AsciiExporter;
 
 import java.io.IOException;
 
@@ -31,9 +31,9 @@ public interface ToAsciiConverter<I> {
 
 	void setCharacterCache(AsciiImgCache characterCache);
 
-	AsciiExporter getExporter();
+	MultiFrameAsciiExporter getExporter();
 
-	void setExporter(AsciiExporter exporter);
+	void setExporter(MultiFrameAsciiExporter exporter);
 
 	/**
 	 * Produces an output that is an ASCII art of the supplied image.

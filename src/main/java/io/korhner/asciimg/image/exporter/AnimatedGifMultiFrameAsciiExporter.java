@@ -6,6 +6,7 @@ import io.korhner.asciimg.image.matrix.TiledImageMatrix;
 import io.korhner.asciimg.utils.AnimatedGifEncoder;
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayOutputStream;
+import java.util.List;
 import java.util.Map;
 
 public class AnimatedGifMultiFrameAsciiExporter implements MultiFrameAsciiExporter<byte[]> {
@@ -21,7 +22,7 @@ public class AnimatedGifMultiFrameAsciiExporter implements MultiFrameAsciiExport
 	 * The number of times the set of GIF frames should be played; 0 means play indefinitely.
 	 */
 	private int repeat;
-	private AsciiExporter<BufferedImage> frameExporter;
+	private MultiFrameAsciiExporter<List<BufferedImage>> frameExporter;
 
 	public AnimatedGifMultiFrameAsciiExporter() {}
 
@@ -58,6 +59,7 @@ public class AnimatedGifMultiFrameAsciiExporter implements MultiFrameAsciiExport
 
 		frameExporter = new ImageAsciiExporter();
 		frameExporter.setCharacterCache(characterCache);
+		frameExporter.initFrames(1);
 		frameExporter.init(source);
 	}
 
@@ -68,7 +70,8 @@ public class AnimatedGifMultiFrameAsciiExporter implements MultiFrameAsciiExport
 	public void imageEnd() {
 
 		frameExporter.imageEnd();
-		encoder.addFrame(frameExporter.getOutput());
+		frameExporter.finalizeFrames();
+		encoder.addFrame(frameExporter.getOutput().get(0));
 		frameExporter = null;
 	}
 

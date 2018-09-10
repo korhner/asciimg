@@ -16,6 +16,7 @@ import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.List;
 import javax.imageio.ImageIO;
 
 public class ImageToAsciiConverterTest {
@@ -72,7 +73,7 @@ public class ImageToAsciiConverterTest {
 		converter.convert(origImage);
 
 		final BufferedImage expected = ImageIO.read(getClass().getResourceAsStream(expectedResourcePath));
-		final BufferedImage actual = imageAsciiExporter.getOutput();
+		final BufferedImage actual = imageAsciiExporter.getOutput().get(0);
 
 		// TODO implement comparison
 //		actual.getData().getDataBuffer().getSize()
@@ -188,12 +189,12 @@ public class ImageToAsciiConverterTest {
 
 		TextAsciiExporter textAsciiExporter = new TextAsciiExporter();
 		stringConverter.setExporter(textAsciiExporter);
-		final String actual = (String) convert(
+		final List<String> actual = (List<String>) convert(
 				portraitImage,
 				"/examples/portrait/converted_large_ssim.png",
 				ssimStrategy,
 				largeFontCache,
 				stringConverter);
-		System.out.println(actual);
+		System.out.println(actual.get(0));
 	}
 }
