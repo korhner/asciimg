@@ -1,6 +1,7 @@
 package io.korhner.asciimg.image.converter;
 
 import io.korhner.asciimg.image.AsciiImgCache;
+import io.korhner.asciimg.image.importer.GifImageImporter;
 import io.korhner.asciimg.image.strategy.CharacterFitStrategy;
 import io.korhner.asciimg.image.strategy.StructuralSimilarityCharacterFitStrategy;
 import io.korhner.asciimg.image.exporter.AnimatedGifMultiFrameAsciiExporter;
@@ -27,6 +28,7 @@ public class GifToAsciiConverterTest {
 		final int repeat = 0; // times
 
 		final GifToAsciiConverter asciiConvert = new GifToAsciiConverter();
+		asciiConvert.setImporter(new GifImageImporter());
 		asciiConvert.setCharacterFitStrategy(ssimStrategy);
 		asciiConvert.setCharacterCache(smallFontCache);
 		asciiConvert.setExporter(exporter);

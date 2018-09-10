@@ -1,6 +1,7 @@
 package io.korhner.asciimg.image.converter;
 
 import io.korhner.asciimg.image.AsciiImgCache;
+import io.korhner.asciimg.image.importer.BufferedImageImageImporter;
 import io.korhner.asciimg.image.strategy.CharacterFitStrategy;
 import io.korhner.asciimg.image.strategy.ColorSquareErrorCharacterFitStrategy;
 import io.korhner.asciimg.image.strategy.StructuralSimilarityCharacterFitStrategy;
@@ -43,9 +44,10 @@ public class ImageToAsciiConverterTest {
 			final String expectedResourcePath,
 			final CharacterFitStrategy characterFitStrategy,
 			final AsciiImgCache cache,
-			final BufferedImageToAsciiConverter converter)
-			throws IOException {
-
+			final ImageToAsciiConverter converter)
+			throws IOException
+	{
+		converter.setImporter(new BufferedImageImageImporter());
 		converter.setCharacterCache(cache);
 		converter.setCharacterFitStrategy(characterFitStrategy);
 		converter.convert(origImage);
@@ -58,9 +60,10 @@ public class ImageToAsciiConverterTest {
 			final String expectedResourcePath,
 			final CharacterFitStrategy characterFitStrategy,
 			final AsciiImgCache cache,
-			final BufferedImageToAsciiConverter converter)
-			throws IOException {
-
+			final ImageToAsciiConverter converter)
+			throws IOException
+	{
+		converter.setImporter(new BufferedImageImageImporter());
 		converter.setCharacterCache(cache);
 		converter.setCharacterFitStrategy(characterFitStrategy);
 		final ImageAsciiExporter imageAsciiExporter = new ImageAsciiExporter();
@@ -87,8 +90,8 @@ public class ImageToAsciiConverterTest {
 	private static BufferedImage portraitImage;
 	private static CharacterFitStrategy squareErrorStrategy;
 	private static CharacterFitStrategy ssimStrategy;
-	private static BufferedImageToAsciiConverter imageConverter;
-	private static BufferedImageToAsciiConverter stringConverter;
+	private static ImageToAsciiConverter imageConverter;
+	private static ImageToAsciiConverter stringConverter;
 
 	@BeforeClass
 	public static void imagesConversion() throws IOException {
@@ -110,8 +113,8 @@ public class ImageToAsciiConverterTest {
 		ssimStrategy = new StructuralSimilarityCharacterFitStrategy();
 
 		// initialize converters
-		imageConverter = new BufferedImageToAsciiConverter();
-		stringConverter = new BufferedImageToAsciiConverter();
+		imageConverter = new ImageToAsciiConverter();
+		stringConverter = new ImageToAsciiConverter();
 	}
 
 	@Test

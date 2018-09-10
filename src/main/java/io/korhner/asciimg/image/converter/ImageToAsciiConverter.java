@@ -2,25 +2,38 @@ package io.korhner.asciimg.image.converter;
 
 import io.korhner.asciimg.image.matrix.*;
 import io.korhner.asciimg.image.strategy.CharacterFinder;
+import io.korhner.asciimg.image.transformer.ToGrayscaleImageTransformer;
+import io.korhner.asciimg.image.transformer.TruncatingImageTransformer;
+
+import java.awt.image.BufferedImage;
+import java.io.IOException;
 import java.util.Map.Entry;
 
 /**
  * A class used to convert an abstract 32bit ARGB image to an ASCII art.
  * Output and conversion algorithm are decoupled.
  */
-public class ImageToAsciiConverter extends AbstractToAsciiConverter<ImageMatrix<Short>> {
+public class ImageToAsciiConverter extends AbstractToAsciiConverter<BufferedImage> {
 
 	public ImageToAsciiConverter() {}
 
-	@Override
-	public void convert(final ImageMatrix<Short> source) {
+	public void convert(final ImageMatrix input) { // HACK
+
+		// truncate to tile-able size
+		final TruncatingImageTransformer truncater = new TruncatingImageTransformer();
+		truncater.setCharacterCache(getCharacterCache());
+		final ImageMatrix truncated = truncater.transform(input);
+
+		// convert to gray-scale
+		final ToGrayscaleImageTransformer grayScaler = new ToGrayscaleImageTransformer();
+		final ImageMatrix grayScaled = grayScaler.transform(truncated);
 
 		// dimension of each tile
-		final ImageMatrixDimensions tileSize = this.getCharacterCache().getCharacterImageSize();
+		final ImageMatrixDimensions tileSize = getCharacterCache().getCharacterImageSize();
 
 		// divide matrix into tiles for easy processing
 		final ReferencingTiledImageMatrix<Short> tiledMatrix = new ReferencingTiledImageMatrix<>(
-				source.getMetaData(), source, tileSize);
+				grayScaled.getMetaData(), grayScaled, tileSize);
 
 		getExporter().setCharacterCache(getCharacterCache());
 		getExporter().init(tiledMatrix);
@@ -41,5 +54,14 @@ public class ImageToAsciiConverter extends AbstractToAsciiConverter<ImageMatrix<
 		}
 
 		getExporter().imageEnd();
+	}
+
+	@Override
+	public void convert(final BufferedImage source) throws IOException {
+
+		getImporter().setSource(source);
+		final ImageMatrix input = getImporter().read();
+
+		convert(input);
 	}
 }

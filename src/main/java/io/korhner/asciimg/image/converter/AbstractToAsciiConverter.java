@@ -2,6 +2,7 @@ package io.korhner.asciimg.image.converter;
 
 import io.korhner.asciimg.image.AsciiImgCache;
 import io.korhner.asciimg.image.exporter.AsciiExporter;
+import io.korhner.asciimg.image.importer.ImageImporter;
 import io.korhner.asciimg.image.strategy.CharacterFitStrategy;
 
 /**
@@ -11,11 +12,22 @@ import io.korhner.asciimg.image.strategy.CharacterFitStrategy;
  */
 public abstract class AbstractToAsciiConverter<I> implements ToAsciiConverter<I> {
 
+	private ImageImporter importer;
 	private CharacterFitStrategy characterFitStrategy;
 	private AsciiImgCache characterCache;
 	private AsciiExporter exporter;
 
 	protected AbstractToAsciiConverter() { }
+
+	@Override
+	public ImageImporter getImporter() {
+		return importer;
+	}
+
+	@Override
+	public void setImporter(ImageImporter importer) {
+		this.importer = importer;
+	}
 
 	@Override
 	public CharacterFitStrategy getCharacterFitStrategy() {
