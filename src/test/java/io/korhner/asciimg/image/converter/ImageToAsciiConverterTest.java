@@ -104,7 +104,7 @@ public class ImageToAsciiConverterTest {
 	private static ImageToAsciiConverter stringConverter;
 
 	@BeforeClass
-	public static void imagesConversion() throws IOException {
+	public static void initConversionRequirements() throws IOException {
 
 		// initialize caches
 		smallFontCache = AsciiImgCache.create(
@@ -128,7 +128,7 @@ public class ImageToAsciiConverterTest {
 	}
 
 	@Test
-	public void smallFontImagesSquareError() throws IOException {
+	public void testToImageSmallFontSquareError() throws IOException {
 
 		convertToImageAndCheck(
 				portraitImage,
@@ -139,7 +139,7 @@ public class ImageToAsciiConverterTest {
 	}
 
 	@Test
-	public void mediumFontImagesSquareError() throws IOException {
+	public void testToImageMediumBwFontSquareError() throws IOException {
 
 		convertToImageAndCheck(
 				portraitImage,
@@ -150,7 +150,7 @@ public class ImageToAsciiConverterTest {
 	}
 
 	@Test
-	public void largeFontImagesSquareError() throws IOException {
+	public void testToImageLargeFontSquareError() throws IOException {
 
 		convertToImageAndCheck(
 				portraitImage,
@@ -161,7 +161,7 @@ public class ImageToAsciiConverterTest {
 	}
 
 	@Test
-	public void smallFontImagesSSIM() throws IOException {
+	public void testToImageSmallFontSsim() throws IOException {
 
 		convertToImageAndCheck(
 				portraitImage,
@@ -172,7 +172,7 @@ public class ImageToAsciiConverterTest {
 	}
 
 	@Test
-	public void mediumFontImagesSSIM() throws IOException {
+	public void testToImageMediumBwFontSsim() throws IOException {
 
 		convertToImageAndCheck(
 				portraitImage,
@@ -183,7 +183,7 @@ public class ImageToAsciiConverterTest {
 	}
 
 	@Test
-	public void largeFontImagesSSIM() throws IOException {
+	public void testToImageLargeFontSsim() throws IOException {
 
 		convertToImageAndCheck(
 				portraitImage,
@@ -194,7 +194,7 @@ public class ImageToAsciiConverterTest {
 	}
 
 	@Test
-	public void toTextOnConsole() throws IOException {
+	public void testToTextLargeFontSsim() throws IOException {
 
 		TextAsciiExporter textAsciiExporter = new TextAsciiExporter();
 		stringConverter.setExporter(textAsciiExporter);
