@@ -21,10 +21,15 @@ import javax.imageio.ImageIO;
 
 public class ImageToAsciiConverterTest {
 
-	public static final boolean DEBUG = true;
-	public static final String DEBUG_OUTPUT_DIR = "/tmp";
-	public static final String ORIGIN_RESOURCE_PATH = "/examples/portrait/orig.gif";
-	public static final String EXPECTED_RESOURCE_PATH = "/examples/portrait/ascii_expected_%s.png";
+	/**
+	 * Indicates whether to delete files created during unit test runs.
+	 * You might want to manually set this to false, in case of test errors,
+	 * so you can manually inspect them after tests finished.
+	 */
+	public static final boolean DELETE_FILES = true;
+	public static final String ORIGIN_RESOURCE_PATH = "/examples/portrait/orig";
+	public static final String EXPECTED_RESOURCE_PATH = "/examples/portrait/ascii_expected_%s";
+	public static final String RESOURCE_SUFFIX = ".png";
 
 	public static byte[] readFully(final InputStream input) throws IOException {
 
@@ -55,6 +60,8 @@ public class ImageToAsciiConverterTest {
 		converter.setCharacterFitStrategy(characterFitStrategy);
 		converter.convert(origImage);
 
+		// TODO implement comparison
+
 		return converter.getExporter().getOutput();
 	}
 
@@ -74,14 +81,14 @@ public class ImageToAsciiConverterTest {
 
 		converter.convert(origImage);
 
-		final BufferedImage expected = ImageIO.read(getClass().getResourceAsStream(expectedResourcePath));
+		final BufferedImage expected = ImageIO.read(getClass().getResourceAsStream(expectedResourcePath + RESOURCE_SUFFIX));
 		final BufferedImage actual = imageAsciiExporter.getOutput().get(0);
 
 		// TODO implement comparison
 //		actual.getData().getDataBuffer().getSize()
 
-		if (DEBUG) {
-			final File actualTestImgFile = new File(DEBUG_OUTPUT_DIR, new File(expectedResourcePath).getName());
+		if (!DELETE_FILES) {
+			final File actualTestImgFile = File.createTempFile(new File(expectedResourcePath).getName(), RESOURCE_SUFFIX);
 			System.err.println("Writing actual file to: " + actualTestImgFile.getAbsolutePath());
 			ImageIO.write(actual, "png", actualTestImgFile);
 		}
@@ -109,7 +116,7 @@ public class ImageToAsciiConverterTest {
 
 		// load image
 		portraitImage = ImageIO.read(ImageToAsciiConverterTest.class.getResourceAsStream(
-				ORIGIN_RESOURCE_PATH));
+				ORIGIN_RESOURCE_PATH + RESOURCE_SUFFIX));
 
 		// initialize algorithms
 		squareErrorStrategy = new ColorSquareErrorCharacterFitStrategy();
