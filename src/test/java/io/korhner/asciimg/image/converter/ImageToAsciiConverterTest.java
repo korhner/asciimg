@@ -215,6 +215,61 @@ public class ImageToAsciiConverterTest {
 	}
 
 	@Test
+	public void testToTextSmallFontSquareError() throws IOException {
+
+		convertToText(
+				portraitImage,
+				"small_square_error",
+				squareErrorStrategy,
+				smallFontCache,
+				stringConverter);
+	}
+
+	@Test
+	public void testToTextMediumBwFontSquareError() throws IOException {
+
+		convertToText(
+				portraitImage,
+				"mediumBw_square_error",
+				squareErrorStrategy,
+				mediumBlackAndWhiteCache,
+				stringConverter);
+	}
+
+	@Test
+	public void testToTextLargeFontSquareError() throws IOException {
+
+		convertToText(
+				portraitImage,
+				"large_square_error",
+				squareErrorStrategy,
+				largeFontCache,
+				stringConverter);
+	}
+
+	@Test
+	public void testToTextSmallFontSsim() throws IOException {
+
+		convertToText(
+				portraitImage,
+				"small_ssim",
+				ssimStrategy,
+				smallFontCache,
+				stringConverter);
+	}
+
+	@Test
+	public void testToTextMediumBwFontSsim() throws IOException {
+
+		convertToText(
+				portraitImage,
+				"mediumBw_ssim",
+				ssimStrategy,
+				mediumBlackAndWhiteCache,
+				stringConverter);
+	}
+
+	@Test
 	public void testToTextLargeFontSsim() throws IOException {
 
 		convertToText(
