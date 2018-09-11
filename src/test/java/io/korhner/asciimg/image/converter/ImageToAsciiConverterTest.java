@@ -29,7 +29,7 @@ public class ImageToAsciiConverterTest {
 	public static final boolean DELETE_FILES = true;
 	private static final String ORIGIN_RESOURCE_PATH = "/examples/portrait/orig";
 	private static final String EXPECTED_RESOURCE_PATH = "/examples/portrait/ascii_expected_%s";
-	private static final String RESOURCE_SUFFIX = ".png";
+	private static final String RESOURCE_SUFFIX_IMG = ".png";
 
 	public static byte[] readFully(final InputStream input) throws IOException {
 
@@ -81,14 +81,14 @@ public class ImageToAsciiConverterTest {
 
 		converter.convert(origImage);
 
-		final BufferedImage expected = ImageIO.read(getClass().getResourceAsStream(expectedResourcePath + RESOURCE_SUFFIX));
+		final BufferedImage expected = ImageIO.read(getClass().getResourceAsStream(expectedResourcePath + RESOURCE_SUFFIX_IMG));
 		final BufferedImage actual = imageAsciiExporter.getOutput().get(0);
 
 		// TODO implement comparison
 //		actual.getData().getDataBuffer().getSize()
 
 		if (!DELETE_FILES) {
-			final File actualTestImgFile = File.createTempFile(new File(expectedResourcePath).getName(), RESOURCE_SUFFIX);
+			final File actualTestImgFile = File.createTempFile(new File(expectedResourcePath).getName(), RESOURCE_SUFFIX_IMG);
 			System.err.println("Writing actual file to: " + actualTestImgFile.getAbsolutePath());
 			ImageIO.write(actual, "png", actualTestImgFile);
 		}
@@ -116,7 +116,7 @@ public class ImageToAsciiConverterTest {
 
 		// load image
 		portraitImage = ImageIO.read(ImageToAsciiConverterTest.class.getResourceAsStream(
-				ORIGIN_RESOURCE_PATH + RESOURCE_SUFFIX));
+				ORIGIN_RESOURCE_PATH + RESOURCE_SUFFIX_IMG));
 
 		// initialize algorithms
 		squareErrorStrategy = new ColorSquareErrorCharacterFitStrategy();
