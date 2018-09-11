@@ -47,7 +47,7 @@ public class ImageToAsciiConverterTest {
 		return buffer.toByteArray();
 	}
 
-	private Object convert(
+	private String convertToText(
 			final BufferedImage origImage,
 			final String expectedResourcePath,
 			final CharacterFitStrategy characterFitStrategy,
@@ -62,7 +62,7 @@ public class ImageToAsciiConverterTest {
 
 		// TODO implement comparison
 
-		return converter.getExporter().getOutput();
+		return ((List<String>) converter.getExporter().getOutput()).get(0);
 	}
 
 	private void convertToImageAndCheck(
@@ -198,12 +198,12 @@ public class ImageToAsciiConverterTest {
 
 		TextAsciiExporter textAsciiExporter = new TextAsciiExporter();
 		stringConverter.setExporter(textAsciiExporter);
-		final List<String> actual = (List<String>) convert(
+		final String actual = convertToText(
 				portraitImage,
 				String.format(EXPECTED_RESOURCE_PATH, "large_ssim"),
 				ssimStrategy,
 				largeFontCache,
 				stringConverter);
-		System.out.println(actual.get(0));
+		System.out.println(actual);
 	}
 }
