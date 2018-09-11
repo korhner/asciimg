@@ -7,16 +7,15 @@ import io.korhner.asciimg.image.strategy.ColorSquareErrorCharacterFitStrategy;
 import io.korhner.asciimg.image.strategy.StructuralSimilarityCharacterFitStrategy;
 import io.korhner.asciimg.image.exporter.ImageAsciiExporter;
 import io.korhner.asciimg.image.exporter.TextAsciiExporter;
+import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
 import java.awt.Font;
 import java.awt.image.BufferedImage;
-import java.io.ByteArrayOutputStream;
-import java.io.File;
-import java.io.IOException;
-import java.io.InputStream;
+import java.io.*;
 import java.util.List;
+import java.util.Scanner;
 import javax.imageio.ImageIO;
 
 public class ImageToAsciiConverterTest {
@@ -29,7 +28,9 @@ public class ImageToAsciiConverterTest {
 	public static final boolean DELETE_FILES = true;
 	private static final String ORIGIN_RESOURCE_PATH = "/examples/portrait/orig";
 	private static final String EXPECTED_RESOURCE_PATH = "/examples/portrait/ascii_expected_%s";
+	private static final String ACTUAL_NAME = "ascii_actual_%s_";
 	private static final String RESOURCE_SUFFIX_IMG = ".png";
+	private static final String RESOURCE_SUFFIX_TXT = ".txt";
 
 	public static byte[] readFully(final InputStream input) throws IOException {
 
@@ -47,9 +48,9 @@ public class ImageToAsciiConverterTest {
 		return buffer.toByteArray();
 	}
 
-	private String convertToText(
+	private void convertToText(
 			final BufferedImage origImage,
-			final String expectedResourcePath,
+			final String specifier,
 			final CharacterFitStrategy characterFitStrategy,
 			final AsciiImgCache cache,
 			final ImageToAsciiConverter converter)
@@ -58,11 +59,31 @@ public class ImageToAsciiConverterTest {
 		converter.setImporter(new BufferedImageImageImporter());
 		converter.setCharacterCache(cache);
 		converter.setCharacterFitStrategy(characterFitStrategy);
+		final TextAsciiExporter textAsciiExporter = new TextAsciiExporter();
+		converter.setExporter(textAsciiExporter);
+
 		converter.convert(origImage);
 
-		// TODO implement comparison
+		// extract result ("actual")
+		final String actual = ((List<String>) converter.getExporter().getOutput()).get(0);
 
-		return ((List<String>) converter.getExporter().getOutput()).get(0);
+		final String expectedResourcePath = String.format(EXPECTED_RESOURCE_PATH, specifier);
+		// write "actual" to file
+		if (!ImageToAsciiConverterTest.DELETE_FILES || true) {
+			final String actualFilePrefix = String.format(ACTUAL_NAME, specifier);
+			final File actualFile = File.createTempFile(actualFilePrefix, RESOURCE_SUFFIX_TXT);
+			final PrintWriter out = new PrintWriter(actualFile);
+			out.print(actual);
+			out.close();
+		}
+
+		// read "expected" from resource/file
+		final InputStream expectedIn = getClass().getResourceAsStream(expectedResourcePath + RESOURCE_SUFFIX_TXT);
+		final Scanner s = new Scanner(expectedIn).useDelimiter("\\A");
+		final String expected = s.hasNext() ? s.next() : "";
+
+		// compare "expected" and "actual"
+		Assert.assertEquals(expected, actual);
 	}
 
 	private void convertToImageAndCheck(
@@ -196,14 +217,11 @@ public class ImageToAsciiConverterTest {
 	@Test
 	public void testToTextLargeFontSsim() throws IOException {
 
-		TextAsciiExporter textAsciiExporter = new TextAsciiExporter();
-		stringConverter.setExporter(textAsciiExporter);
-		final String actual = convertToText(
+		convertToText(
 				portraitImage,
-				String.format(EXPECTED_RESOURCE_PATH, "large_ssim"),
+				"large_ssim",
 				ssimStrategy,
 				largeFontCache,
 				stringConverter);
-		System.out.println(actual);
 	}
 }
