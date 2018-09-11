@@ -27,9 +27,9 @@ public class ImageToAsciiConverterTest {
 	 * so you can manually inspect them after tests finished.
 	 */
 	public static final boolean DELETE_FILES = true;
-	public static final String ORIGIN_RESOURCE_PATH = "/examples/portrait/orig";
-	public static final String EXPECTED_RESOURCE_PATH = "/examples/portrait/ascii_expected_%s";
-	public static final String RESOURCE_SUFFIX = ".png";
+	private static final String ORIGIN_RESOURCE_PATH = "/examples/portrait/orig";
+	private static final String EXPECTED_RESOURCE_PATH = "/examples/portrait/ascii_expected_%s";
+	private static final String RESOURCE_SUFFIX = ".png";
 
 	public static byte[] readFully(final InputStream input) throws IOException {
 
