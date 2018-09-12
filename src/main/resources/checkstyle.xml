@@ -165,7 +165,7 @@
 		<module name="AvoidNestedBlocks"/>
 		<module name="EmptyBlock"/>
 		<module name="LeftCurly">
-			<!--<property name="option" value="nlow"/>-->
+			<property name="option" value="nlow"/>
 		</module>
 		<!--<module name="NeedBraces"/>-->
 		<!--<module name="RightCurly">
