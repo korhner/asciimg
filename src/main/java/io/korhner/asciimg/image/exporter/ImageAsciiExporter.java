@@ -2,7 +2,7 @@ package io.korhner.asciimg.image.exporter;
 
 import io.korhner.asciimg.image.AsciiImgCache;
 import io.korhner.asciimg.image.matrix.ImageMatrix;
-import io.korhner.asciimg.image.matrix.TiledImageMatrix;
+import io.korhner.asciimg.image.matrix.ImageMatrixDimensions;
 import java.awt.Color;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
@@ -61,10 +61,10 @@ public class ImageAsciiExporter implements MultiFrameAsciiExporter<List<Buffered
 	 * Create an empty buffered image.
 	 */
 	@Override
-	public void init(final TiledImageMatrix<?> source) {
+	public void init(final ImageMatrixDimensions targetDimensions) {
 
-		final int imageWidth = source.getImageDimensions().getWidth();
-		final int imageHeight = source.getImageDimensions().getHeight();
+		final int imageWidth = targetDimensions.getWidth() * characterCache.getCharacterImageSize().getWidth();
+		final int imageHeight = targetDimensions.getHeight() * characterCache.getCharacterImageSize().getHeight();
 		currentOutput = new BufferedImage(imageWidth, imageHeight, BufferedImage.TYPE_INT_ARGB);
 		output.add(currentOutput);
 	}

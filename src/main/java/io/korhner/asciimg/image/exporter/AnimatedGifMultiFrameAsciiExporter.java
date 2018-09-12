@@ -2,7 +2,7 @@ package io.korhner.asciimg.image.exporter;
 
 import io.korhner.asciimg.image.AsciiImgCache;
 import io.korhner.asciimg.image.matrix.ImageMatrix;
-import io.korhner.asciimg.image.matrix.TiledImageMatrix;
+import io.korhner.asciimg.image.matrix.ImageMatrixDimensions;
 import io.korhner.asciimg.utils.AnimatedGifEncoder;
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayOutputStream;
@@ -55,12 +55,12 @@ public class AnimatedGifMultiFrameAsciiExporter implements MultiFrameAsciiExport
 	 * Called at the beginning of a frame.
 	 */
 	@Override
-	public void init(final TiledImageMatrix<?> source) {
+	public void init(final ImageMatrixDimensions targetDimensions) {
 
 		frameExporter = new ImageAsciiExporter();
 		frameExporter.setCharacterCache(characterCache);
 		frameExporter.initFrames(1);
-		frameExporter.init(source);
+		frameExporter.init(targetDimensions);
 	}
 
 	/**

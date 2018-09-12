@@ -17,17 +17,11 @@ public class ReferencingTiledImageMatrix<V> extends AbstractList<ImageMatrix<V>>
 	/** The tiles. */
 	private final List<ImageMatrix<V>> tiles;
 
-	/** Width of a tile. */
-	private final int tileWidth;
+	/** Dimensions of a tile in data points. */
+	private final ImageMatrixDimensions tileSize;
 
-	/** Height of a tile. */
-	private final int tileHeight;
-
-	/** Number of tiles on the x axis. */
-	private final int tilesX;
-
-	/** Number of tiles on the y axis. */
-	private final int tilesY;
+	/** Number of tiles on the x and y axes. */
+	private final ImageMatrixDimensions sizeInTiles;
 
 	/**
 	 * Instantiates a new tiled image matrix.
@@ -46,6 +40,7 @@ public class ReferencingTiledImageMatrix<V> extends AbstractList<ImageMatrix<V>>
 	{
 		final int imageWidth = original.getDimensions().getWidth();
 		final int imageHeight = original.getDimensions().getHeight();
+
 		final int tileWidth = tileDimensions.getWidth();
 		final int tileHeight = tileDimensions.getHeight();
 
@@ -61,6 +56,7 @@ public class ReferencingTiledImageMatrix<V> extends AbstractList<ImageMatrix<V>>
 		if (tileHeight > imageHeight) {
 			throw new IllegalArgumentException("Tile height larger then original images height!");
 		}
+		// we won't allow partial tiles
 		if (imageWidth % tileWidth != 0) {
 			throw new IllegalArgumentException("Tile width does not divide the original images width!");
 		}
@@ -70,31 +66,38 @@ public class ReferencingTiledImageMatrix<V> extends AbstractList<ImageMatrix<V>>
 
 		this.original = original;
 		this.metaData = metaData;
-		this.tileWidth = tileWidth;
-		this.tileHeight = tileHeight;
+		this.tileSize = tileDimensions;
 
-		// we won't allow partial tiles
-		this.tilesX = imageWidth / tileWidth;
-		this.tilesY = imageHeight / tileHeight;
-		final int roundedWidth = tilesX * tileWidth;
-		final int roundedHeight = tilesY * tileHeight;
+		this.sizeInTiles = new ImageMatrixDimensions(
+				imageWidth / tileWidth,
+				imageHeight / tileHeight);
 
-		tiles = new ArrayList<>(roundedWidth * roundedHeight);
+		tiles = new ArrayList<>(imageWidth * imageHeight);
 
 		// create each tile as a sub-region, referencing the original matrix
-		for (int i = 0; i < tilesY; i++) {
-			for (int j = 0; j < tilesX; j++) {
+		for (int y = 0; y < sizeInTiles.getHeight(); y++) {
+			for (int x = 0; x < sizeInTiles.getWidth(); x++) {
 				tiles.add(new RegionImageMatrix<>(
 						original,
 						tileDimensions,
-						this.tileWidth * j, this.tileHeight * i));
+						tileWidth * x, tileHeight * y));
 			}
 		}
 	}
 
 	@Override
-	public ImageMatrixInfo getMetadata() {
+	public ImageMatrixInfo getMetaData() {
 		return metaData;
+	}
+
+	@Override
+	public ImageMatrixDimensions getDimensions() {
+		return original.getDimensions();
+	}
+
+	@Override
+	public V getValue(final int posX, final int posY) {
+		return original.getValue(posX, posY);
 	}
 
 	@Override
@@ -104,7 +107,7 @@ public class ReferencingTiledImageMatrix<V> extends AbstractList<ImageMatrix<V>>
 
 	@Override
 	public ImageMatrix<V> getTile(final int x, final int y) {
-		return this.tiles.get(ArrayUtils.convert2DTo1D(x, y, getTilesX()));
+		return this.tiles.get(ArrayUtils.convert2DTo1D(x, y, sizeInTiles.getWidth()));
 	}
 
 	@Override
@@ -113,28 +116,13 @@ public class ReferencingTiledImageMatrix<V> extends AbstractList<ImageMatrix<V>>
 	}
 
 	@Override
-	public int getTileHeight() {
-		return this.tileHeight;
+	public ImageMatrixDimensions getTileSize() {
+		return tileSize;
 	}
 
 	@Override
-	public int getTilesX() {
-		return this.tilesX;
-	}
-
-	@Override
-	public int getTilesY() {
-		return this.tilesY;
-	}
-
-	@Override
-	public int getTileWidth() {
-		return this.tileWidth;
-	}
-
-	@Override
-	public ImageMatrixDimensions getImageDimensions() {
-		return original.getDimensions();
+	public ImageMatrixDimensions getSizeInTiles() {
+		return sizeInTiles;
 	}
 
 	@Override

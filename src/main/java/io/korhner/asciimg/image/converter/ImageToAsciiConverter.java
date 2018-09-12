@@ -13,7 +13,7 @@ import java.util.Map.Entry;
  * A class used to convert an abstract 32bit ARGB image to an ASCII art.
  * Output and conversion algorithm are decoupled.
  */
-public class ImageToAsciiConverter extends AbstractToAsciiConverter<BufferedImage> {
+public class ImageToAsciiConverter<O> extends AbstractToAsciiConverter<BufferedImage, O> {
 
 	public ImageToAsciiConverter() {}
 
@@ -36,13 +36,13 @@ public class ImageToAsciiConverter extends AbstractToAsciiConverter<BufferedImag
 				grayScaled.getMetaData(), grayScaled, tileSize);
 
 		getExporter().setCharacterCache(getCharacterCache());
-		getExporter().init(tiledMatrix);
+		getExporter().init(tiledMatrix.getSizeInTiles());
 
 		// find best fitting character for each tile
 		// NOTE We go through Y in the outer loop to improve locality
 		//      -> low level performance optimization
-		for (int tileY = 0; tileY < tiledMatrix.getTilesY(); tileY++) {
-			for (int tileX = 0; tileX < tiledMatrix.getTilesX(); tileX++) {
+		for (int tileY = 0; tileY < tiledMatrix.getSizeInTiles().getHeight(); tileY++) {
+			for (int tileX = 0; tileX < tiledMatrix.getSizeInTiles().getWidth(); tileX++) {
 				// find best fit
 				final Entry<Character, ImageMatrix<Short>> bestFit = new CharacterFinder(
 						getCharacterCache(),

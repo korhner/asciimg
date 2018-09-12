@@ -4,10 +4,11 @@ package io.korhner.asciimg.image.matrix;
  * Separates an input image into multiple tiles.
  * You may want ot think of the original image a sa chess-board,
  * and the tiles as the fields of the board.
+ *
+ * @param <D>
+ *            data point value type, as in, the class of a "pixel" of the image
  */
-public interface TiledImageMatrix<V> extends Iterable<ImageMatrix<V>> {
-
-	ImageMatrixInfo getMetadata();
+public interface TiledImageMatrix<D> extends ImageMatrix<D>, Iterable<ImageMatrix<D>> {
 
 	/**
 	 * Gets the tile at a specific index.
@@ -16,7 +17,7 @@ public interface TiledImageMatrix<V> extends Iterable<ImageMatrix<V>> {
 	 *            tile index
 	 * @return the tile
 	 */
-	ImageMatrix<V> getTile(final int index);
+	ImageMatrix<D> getTile(final int index);
 
 	/**
 	 * Gets the tile at a specific y and z location.
@@ -27,7 +28,7 @@ public interface TiledImageMatrix<V> extends Iterable<ImageMatrix<V>> {
 	 *            y location of the tile to fetch
 	 * @return the tile
 	 */
-	ImageMatrix<V> getTile(final int x, final int y);
+	ImageMatrix<D> getTile(final int x, final int y);
 
 	/**
 	 * @return the number of tiles
@@ -35,27 +36,12 @@ public interface TiledImageMatrix<V> extends Iterable<ImageMatrix<V>> {
 	int getTileCount();
 
 	/**
-	 * @return the tile y size
+	 * @return size of a tile in data points
 	 */
-	int getTileHeight();
+	ImageMatrixDimensions getTileSize();
 
 	/**
-	 * @return number of tiles on x axis
+	 * @return number of tiles on the x and y axis
 	 */
-	int getTilesX();
-
-	/**
-	 * @return number of tiles on y axis
-	 */
-	int getTilesY();
-
-	/**
-	 * @return tile width
-	 */
-	int getTileWidth();
-
-	/**
-	 * @return tile width
-	 */
-	ImageMatrixDimensions getImageDimensions();
+	ImageMatrixDimensions getSizeInTiles();
 }

@@ -12,12 +12,14 @@ import java.io.IOException;
  *
  * @param <I>
  *            input type of the image (or similar) to be converted to ASCII art
+ * @param <O>
+ *            input type of the image (or similar) to be converted to ASCII art
  */
-public interface ToAsciiConverter<I> {
+public interface ToAsciiConverter<I, O> {
 
-	ImageImporter getImporter();
+	ImageImporter<I, ?> getImporter();
 
-	void setImporter(ImageImporter importer);
+	void setImporter(ImageImporter<I, ?> importer);
 
 	/**
 	 * The character fit strategy used to determine the best character for each
@@ -31,9 +33,9 @@ public interface ToAsciiConverter<I> {
 
 	void setCharacterCache(AsciiImgCache characterCache);
 
-	MultiFrameAsciiExporter getExporter();
+	MultiFrameAsciiExporter<O> getExporter();
 
-	void setExporter(MultiFrameAsciiExporter exporter);
+	void setExporter(MultiFrameAsciiExporter<O> exporter);
 
 	/**
 	 * Produces an output that is an ASCII art of the supplied image.

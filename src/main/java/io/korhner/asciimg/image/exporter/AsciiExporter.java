@@ -1,9 +1,8 @@
 package io.korhner.asciimg.image.exporter;
 
 import io.korhner.asciimg.image.AsciiImgCache;
-import io.korhner.asciimg.image.matrix.GrayScaleMatrix;
 import io.korhner.asciimg.image.matrix.ImageMatrix;
-import io.korhner.asciimg.image.matrix.TiledImageMatrix;
+import io.korhner.asciimg.image.matrix.ImageMatrixDimensions;
 
 import java.util.Map.Entry;
 
@@ -23,10 +22,10 @@ public interface AsciiExporter<O> {
 	 * Initializes the inner state of this exporter
 	 * to be ready to call {@link #addCharacter}.
 	 *
-	 * @param source
-	 *            tiled source image data
+	 * @param targetDimensions
+	 *            dimensions of the ASCII art "image" in characters
 	 */
-	void init(TiledImageMatrix<?> source);
+	void init(ImageMatrixDimensions targetDimensions);
 
 	/**
 	 * Appends one ASCII art character to the internal output.

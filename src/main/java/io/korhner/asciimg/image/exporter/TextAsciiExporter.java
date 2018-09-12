@@ -2,7 +2,7 @@ package io.korhner.asciimg.image.exporter;
 
 import io.korhner.asciimg.image.AsciiImgCache;
 import io.korhner.asciimg.image.matrix.ImageMatrix;
-import io.korhner.asciimg.image.matrix.TiledImageMatrix;
+import io.korhner.asciimg.image.matrix.ImageMatrixDimensions;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -13,17 +13,15 @@ import java.util.Map.Entry;
  */
 public class TextAsciiExporter implements MultiFrameAsciiExporter<List<String>> {
 
-	private AsciiImgCache characterCache;
-	private int imageWidth;
+	/** Width of the output in characters. */
+	private int width;
 	private List<String> output;
 	private StringBuilder currentOutput;
 
 	public TextAsciiExporter() {}
 
 	@Override
-	public void setCharacterCache(final AsciiImgCache characterCache) {
-		this.characterCache = characterCache;
-	}
+	public void setCharacterCache(final AsciiImgCache characterCache) {}
 
 	@Override
 	public void initFrames(int numFrame) {
@@ -31,11 +29,11 @@ public class TextAsciiExporter implements MultiFrameAsciiExporter<List<String>> 
 	}
 
 	@Override
-	public void init(final TiledImageMatrix<?> source) {
+	public void init(final ImageMatrixDimensions targetDimensions) {
 
-		this.imageWidth = source.getTileWidth() * source.getTilesX();
+		this.width = targetDimensions.getWidth();
 		// each tile and each new-line is a char
-		currentOutput = new StringBuilder(source.getTileCount() + source.getTilesY());
+		currentOutput = new StringBuilder((targetDimensions.getWidth() + 1) * targetDimensions.getHeight());
 	}
 
 	@Override
@@ -55,7 +53,7 @@ public class TextAsciiExporter implements MultiFrameAsciiExporter<List<String>> 
 		currentOutput.append(characterEntry.getKey());
 
 		// append new line at the end of the row
-		if ((tileX + 1) * characterCache.getCharacterImageSize().getWidth() == imageWidth) {
+		if ((tileX + 1) == width) {
 			currentOutput.append(System.lineSeparator());
 		}
 	}

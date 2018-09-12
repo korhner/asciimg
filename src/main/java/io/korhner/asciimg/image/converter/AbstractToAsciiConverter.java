@@ -9,23 +9,24 @@ import io.korhner.asciimg.image.strategy.CharacterFitStrategy;
  * Basic interface implementation.
  *
  * @param <I> input type of the image (or similar) to be converted to ASCII art
+ * @param <O> input type of the converted image or animation, the ASCII art
  */
-public abstract class AbstractToAsciiConverter<I> implements ToAsciiConverter<I> {
+public abstract class AbstractToAsciiConverter<I, O> implements ToAsciiConverter<I, O> {
 
-	private ImageImporter importer;
+	private ImageImporter<I, ?> importer;
 	private CharacterFitStrategy characterFitStrategy;
 	private AsciiImgCache characterCache;
-	private MultiFrameAsciiExporter exporter;
+	private MultiFrameAsciiExporter<O> exporter;
 
 	protected AbstractToAsciiConverter() { }
 
 	@Override
-	public ImageImporter getImporter() {
+	public ImageImporter<I, ?> getImporter() {
 		return importer;
 	}
 
 	@Override
-	public void setImporter(ImageImporter importer) {
+	public void setImporter(ImageImporter<I, ?> importer) {
 		this.importer = importer;
 	}
 
@@ -49,12 +50,12 @@ public abstract class AbstractToAsciiConverter<I> implements ToAsciiConverter<I>
 	}
 
 	@Override
-	public MultiFrameAsciiExporter getExporter() {
+	public MultiFrameAsciiExporter<O> getExporter() {
 		return exporter;
 	}
 
 	@Override
-	public void setExporter(final MultiFrameAsciiExporter exporter) {
+	public void setExporter(final MultiFrameAsciiExporter<O> exporter) {
 		this.exporter = exporter;
 	}
 }
