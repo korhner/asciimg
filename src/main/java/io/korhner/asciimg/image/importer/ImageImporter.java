@@ -34,6 +34,8 @@ public interface ImageImporter<I, O> {
 	/**
 	 * Reads an image (or similar) into the internal format.
 	 *
+	 * @return the contents of the imported source,
+	 * which is usually either an image or a frame of an animation
 	 * @throws IOException on any kind of input error
 	 */
 	ImageMatrix<O> read() throws IOException;

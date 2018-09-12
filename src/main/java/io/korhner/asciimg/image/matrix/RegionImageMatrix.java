@@ -15,6 +15,12 @@ public class RegionImageMatrix<T> extends AbstractImageMatrix<T> {
 	/**
 	 * @param origin
 	 *            original/referenced image
+	 * @param regionDimensions
+	 *            width and height of the sub-region (in number of data points) to be represented
+	 * @param startPixelX
+	 *            start data point index of the sub-region on the x-axis
+	 * @param startPixelY
+	 *            start data point index of the sub-region on the y-axis
 	 */
 	public RegionImageMatrix(
 			final ImageMatrix<T> origin,

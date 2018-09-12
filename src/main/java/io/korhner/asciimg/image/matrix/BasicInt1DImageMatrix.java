@@ -15,8 +15,12 @@ public class BasicInt1DImageMatrix extends AbstractImageMatrix<Integer> {
 	/**
 	 * Creates an empty image with the given dimensions.
 	 *
+	 * @param metaData
+	 *            image meta data
 	 * @param data
 	 *            image data points
+	 * @param width
+	 *            image width in number of data points
 	 */
 	public BasicInt1DImageMatrix(final ImageMatrixInfo metaData, final int[] data, final int width) {
 		super(metaData, new ImageMatrixDimensions(width, data.length / width));

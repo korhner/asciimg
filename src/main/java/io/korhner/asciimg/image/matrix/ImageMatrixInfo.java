@@ -16,7 +16,7 @@ public interface ImageMatrixInfo {
 	 * - ARGB: 4
 	 * - RGB: 3
 	 * - grey scale: 1
-	 * - black & white: 1
+	 * - black &amp; white: 1
 	 * @return the number of values per data point
 	 */
 	int getValuesPerDataPoint();
@@ -29,7 +29,7 @@ public interface ImageMatrixInfo {
 	 * - ARGB: 8
 	 * - RGB: 8
 	 * - grey scale: 8
-	 * - black & white: 1
+	 * - black &amp; white: 1
 	 * @return the number of bits used to represent each value withing the data-point
 	 */
 	int getBitsPerValue();

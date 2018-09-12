@@ -52,7 +52,7 @@ public class AnimatedGifMultiFrameAsciiExporter implements MultiFrameAsciiExport
 	}
 
 	/**
-	 * Called at the beginning of a frame an empty buffered image. TODO fix this sentence <
+	 * Called at the beginning of a frame.
 	 */
 	@Override
 	public void init(final TiledImageMatrix<?> source) {

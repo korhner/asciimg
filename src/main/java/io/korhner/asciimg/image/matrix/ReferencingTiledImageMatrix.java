@@ -32,6 +32,8 @@ public class ReferencingTiledImageMatrix<V> extends AbstractList<ImageMatrix<V>>
 	/**
 	 * Instantiates a new tiled image matrix.
 	 *
+	 * @param metaData
+	 *            image meta data
 	 * @param original
 	 *            the source matrix
 	 * @param tileDimensions
