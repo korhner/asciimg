@@ -91,7 +91,7 @@ public class NeuQuant {
 	protected static final int INIT_ALPHA = (1 << ALPHA_BIAS_SHIFT);
 
 	/** biased by 10 bits */
-	protected int alphaDec;
+	private int alphaDec;
 
 	/* RAD_BIAS and ALPHA_RAD_BIAS used for radPower calculation */
 	protected static final int RAD_BIAS_SHIFT = 8;
@@ -103,26 +103,26 @@ public class NeuQuant {
 	-------------------------- */
 
 	/** the input image itself */
-	protected final byte[] picture;
+	private final byte[] picture;
 	/** lengthCount = H*W*3 */
-	protected final int lengthCount;
+	private final int lengthCount;
 
 	/** sampling factor 1..30 */
-	protected int sampleFac;
+	private int sampleFac;
 
 	///** BGRc */
 	//typedef int pixel[4];
 	/** the network itself - [NET_SIZE][4] */
-	protected final int[][] network;
+	private final int[][] network;
 
 	/** for network lookup - really 256 */
-	protected final int[] netIndex;
+	private final int[] netIndex;
 
 	/** bias and freq arrays for learning */
-	protected final int[] bias;
-	protected final int[] freq;
+	private final int[] bias;
+	private final int[] freq;
 	/** radPower for pre-computation */
-	protected final int[] radPower;
+	private final int[] radPower;
 
 	/**
 	 * Initialise network input range (0,0,0) to (255,255,255) and set parameters
@@ -406,13 +406,13 @@ public class NeuQuant {
 	}
 
 	/**
-	 * Move adjacent neurons by precomputed <code>alpha*(1-((i-j)^2/[red]^2)) input radPower[|i-j|]</code>.
+	 * Move adjacent neurons by precomputed <code>alpha*(1-((i-j)^2/[rad]^2)) input radPower[|i-j|]</code>.
 	 *
-	 * @param rad TODO document this
+	 * @param rad radius of the area/neighbouring neurons we want to change
 	 * @param i index of the central neuron
-	 * @param blue TODO document this
-	 * @param green TODO document this
-	 * @param red TODO document this
+	 * @param blue blue part of the bias
+	 * @param green green part of the bias
+	 * @param red red part of the bias
 	 */
 	protected void alterNeigh(final int rad, final int i, final int blue, final int green, final int red) {
 

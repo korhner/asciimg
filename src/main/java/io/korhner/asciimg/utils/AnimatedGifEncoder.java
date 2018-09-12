@@ -33,26 +33,26 @@ public class AnimatedGifEncoder {
 	private static final int DEFAULT_WIDTH = 320;
 	private static final int DEFAULT_HEIGHT = 240;
 
-	protected int width; // image size
-	protected int height;
-	protected Color transparent; // transparent color if given
-	protected int transIndex; // transparent index input color table
-	protected int repeat; // no repeat
-	protected int delay; // frame delay (hundredths)
-	protected boolean started; // ready to output frames
-	protected OutputStream out;
-	protected BufferedImage image; // current frame
-	protected byte[] pixels; // BGR byte array from frame
-	protected byte[] indexedPixels; // converted frame indexed to palette
-	protected int colorDepth; // number of bit planes
-	protected byte[] colorTab; // RGB palette
-	protected final boolean[] usedEntry; // active palette entries
-	protected int palSize; // color table size (bits-1)
-	protected int dispose; // disposal code (-1 = use default)
-	protected boolean closeStream; // imageEnd stream when finished
-	protected boolean firstFrame;
-	protected boolean sizeSet; // if false, get size from first frame
-	protected int sample; // default sample interval for quantizer
+	private int width; // image size
+	private int height;
+	private Color transparent; // transparent color if given
+	private int transIndex; // transparent index input color table
+	private int repeat; // no repeat
+	private int delay; // frame delay (hundredths)
+	private boolean started; // ready to output frames
+	private OutputStream out;
+	private BufferedImage image; // current frame
+	private byte[] pixels; // BGR byte array from frame
+	private byte[] indexedPixels; // converted frame indexed to palette
+	private int colorDepth; // number of bit planes
+	private byte[] colorTab; // RGB palette
+	private final boolean[] usedEntry; // active palette entries
+	private int palSize; // color table size (bits-1)
+	private int dispose; // disposal code (-1 = use default)
+	private boolean closeStream; // imageEnd stream when finished
+	private boolean firstFrame;
+	private boolean sizeSet; // if false, get size from first frame
+	private int sample; // default sample interval for quantizer
 
 	public AnimatedGifEncoder() {
 		transparent = null;

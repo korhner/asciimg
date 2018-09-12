@@ -45,7 +45,7 @@ public class GrayScaleMatrix extends AbstractImageMatrix<Short> {
 	}
 
 	@Override
-	public Short getValue(int posX, int posY) {
+	public Short getValue(final int posX, final int posY) {
 		return convertRGBToGrayScale(argbImage.getValue(posX, posY));
 	}
 }

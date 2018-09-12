@@ -38,21 +38,19 @@ public class ReferencingTiledImageMatrix<V> extends AbstractList<ImageMatrix<V>>
 			final ImageMatrix<V> original,
 			final ImageMatrixDimensions tileDimensions)
 	{
-		final int imageWidth = original.getDimensions().getWidth();
-		final int imageHeight = original.getDimensions().getHeight();
-
 		final int tileWidth = tileDimensions.getWidth();
-		final int tileHeight = tileDimensions.getHeight();
-
 		if (tileWidth <= 0) {
 			throw new IllegalArgumentException("Tile width has to be positive!");
 		}
+		final int tileHeight = tileDimensions.getHeight();
 		if (tileHeight <= 0) {
 			throw new IllegalArgumentException("Tile height has to be positive!");
 		}
+		final int imageWidth = original.getDimensions().getWidth();
 		if (tileWidth > imageWidth) {
 			throw new IllegalArgumentException("Tile width larger then original images width!");
 		}
+		final int imageHeight = original.getDimensions().getHeight();
 		if (tileHeight > imageHeight) {
 			throw new IllegalArgumentException("Tile height larger then original images height!");
 		}
@@ -126,7 +124,7 @@ public class ReferencingTiledImageMatrix<V> extends AbstractList<ImageMatrix<V>>
 	}
 
 	@Override
-	public ImageMatrix<V> get(int index) {
+	public ImageMatrix<V> get(final int index) {
 		return getTile(index);
 	}
 

@@ -13,7 +13,7 @@ public class CharacterFinder {
 	private final AsciiImgCache characterCache;
 	private final CharacterFitStrategy characterFitStrategy;
 
-	public CharacterFinder(AsciiImgCache characterCache, CharacterFitStrategy characterFitStrategy) {
+	public CharacterFinder(final AsciiImgCache characterCache, final CharacterFitStrategy characterFitStrategy) {
 
 		this.characterCache = characterCache;
 		this.characterFitStrategy = characterFitStrategy;

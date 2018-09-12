@@ -21,7 +21,7 @@ public class TruncatingImageTransformer implements ImageTransformer<Integer, Int
 	}
 
 	@Override
-	public ImageMatrix<Integer> transform(ImageMatrix<Integer> source) {
+	public ImageMatrix<Integer> transform(final ImageMatrix<Integer> source) {
 
 		// dimension of each tile
 		final ImageMatrixDimensions tileSize = getCharacterCache().getCharacterImageSize();

@@ -26,7 +26,7 @@ public class ImageAsciiExporter implements MultiFrameAsciiExporter<List<Buffered
 	}
 
 	@Override
-	public void initFrames(int numFrame) {
+	public void initFrames(final int numFrame) {
 		output = new ArrayList<>(numFrame);
 	}
 

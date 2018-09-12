@@ -9,7 +9,7 @@ import io.korhner.asciimg.image.matrix.ImageMatrix;
 public class ToGrayscaleImageTransformer implements ImageTransformer<Integer, Short> {
 
 	@Override
-	public ImageMatrix<Short> transform(ImageMatrix<Integer> source) {
+	public ImageMatrix<Short> transform(final ImageMatrix<Integer> source) {
 
 		return new GrayScaleMatrix(source);
 	}

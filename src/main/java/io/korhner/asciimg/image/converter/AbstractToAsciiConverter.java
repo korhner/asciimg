@@ -26,7 +26,7 @@ public abstract class AbstractToAsciiConverter<I, O> implements ToAsciiConverter
 	}
 
 	@Override
-	public void setImporter(ImageImporter<I, ?> importer) {
+	public void setImporter(final ImageImporter<I, ?> importer) {
 		this.importer = importer;
 	}
 

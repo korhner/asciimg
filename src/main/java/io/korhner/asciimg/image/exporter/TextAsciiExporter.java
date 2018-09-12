@@ -24,7 +24,7 @@ public class TextAsciiExporter implements MultiFrameAsciiExporter<List<String>> 
 	public void setCharacterCache(final AsciiImgCache characterCache) {}
 
 	@Override
-	public void initFrames(int numFrame) {
+	public void initFrames(final int numFrame) {
 		output = new ArrayList<>(numFrame);
 	}
 

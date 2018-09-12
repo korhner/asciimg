@@ -53,59 +53,59 @@ public class GifDecoder {
 	 */
 	public static final int STATUS_OPEN_ERROR = 2;
 
-	protected BufferedInputStream input;
-	protected int status;
+	private BufferedInputStream input;
+	private int status;
 
-	protected int width; // full image width
-	protected int height; // full image height
-	protected boolean gctFlag; // global color table used
-	protected int gctSize; // size of global color table
-	protected int loopCount; // iterations; 0 = repeat forever
+	private int width; // full image width
+	private int height; // full image height
+	private boolean gctFlag; // global color table used
+	private int gctSize; // size of global color table
+	private int loopCount; // iterations; 0 = repeat forever
 
-	protected int[] gct; // global color table
-	protected int[] lct; // local color table
-	protected int[] act; // active color table
+	private int[] gct; // global color table
+	private int[] lct; // local color table
+	private int[] act; // active color table
 
-	protected int bgIndex; // background color index
-	protected int bgColor; // background color
-	protected int lastBgColor; // previous bg color
-	protected int pixelAspect; // pixel aspect ratio
+	private int bgIndex; // background color index
+	private int bgColor; // background color
+	private int lastBgColor; // previous bg color
+	private int pixelAspect; // pixel aspect ratio
 
-	protected boolean lctFlag; // local color table flag
-	protected boolean interlace; // interlace flag
-	protected int lctSize; // local color table size
+	private boolean lctFlag; // local color table flag
+	private boolean interlace; // interlace flag
+	private int lctSize; // local color table size
 
 	// current image rectangle
-	protected int imgX;
-	protected int imgY;
-	protected int imgWidth;
-	protected int imgHeight;
-	protected Rectangle lastRect; // last image rect
-	protected BufferedImage image; // current frame
-	protected BufferedImage lastImage; // previous frame
+	private int imgX;
+	private int imgY;
+	private int imgWidth;
+	private int imgHeight;
+	private Rectangle lastRect; // last image rect
+	private BufferedImage image; // current frame
+	private BufferedImage lastImage; // previous frame
 
-	protected final byte[] block; // current data block
-	protected int blockSize; // block size
+	private final byte[] block; // current data block
+	private int blockSize; // block size
 
 	// last graphic control extension info
-	protected int dispose;
+	private int dispose;
 	// 0=no action; 1=leave input place; 2=restore to bg; 3=restore to prev
-	protected int lastDispose;
-	protected boolean transparency; // use transparent color
-	protected int delay; // delay input milliseconds
-	protected int transIndex; // transparent color index
+	private int lastDispose;
+	private boolean transparency; // use transparent color
+	private int delay; // delay input milliseconds
+	private int transIndex; // transparent color index
 
 	// max decoder pixel stack size
-	protected static final int MAX_STACK_SIZE = 4096;
+	private static final int MAX_STACK_SIZE = 4096;
 
 	// LZW decoder working arrays
-	protected short[] prefix;
-	protected byte[] suffix;
-	protected byte[] pixelStack;
-	protected byte[] pixels;
+	private short[] prefix;
+	private byte[] suffix;
+	private byte[] pixelStack;
+	private byte[] pixels;
 
-	protected List<GifFrame> frames; // frames read from current file
-	protected int frameCount;
+	private List<GifFrame> frames; // frames read from current file
+	private int frameCount;
 
 	public GifDecoder() {
 		loopCount = 1;
