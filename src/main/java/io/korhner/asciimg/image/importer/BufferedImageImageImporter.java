@@ -25,7 +25,11 @@
 
 package io.korhner.asciimg.image.importer;
 
-import io.korhner.asciimg.image.matrix.*;
+import io.korhner.asciimg.image.matrix.BasicImageMatrixInfo;
+import io.korhner.asciimg.image.matrix.BasicInt1DImageMatrix;
+import io.korhner.asciimg.image.matrix.ImageMatrix;
+import io.korhner.asciimg.image.matrix.ImageMatrixDimensions;
+import io.korhner.asciimg.image.matrix.ImageMatrixInfo;
 
 import java.awt.image.BufferedImage;
 import java.io.IOException;

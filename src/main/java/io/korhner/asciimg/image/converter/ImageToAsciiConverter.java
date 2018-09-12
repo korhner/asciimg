@@ -25,7 +25,9 @@
 
 package io.korhner.asciimg.image.converter;
 
-import io.korhner.asciimg.image.matrix.*;
+import io.korhner.asciimg.image.matrix.ImageMatrix;
+import io.korhner.asciimg.image.matrix.ImageMatrixDimensions;
+import io.korhner.asciimg.image.matrix.ReferencingTiledImageMatrix;
 import io.korhner.asciimg.image.strategy.CharacterFinder;
 import io.korhner.asciimg.image.transformer.ToGrayscaleImageTransformer;
 import io.korhner.asciimg.image.transformer.TruncatingImageTransformer;

@@ -25,7 +25,11 @@
 
 package io.korhner.asciimg.image;
 
-import io.korhner.asciimg.image.matrix.*;
+import io.korhner.asciimg.image.matrix.BasicImageMatrixInfo;
+import io.korhner.asciimg.image.matrix.BasicInt1DImageMatrix;
+import io.korhner.asciimg.image.matrix.GrayScaleMatrix;
+import io.korhner.asciimg.image.matrix.ImageMatrix;
+import io.korhner.asciimg.image.matrix.ImageMatrixDimensions;
 
 import java.awt.Color;
 import java.awt.Font;
