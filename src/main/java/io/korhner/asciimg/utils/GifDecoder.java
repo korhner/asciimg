@@ -466,7 +466,8 @@ public class GifDecoder {
 				suffix[available] = (byte) first;
 				available++;
 				if (((available & codeMask) == 0)
-					&& (available < MAX_STACK_SIZE)) {
+					&& (available < MAX_STACK_SIZE))
+				{
 					codeSize++;
 					codeMask += available;
 				}

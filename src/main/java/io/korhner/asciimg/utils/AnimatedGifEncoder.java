@@ -384,7 +384,8 @@ public class AnimatedGifEncoder {
 		final int type = image.getType();
 		if ((imageWidth != width)
 			|| (imageHeight != height)
-			|| (type != BufferedImage.TYPE_3BYTE_BGR)) {
+			|| (type != BufferedImage.TYPE_3BYTE_BGR))
+		{
 			// create new image with right size/format
 			final BufferedImage temp = new BufferedImage(width, height, BufferedImage.TYPE_3BYTE_BGR);
 			final Graphics2D graphics = temp.createGraphics();

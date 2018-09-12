@@ -132,7 +132,8 @@ public final class AsciiImgCache implements Iterable<Entry<Character, ImageMatri
 	private static Map<Character, ImageMatrix<Short>> createCharacterImages(
 			final Font font,
 			final ImageMatrixDimensions characterSize,
-			final char[] characters) {
+			final char[] characters)
+	{
 		// create each image
 		final BufferedImage img = new BufferedImage(characterSize.getWidth(), characterSize.getHeight(), BufferedImage.TYPE_INT_ARGB);
 		final Graphics2D graphics2D = (Graphics2D) img.getGraphics();
