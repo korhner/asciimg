@@ -77,6 +77,8 @@
                     <linkXRef>true</linkXRef>
                     <configLocation>src/main/resources/checkstyle.xml</configLocation>
                     <propertyExpansion>java.header.regex.template.file=${project.basedir}/src/main/resources/java_header_regex_template.txt</propertyExpansion>
+                    <suppressionsLocation>${project.basedir}/src/main/resources/checkstyle-suppressions.xml</suppressionsLocation>
+                    <suppressionsFileExpression>checkstyle.suppressions.file</suppressionsFileExpression>
                 </configuration>
             </plugin>
 
@@ -233,6 +235,8 @@
                     <linkXRef>true</linkXRef>
                     <configLocation>src/main/resources/checkstyle.xml</configLocation>
                     <propertyExpansion>java.header.regex.template.file=${project.basedir}/src/main/resources/java_header_regex_template.txt</propertyExpansion>
+                    <suppressionsLocation>${project.basedir}/src/main/resources/checkstyle-suppressions.xml</suppressionsLocation>
+                    <suppressionsFileExpression>checkstyle.suppressions.file</suppressionsFileExpression>
                 </configuration>
             </plugin>
 

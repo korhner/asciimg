@@ -74,9 +74,10 @@
 	<!-- See http://checkstyle.sf.net/config_header.html -->
 	<!-- Following interprets the header file as regular expressions. -->
 	<!-- NOTE the used variable is supplied by the invocation in maven! -->
-	<!--<module name="RegexpHeader">
+	<module name="RegexpHeader">
 		<property name="headerFile" value="${java.header.regex.template.file}"/>
-	</module>-->
+		<property name="multiLines" value="5"/>
+	</module>
 
 	<module name="TreeWalker">
 
