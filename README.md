@@ -1,7 +1,7 @@
-asciimg
+Asciiimg
 ========
 
-Asciimg is an extensible Ascii art generator written in Java.
+Asciiimg is an extensible Ascii art generator written in Java.
 For more info refer to this blog post:
 <a href="http://korhner.github.io/java/image-processing/ascii-art-generator-part-2/">
 http://korhner.github.io/java/image-processing/ascii-art-generator-part-2/</a>
