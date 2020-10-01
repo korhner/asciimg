@@ -6,7 +6,7 @@ For more info refer to this blog post:
 <a href="http://korhner.github.io/java/image-processing/ascii-art-generator-part-2/">
 http://korhner.github.io/java/image-processing/ascii-art-generator-part-2/</a>
 
-## Example usage
+## Example usage awesome
 
 <pre>
 // initialize cache
