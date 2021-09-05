@@ -23,53 +23,42 @@
  * SOFTWARE.
  */
 
-package io.korhner.asciimg.utils;
+package io.korhner.asciimg.image.matrix;
+
+import io.korhner.asciimg.utils.ArrayUtils;
 
 /**
- * An utility class used for various array utilities.
+ * Basic implementation of {@link ImageMatrix}, backed by an <code>int[]</code>.
  */
-public final class ArrayUtils {
-
-	private ArrayUtils() {}
+public class BasicInt1DImageMatrix extends AbstractImageMatrix<Integer> {
 
 	/**
-	 * Converts from 1D array index to 1D on x axis.
-	 *
-	 * @param index
-	 *            The index of 1D array.
-	 * @param arrayWidth
-	 *            2D Array width (length of rows on x axis).
-	 * @return Corresponding index of x axis.
+	 * The images data points.
 	 */
-	public static int convert1DtoX(final int index, final int arrayWidth) {
-		return index % arrayWidth;
+	private final int[] data;
+
+	/**
+	 * Creates an empty image with the given dimensions.
+	 *
+	 * @param metaData
+	 *            image meta data
+	 * @param data
+	 *            image data points
+	 * @param width
+	 *            image width in number of data points
+	 */
+	public BasicInt1DImageMatrix(final ImageMatrixInfo metaData, final int[] data, final int width) {
+		super(metaData, new ImageMatrixDimensions(width, data.length / width));
+
+		if (data.length % width != 0) {
+			throw new IllegalArgumentException("width does not divide data");
+		}
+
+		this.data = data;
 	}
 
-	/**
-	 * Converts from 1D array index to 1D on y axis.
-	 *
-	 * @param index
-	 *            The index of 1D array.
-	 * @param arrayWidth
-	 *            2D Array width (length of rows on x axis).
-	 * @return Corresponding index of y axis.
-	 */
-	public static int convert1DtoY(final int index, final int arrayWidth) {
-		return index / arrayWidth;
-	}
-
-	/**
-	 * Converts from 2D array index to 1D.
-	 *
-	 * @param xPos
-	 *            The index on xPos axis.
-	 * @param yPos
-	 *            The index on xPos axis.
-	 * @param arrayWidth
-	 *            2D Array width (length of rows on xPos axis).
-	 * @return Corresponding index if the array was 1D.
-	 */
-	public static int convert2DTo1D(final int xPos, final int yPos, final int arrayWidth) {
-		return yPos * arrayWidth + xPos;
+	@Override
+	public Integer getValue(final int posX, final int posY) {
+		return data[ArrayUtils.convert2DTo1D(posX, posY, getDimensions().getWidth())];
 	}
 }

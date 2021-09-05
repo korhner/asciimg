@@ -23,53 +23,50 @@
  * SOFTWARE.
  */
 
-package io.korhner.asciimg.utils;
+package io.korhner.asciimg.image.matrix;
 
 /**
- * An utility class used for various array utilities.
+ * Separates an input image into multiple tiles.
+ * You may want ot think of the original image a sa chess-board,
+ * and the tiles as the fields of the board.
+ *
+ * @param <D>
+ *            data point value type, as in, the class of a "pixel" of the image
  */
-public final class ArrayUtils {
-
-	private ArrayUtils() {}
+public interface TiledImageMatrix<D> extends ImageMatrix<D>, Iterable<ImageMatrix<D>> {
 
 	/**
-	 * Converts from 1D array index to 1D on x axis.
+	 * Gets the tile at a specific index.
 	 *
 	 * @param index
-	 *            The index of 1D array.
-	 * @param arrayWidth
-	 *            2D Array width (length of rows on x axis).
-	 * @return Corresponding index of x axis.
+	 *            tile index
+	 * @return the tile
 	 */
-	public static int convert1DtoX(final int index, final int arrayWidth) {
-		return index % arrayWidth;
-	}
+	ImageMatrix<D> getTile(final int index);
 
 	/**
-	 * Converts from 1D array index to 1D on y axis.
+	 * Gets the tile at a specific y and z location.
 	 *
-	 * @param index
-	 *            The index of 1D array.
-	 * @param arrayWidth
-	 *            2D Array width (length of rows on x axis).
-	 * @return Corresponding index of y axis.
+	 * @param x
+	 *            x location of the tile to fetch
+	 * @param y
+	 *            y location of the tile to fetch
+	 * @return the tile
 	 */
-	public static int convert1DtoY(final int index, final int arrayWidth) {
-		return index / arrayWidth;
-	}
+	ImageMatrix<D> getTile(final int x, final int y);
 
 	/**
-	 * Converts from 2D array index to 1D.
-	 *
-	 * @param xPos
-	 *            The index on xPos axis.
-	 * @param yPos
-	 *            The index on xPos axis.
-	 * @param arrayWidth
-	 *            2D Array width (length of rows on xPos axis).
-	 * @return Corresponding index if the array was 1D.
+	 * @return the number of tiles
 	 */
-	public static int convert2DTo1D(final int xPos, final int yPos, final int arrayWidth) {
-		return yPos * arrayWidth + xPos;
-	}
+	int getTileCount();
+
+	/**
+	 * @return size of a tile in data points
+	 */
+	ImageMatrixDimensions getTileSize();
+
+	/**
+	 * @return number of tiles on the x and y axis
+	 */
+	ImageMatrixDimensions getSizeInTiles();
 }

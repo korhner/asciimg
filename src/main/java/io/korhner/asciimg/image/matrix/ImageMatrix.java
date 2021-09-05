@@ -23,53 +23,27 @@
  * SOFTWARE.
  */
 
-package io.korhner.asciimg.utils;
+package io.korhner.asciimg.image.matrix;
 
 /**
- * An utility class used for various array utilities.
+ * Encapsulates an images raw, basic data.
+ * This could be characters of an ASCII image, or gray scale or RGB values of a bitmap image.
  */
-public final class ArrayUtils {
+public interface ImageMatrix<T> {
 
-	private ArrayUtils() {}
-
-	/**
-	 * Converts from 1D array index to 1D on x axis.
-	 *
-	 * @param index
-	 *            The index of 1D array.
-	 * @param arrayWidth
-	 *            2D Array width (length of rows on x axis).
-	 * @return Corresponding index of x axis.
-	 */
-	public static int convert1DtoX(final int index, final int arrayWidth) {
-		return index % arrayWidth;
-	}
+	ImageMatrixInfo getMetaData();
 
 	/**
-	 * Converts from 1D array index to 1D on y axis.
+	 * Returns the value at a specified position.
 	 *
-	 * @param index
-	 *            The index of 1D array.
-	 * @param arrayWidth
-	 *            2D Array width (length of rows on x axis).
-	 * @return Corresponding index of y axis.
+	 * @param posX x-coordinate of the data point to fetch
+	 * @param posY y-coordinate of the data point to fetch
+	 * @return data point value
 	 */
-	public static int convert1DtoY(final int index, final int arrayWidth) {
-		return index / arrayWidth;
-	}
+	T getValue(final int posX, final int posY);
 
 	/**
-	 * Converts from 2D array index to 1D.
-	 *
-	 * @param xPos
-	 *            The index on xPos axis.
-	 * @param yPos
-	 *            The index on xPos axis.
-	 * @param arrayWidth
-	 *            2D Array width (length of rows on xPos axis).
-	 * @return Corresponding index if the array was 1D.
+	 * @return the images dimensions
 	 */
-	public static int convert2DTo1D(final int xPos, final int yPos, final int arrayWidth) {
-		return yPos * arrayWidth + xPos;
-	}
+	ImageMatrixDimensions getDimensions();
 }

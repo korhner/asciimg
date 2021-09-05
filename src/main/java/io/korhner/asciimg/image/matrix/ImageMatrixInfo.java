@@ -23,53 +23,40 @@
  * SOFTWARE.
  */
 
-package io.korhner.asciimg.utils;
+package io.korhner.asciimg.image.matrix;
 
 /**
- * An utility class used for various array utilities.
+ * Contains basic image meta data.
  */
-public final class ArrayUtils {
+public interface ImageMatrixInfo {
 
-	private ArrayUtils() {}
-
-	/**
-	 * Converts from 1D array index to 1D on x axis.
-	 *
-	 * @param index
-	 *            The index of 1D array.
-	 * @param arrayWidth
-	 *            2D Array width (length of rows on x axis).
-	 * @return Corresponding index of x axis.
-	 */
-	public static int convert1DtoX(final int index, final int arrayWidth) {
-		return index % arrayWidth;
-	}
+	boolean isGrayScale();
+	boolean isBlackAndWhite();
+	boolean isColored();
+	boolean isWithAlpha();
 
 	/**
-	 * Converts from 1D array index to 1D on y axis.
-	 *
-	 * @param index
-	 *            The index of 1D array.
-	 * @param arrayWidth
-	 *            2D Array width (length of rows on x axis).
-	 * @return Corresponding index of y axis.
+	 * Indicates the number of values per data point.
+	 * Examples:
+	 * - ARGB: 4
+	 * - RGB: 3
+	 * - grey scale: 1
+	 * - black &amp; white: 1
+	 * @return the number of values per data point
 	 */
-	public static int convert1DtoY(final int index, final int arrayWidth) {
-		return index / arrayWidth;
-	}
+	int getValuesPerDataPoint();
+
+	Class getDataPointClass();
 
 	/**
-	 * Converts from 2D array index to 1D.
-	 *
-	 * @param xPos
-	 *            The index on xPos axis.
-	 * @param yPos
-	 *            The index on xPos axis.
-	 * @param arrayWidth
-	 *            2D Array width (length of rows on xPos axis).
-	 * @return Corresponding index if the array was 1D.
+	 * Indicates the number of bits used to represent each value (see {@link #getValuesPerDataPoint()}).
+	 * Examples:
+	 * - ARGB: 8
+	 * - RGB: 8
+	 * - grey scale: 8
+	 * - black &amp; white: 1
+	 * @return the number of bits used to represent each value withing the data-point
 	 */
-	public static int convert2DTo1D(final int xPos, final int yPos, final int arrayWidth) {
-		return yPos * arrayWidth + xPos;
-	}
+	int getBitsPerValue();
+
 }
